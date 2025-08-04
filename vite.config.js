@@ -8,7 +8,7 @@ const isGitHubPages = process.env.GITHUB_PAGES === 'true';
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(),tailwindcss()],
-  base: isGitHubPages ? '/ksar-data/' : '/',
+  base: isGitHubPages ? '/ksar-budget/' : '/',
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

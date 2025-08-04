@@ -97,7 +97,7 @@ function Navbar({ language, setLanguage, theme, setTheme, t }) {
 
       {/* Mobile Navigation Menu */}
       {isMobileMenuOpen && (
-        <div className={`md:hidden border-t ${theme === 'dark' ? 'bg-gray-950 border-gray-800' : 'bg-stone-50 border-gray-200'}`}>
+        <div style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif', fontSize:'2rem' } : { fontFamily: 'Inter, sans-serif', direction:'ltr', fontSize:'2rem' }} className={`md:hidden border-t ${theme === 'dark' ? 'bg-gray-950 border-gray-800' : 'bg-stone-50 border-gray-200'}`}>
           <nav className="container mx-auto px-4 py-2">
             <div className="flex flex-col space-y-1">
               {navItems.map(item => (
