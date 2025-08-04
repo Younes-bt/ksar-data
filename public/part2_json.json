@@ -1,0 +1,282 @@
+[
+    {
+        "Année":2024,
+        "fr_Indicateur":"Nombre de ménages",
+        "ar_Indicateur":"عدد الأسر",
+        "Ensemble":33188.0,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2024,
+        "fr_Indicateur":"Nombre moyen de personnes par pièce d'habitation",
+        "ar_Indicateur":"المتوسط العام لعدد الأشخاص لكل غرفة سكنية",
+        "Ensemble":1.4,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2024,
+        "fr_Indicateur":"Part des ménages sédentaires disposant d'une cuisine (%)",
+        "ar_Indicateur":"نسبة الأسر الساكنة التي تتوفر على مطبخ (%)",
+        "Ensemble":98.8,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2024,
+        "fr_Indicateur":"Part des ménages sédentaires disposant d'une fosse septique (%)",
+        "ar_Indicateur":"نسبة الأسر الساكنة التي تتوفر على حفرة صحية (%)",
+        "Ensemble":0.5,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2024,
+        "fr_Indicateur":"Part des ménages sédentaires disposant de W.-C. (%)",
+        "ar_Indicateur":"نسبة الأسر الساكنة التي تتوفر على مرحاض (%)",
+        "Ensemble":99.7,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2024,
+        "fr_Indicateur":"Part des ménages sédentaires disposant de l'eau courante (%)",
+        "ar_Indicateur":"نسبة الأسر الساكنة التي تتوفر على ماء صالح للشرب (%)",
+        "Ensemble":97.7,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2024,
+        "fr_Indicateur":"Part des ménages sédentaires disposant de l'électricité (%)\t",
+        "ar_Indicateur":"نسبة الأسر الساكنة التي تتوفر على الكهرباء (%)",
+        "Ensemble":97.5,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2024,
+        "fr_Indicateur":"Part des ménages sédentaires locataires (%)\t",
+        "ar_Indicateur":"نسبة الأسر الساكنة المكتَرية للمسكن (%)",
+        "Ensemble":20.6,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2024,
+        "fr_Indicateur":"Part des ménages sédentaires propriétaires (%)\t",
+        "ar_Indicateur":"نسبة الأسر الساكنة المالكة للمسكن (%)",
+        "Ensemble":66.7,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2024,
+        "fr_Indicateur":"Part des ménages sédentaires raccordés au réseau public d'assainissement (%)\t",
+        "ar_Indicateur":"نسبة الأسر الساكنة المرتبطة بشبكة الصرف الصحي العمومية (%)",
+        "Ensemble":99.4,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2024,
+        "fr_Indicateur":"Part des ménages sédentaires vivant dans un appartement (%)",
+        "ar_Indicateur":"نسبة الأسر الساكنة التي تعيش في شقة (%)",
+        "Ensemble":7.7,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2024,
+        "fr_Indicateur":"Part des ménages sédentaires vivant dans un logement de 10-19 ans (%)",
+        "ar_Indicateur":"نسبة الأسر الساكنة التي تعيش في مسكن عمره بين 10 و19 سنة (%)",
+        "Ensemble":35.5,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2024,
+        "fr_Indicateur":"Part des ménages sédentaires vivant dans un logement de 20-49 ans (%)\t",
+        "ar_Indicateur":"نسبة الأسر الساكنة التي تعيش في مسكن عمره بين 20 و49 سنة (%)",
+        "Ensemble":39.4,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2024,
+        "fr_Indicateur":"Part des ménages sédentaires vivant dans un logement de 50 ans ou plus (%)\t",
+        "ar_Indicateur":"نسبة الأسر الساكنة التي تعيش في مسكن عمره 50 سنة أو أكثر (%)",
+        "Ensemble":5.6,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2024,
+        "fr_Indicateur":"Part des ménages sédentaires vivant dans un logement de moins de 10 ans (%)\t",
+        "ar_Indicateur":"نسبة الأسر الساكنة التي تعيش في مسكن عمره أقل من 10 سنوات (%)",
+        "Ensemble":19.6,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2024,
+        "fr_Indicateur":"Part des ménages sédentaires vivant dans un logement rural (%)\t",
+        "ar_Indicateur":"نسبة الأسر الساكنة التي تعيش في مسكن قروي (%)",
+        "Ensemble":0.1,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2024,
+        "fr_Indicateur":"Part des ménages sédentaires vivant dans une maison marocaine (%)\t",
+        "ar_Indicateur":"نسبة الأسر الساكنة التي تعيش في منزل مغربي تقليدي (%)",
+        "Ensemble":91.2,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2024,
+        "fr_Indicateur":"Part des ménages sédentaires vivant dans une maison sommaire ou dans un bidonville (%)\t",
+        "ar_Indicateur":"نسبة الأسر الساكنة التي تعيش في سكن عشوائي أو صفيحي (%)",
+        "Ensemble":0.2,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2024,
+        "fr_Indicateur":"Part des ménages sédentaires vivant dans une villa ou un étage de villa (%)\t",
+        "ar_Indicateur":"نسبة الأسر الساكنة التي تعيش في فيلا أو طابق في فيلا (%)",
+        "Ensemble":0.3,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2024,
+        "fr_Indicateur":"Taille moyenne des ménages\t",
+        "ar_Indicateur":"المتوسط العام لحجم الأسر",
+        "Ensemble":3.8,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2014,
+        "fr_Indicateur":"Nombre de ménages",
+        "ar_Indicateur":"عدد الأسر",
+        "Ensemble":29514.0,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2014,
+        "fr_Indicateur":"Nombre moyen de personnes par pièce d'habitation",
+        "ar_Indicateur":"المتوسط العام لعدد الأشخاص لكل غرفة سكنية",
+        "Ensemble":1.3,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2014,
+        "fr_Indicateur":"Part des ménages sédentaires disposant d'une cuisine (%)",
+        "ar_Indicateur":"نسبة الأسر الساكنة التي تتوفر على مطبخ (%)",
+        "Ensemble":97.0,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2014,
+        "fr_Indicateur":"Part des ménages sédentaires disposant d'une fosse septique (%)",
+        "ar_Indicateur":"نسبة الأسر الساكنة التي تتوفر على حفرة صحية (%)",
+        "Ensemble":1.8,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2014,
+        "fr_Indicateur":"Part des ménages sédentaires disposant de W.-C. (%)",
+        "ar_Indicateur":"نسبة الأسر الساكنة التي تتوفر على مرحاض (%)",
+        "Ensemble":99.3,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2014,
+        "fr_Indicateur":"Part des ménages sédentaires disposant de l'eau courante (%)",
+        "ar_Indicateur":"نسبة الأسر الساكنة التي تتوفر على ماء صالح للشرب (%)",
+        "Ensemble":92.4,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2014,
+        "fr_Indicateur":"Part des ménages sédentaires disposant de l'électricité (%)\t",
+        "ar_Indicateur":"نسبة الأسر الساكنة التي تتوفر على الكهرباء (%)",
+        "Ensemble":92.3,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2014,
+        "fr_Indicateur":"Part des ménages sédentaires locataires (%)\t",
+        "ar_Indicateur":"نسبة الأسر الساكنة المكتَرية للمسكن (%)",
+        "Ensemble":21.2,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2014,
+        "fr_Indicateur":"Part des ménages sédentaires propriétaires (%)\t",
+        "ar_Indicateur":"نسبة الأسر الساكنة المالكة للمسكن (%)",
+        "Ensemble":68.9,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2014,
+        "fr_Indicateur":"Part des ménages sédentaires raccordés au réseau public d'assainissement (%)\t",
+        "ar_Indicateur":"نسبة الأسر الساكنة المرتبطة بشبكة الصرف الصحي العمومية (%)",
+        "Ensemble":97.5,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2014,
+        "fr_Indicateur":"Part des ménages sédentaires vivant dans un appartement (%)\t",
+        "ar_Indicateur":"نسبة الأسر الساكنة التي تعيش في شقة (%)",
+        "Ensemble":4.6,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2014,
+        "fr_Indicateur":"Part des ménages sédentaires vivant dans un logement de 10-19 ans (%)",
+        "ar_Indicateur":"نسبة الأسر الساكنة التي تعيش في مسكن عمره بين 10 و19 سنة (%)",
+        "Ensemble":20.2,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2014,
+        "fr_Indicateur":"Part des ménages sédentaires vivant dans un logement de 20-49 ans (%)",
+        "ar_Indicateur":"نسبة الأسر الساكنة التي تعيش في مسكن عمره بين 20 و49 سنة (%)",
+        "Ensemble":43.0,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2014,
+        "fr_Indicateur":"Part des ménages sédentaires vivant dans un logement de 50 ans ou plus (%)\t",
+        "ar_Indicateur":"نسبة الأسر الساكنة التي تعيش في مسكن عمره 50 سنة أو أكثر (%)",
+        "Ensemble":20.1,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2014,
+        "fr_Indicateur":"Part des ménages sédentaires vivant dans un logement de moins de 10 ans (%)",
+        "ar_Indicateur":"نسبة الأسر الساكنة التي تعيش في مسكن عمره أقل من 10 سنوات (%)",
+        "Ensemble":16.8,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2014,
+        "fr_Indicateur":"Part des ménages sédentaires vivant dans un logement rural (%)",
+        "ar_Indicateur":"نسبة الأسر الساكنة التي تعيش في مسكن قروي (%)",
+        "Ensemble":0.1,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2014,
+        "fr_Indicateur":"Part des ménages sédentaires vivant dans une maison marocaine (%)\t",
+        "ar_Indicateur":"نسبة الأسر الساكنة التي تعيش في منزل مغربي تقليدي (%)",
+        "Ensemble":91.1,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2014,
+        "fr_Indicateur":"Part des ménages sédentaires vivant dans une maison sommaire ou dans un bidonville (%)\t",
+        "ar_Indicateur":"نسبة الأسر الساكنة التي تعيش في سكن عشوائي أو صفيحي (%)",
+        "Ensemble":1.5,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2014,
+        "fr_Indicateur":"Part des ménages sédentaires vivant dans une villa ou un étage de villa (%)\t",
+        "ar_Indicateur":"نسبة الأسر الساكنة التي تعيش في فيلا أو طابق في فيلا (%)",
+        "Ensemble":2.3,
+        "Thème":"CONDITIONS D'HABITAT"
+    },
+    {
+        "Année":2014,
+        "fr_Indicateur":"Taille moyenne des ménages\t",
+        "ar_Indicateur":"المتوسط العام لحجم الأسر",
+        "Ensemble":4.3,
+        "Thème":"CONDITIONS D'HABITAT"
+    }
+]

@@ -1,0 +1,306 @@
+import { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import translations from "./i18n";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import SearchPage from "./pages/SearchPage";
+import NewInsightsPage from "./pages/NewInsightsPage";
+import About from "./pages/About";
+import RgphPage from "./pages/RgphPage"; 
+import RgphInsights from "./pages/RgphInsights"; 
+import MedicinePrices from "./pages/MedicinePrices"; 
+import SupportGrants from "./pages/SupportGrants"; // Add support grants import
+import ContactUs from "./pages/ContactUs";
+
+function App() {
+  const [budgetData, setBudgetData] = useState([]);
+  const [rgphData, setRGPHData] = useState([]);
+  const [medicineData, setMedicineData] = useState([]);
+  const [supportData, setSupportData] = useState([]); // Add support data state
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [language, setLanguage] = useState("ar");
+  const [theme, setTheme] = useState(() => {
+    const stored = localStorage.getItem("theme");
+    return stored || "dark";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  useEffect(() => {
+    setLoading(true);
+    
+    // Load budget, RGPH, medicine, and support data concurrently
+    const loadBudgetData = fetch("/full_data_v6.json")
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      });
+
+    const loadRGPHData = Promise.all([
+      fetch("/part1_json.json").then(res => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      }),
+      fetch("/part2_json.json").then(res => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
+    ]).then(([part1, part2]) => {
+      // Combine both parts of RGPH data
+      return [...part1, ...part2];
+    });
+
+    const loadMedicineData = fetch("/medicament_prices.json")
+      .then(res => {
+        console.log("Medicine data fetch response:", res.status, res.statusText);
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then(data => {
+        console.log("Medicine data loaded successfully:", data?.length, "records");
+        return data;
+      })
+      .catch(err => {
+        console.error("Medicine data fetch error:", err);
+        throw err;
+      });
+
+    const loadSupportData = fetch("/support_list.json")
+      .then(res => {
+        console.log("Support data fetch response:", res.status, res.statusText);
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then(data => {
+        console.log("Support data loaded successfully:", data?.length, "records");
+        return data;
+      })
+      .catch(err => {
+        console.error("Support data fetch error:", err);
+        throw err;
+      });
+
+    // Execute all promises
+    Promise.all([loadBudgetData, loadRGPHData, loadMedicineData, loadSupportData])
+      .then(([budgetData, rgphData, medicineData, supportData]) => {
+        setBudgetData(budgetData);
+        setRGPHData(rgphData);
+        setMedicineData(medicineData || []);
+        setSupportData(supportData || []); // Set support data
+        console.log("Loaded budget data:", budgetData.length, "records");
+        console.log("Loaded RGPH data:", rgphData.length, "records");
+        console.log("Loaded medicine data:", medicineData?.length || 0, "records");
+        console.log("Loaded support data:", supportData?.length || 0, "records");
+        setError(null);
+      })
+      .catch((err) => {
+        console.error("Data fetch error:", err);
+        
+        // Try to load individual datasets that might have succeeded
+        Promise.allSettled([loadBudgetData, loadRGPHData, loadMedicineData, loadSupportData])
+          .then(results => {
+            const [budgetResult, rgphResult, medicineResult, supportResult] = results;
+            
+            if (budgetResult.status === 'fulfilled') {
+              setBudgetData(budgetResult.value);
+              console.log("Budget data loaded successfully as fallback");
+            }
+            if (rgphResult.status === 'fulfilled') {
+              setRGPHData(rgphResult.value);
+              console.log("RGPH data loaded successfully as fallback");
+            }
+            if (medicineResult.status === 'fulfilled') {
+              setMedicineData(medicineResult.value);
+              console.log("Medicine data loaded successfully as fallback");
+            } else {
+              console.warn("Medicine data failed to load:", medicineResult.reason);
+              setMedicineData([]);
+            }
+            if (supportResult.status === 'fulfilled') {
+              setSupportData(supportResult.value);
+              console.log("Support data loaded successfully as fallback");
+            } else {
+              console.warn("Support data failed to load:", supportResult.reason);
+              setSupportData([]);
+            }
+            
+            // Only show error if all datasets failed
+            const allFailed = results.every(result => result.status === 'rejected');
+            if (allFailed) {
+              setError("Failed to load data. Please try again later.");
+            } else {
+              setError(null);
+            }
+          });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+
+  const t = translations[language];
+
+  // Show loading screen
+  if (loading) {
+    return (
+      <div className={`min-h-screen flex items-center justify-center ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <h2 className={`text-xl font-semibold ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
+            {t?.common?.loading || "Loading Data..." || "جاري تحميل البيانات..."}
+          </h2>
+          <p className={`text-sm mt-2 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+            {t?.common?.please_wait || "Please wait while we load the data" || "يرجى الانتظار بينما نقوم بتحميل البيانات"}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error screen
+  if (error) {
+    return (
+      <div className={`min-h-screen flex items-center justify-center ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
+        <div className="text-center">
+          <div className="text-red-500 text-6xl mb-4">⚠️</div>
+          <h2 className={`text-xl font-semibold ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
+            {t?.common?.error_loading || "Error Loading Data" || "خطأ في تحميل البيانات"}
+          </h2>
+          <p className={`text-sm mt-2 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+            {error}
+          </p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+          >
+            {t?.common?.retry || "Retry" || "إعادة المحاولة"}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <Router>
+      <Navbar
+        language={language}
+        setLanguage={setLanguage}
+        theme={theme}
+        setTheme={setTheme}
+        t={t}
+      />
+
+      <Routes>
+        <Route
+          path="/"
+          element={<Home t={t} language={language} theme={theme} />}
+        />
+        <Route
+          path="/search"
+          element={
+            <SearchPage
+              data={budgetData}
+              loading={loading}
+              t={t}
+              language={language}
+              theme={theme}
+            />
+          }
+        />
+        <Route
+          path="/rgph"
+          element={
+            <RgphPage
+              data={rgphData}
+              loading={loading}
+              t={t}
+              language={language}
+              theme={theme}
+            />
+          }
+        />
+        <Route 
+          path="/insights" 
+          element={
+            <NewInsightsPage 
+              data={budgetData} 
+              t={t} 
+              language={language} 
+              theme={theme} 
+            />
+          } 
+        />
+        <Route 
+          path="/insights2" 
+          element={
+            <RgphInsights 
+              data={rgphData} 
+              t={t} 
+              language={language} 
+              theme={theme} 
+            />
+          } 
+        />
+        <Route 
+          path="/medicines" 
+          element={
+            <MedicinePrices 
+              data={medicineData} 
+              loading={loading} 
+              t={t} 
+              language={language} 
+              theme={theme} 
+            />
+          } 
+        />
+        <Route 
+          path="/support" 
+          element={
+            <SupportGrants 
+              data={supportData} 
+              loading={loading} 
+              t={t} 
+              language={language} 
+              theme={theme} 
+            />
+          } 
+        />
+        <Route 
+          path="/about" 
+          element={
+            <About 
+              t={t} 
+              language={language} 
+              theme={theme} 
+            />
+          } 
+        />
+        <Route 
+          path="/contactUs" 
+          element={
+            <ContactUs 
+              t={t} 
+              language={language} 
+              theme={theme} 
+            />
+          } 
+        />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
