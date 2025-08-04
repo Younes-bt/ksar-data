@@ -184,7 +184,7 @@ export default function SupportGrants({ data, loading, t, language, theme }) {
   return (
     <div className={`p-5 md:px-40 md:py-10 space-y-4 min-h-screen ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
       
-      <h1 style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif', direction:'rtl', fontSize:'2rem' } : { fontFamily: 'Inter, sans-serif', direction:'ltr', fontSize:'2rem' }} className="text-center mb-10">
+      <h1 style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif', direction:'rtl' } : { fontFamily: 'Inter, sans-serif', direction:'ltr' }} className="text-center mb-5 md:mb-10 md:text-4xl">
         {t?.supportpage?.search_support_data || 'Search Sports Association Support Grants'}
       </h1>
 
@@ -292,22 +292,23 @@ export default function SupportGrants({ data, loading, t, language, theme }) {
             `${t?.supportpage?.showing || 'Showing'} ${paginatedData.length} ${t?.supportpage?.of || 'of'} ${totalRows} ${t?.supportpage?.results || 'results'}${data.length > 0 ? ` ${t?.supportpage?.of || 'of'} ${data.length} ${t?.supportpage?.total || 'total'}` : ''}`
           )}
         </p>
+        
       </div>
-
+          <p className="text-xs text-red-500 text-center mt-2">
+          <span>{t?.supportpage?.showAll || 'Total Grants'}</span> 
+        </p>
       {/* The data table */}
       <SupportTable t={t} data={paginatedData} isLoading={isFiltering} theme={theme} language={language}/>
 
       {/* Data Source Credit */}
-      <div className={`mt-4 p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
+      <div className={`mt-4 p-4 text-center rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
         <div className="flex items-center gap-2 text-sm text-gray-600">
           <div>
             <p className="font-medium">
               {t?.supportpage?.data_source || 'Data Source'} : {t?.supportpage?.municipal_records || 'Municipal Records of Al Ksar Al Kabir'}
               {' - '} {t?.supportpage?.years_range || 'Years'}: 2020-2024
             </p>
-            <p className="text-xs mt-1">
-              {t?.supportpage?.total_distributed || 'Total Distributed'}: {allStats.totalGrants} DH {t?.supportpage?.to || 'to'} {allStats.uniqueAssociations} {t?.supportpage?.associations || 'associations'}
-            </p>
+            
           </div>
         </div>
       </div>

@@ -6,12 +6,12 @@ import GlobeBackground from '../components/GlobeBackground';
 
 const Home = ({ t, language, theme }) => {
   const text1 = [t?.home?.yourCity || 'YOUR CITY..', t?.home?.yourBudget || 'YOUR BUDGET']
-  const text2 = t?.home?.yourBudget || 'YOUR BUDGET'
+
 
   const arabicStyle = {
     fontFamily: 'Noto Kufi Arabic, sans-serif',
     direction: 'rtl',
-    fontSize: '5rem'
+    
   }
 
   // Theme classes for consistency
@@ -42,20 +42,20 @@ const Home = ({ t, language, theme }) => {
 
         {/* Main Content Container */}
         <div className="relative z-10 min-h-screen flex items-center">
-          <div className="container mx-auto px-6 lg:px-12">
+          <div className="container mx-auto px-3 lg:px-15">
             <div className="lg:flex lg:flex-cols-2 gap-12 items-center">
       <GlobeBackground theme={theme}/>
               
               {/* Left Side - Text Content */}
-              <div className="space-y-8 text-center">
+              <div className="space-y-15 text-center">
                 
                 {/* Main Headlines */}
-                <div className="space-y-2">
-                    <h1 className="text-5xl lg:text-6xl font-[1000] leading-tight">
+                <div className="space-y-4">
+                    <h1 className=" lg:text-6xl font-[1000] leading-tight">
                       {/* First Line */}
                       <span
                         style={language === 'ar' ? arabicStyle : undefined}
-                        className={`text-8xl bg-gradient-to-r ${theme === 'dark' ? 'from-amber-600 via-amber-300 to-amber-600' : 'from-amber-600 via-amber-400 to-amber-600'} bg-clip-text text-transparent block`}
+                        className={`md:text-8xl text-6xl text-center bg-gradient-to-r ${theme === 'dark' ? 'from-amber-600 via-amber-300 to-amber-600' : 'from-amber-600 via-amber-400 to-amber-600'} bg-clip-text text-transparent `}
                       >
                         <Typewriter
                           words={text1}
@@ -71,12 +71,14 @@ const Home = ({ t, language, theme }) => {
 
                 {/* Main Description */}
                 <div className="space-y-6 text-center">
+                  
                   <h2 style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif', direction:'rtl', fontSize:'1.50rem' } : undefined} className={`text-xl lg:text-2xl font-bold leading-relaxed ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'}`}>
                     {t?.home?.welcomeMessage || 'WELCOME TO KSAR-DATA'}
                   </h2>
 
-                  <p style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif', direction:'rtl', fontSize:'1.25rem' } : undefined} className={`text-base lg:text-sm leading-relaxed max-w-xl ${theme === 'dark' ? 'text-gray-500' : 'text-gray-800'}`}>
-                    {t?.home?.heroDescription || 'YOUR GATEWAY TO TRANSPARENCY AND UNDERSTANDING OF KSAR EL KEBIR\'S PUBLIC DATA'}
+                  
+                  <p style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif', direction:'rtl', fontSize:'1.25rem' } : undefined} className={`text-base lg:text-sm leading-relaxed max-w-xl ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'}`}>
+                    {t?.home?.subtitle || 'An interactive web application aimed at helping users explore public data related to the city of Ksar El Kebir in a visual and user-friendly way.'}
                   </p>
                 </div>
 
@@ -91,13 +93,18 @@ const Home = ({ t, language, theme }) => {
                   <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/10 to-purple-400/10 blur-3xl transform scale-110"></div>
                   
                   {/* PNG Image Container */}
-                  <div className="relative z-10 mt-8">
+                  <div className="relative  mt-8">
                     <img 
-                      src={`${theme === 'dark' ? '/ksar-el-kebir-gate copy.png' : '/ksar-el-kebir-gate dark.png'}`} 
+                      src={theme === 'dark'
+                        ? 'https://res.cloudinary.com/daeuundyc/image/upload/f_auto,q_auto/ksar-el-kebir-gate_lqfind.png'
+                        : 'https://res.cloudinary.com/daeuundyc/image/upload/f_auto,q_auto/ksar-el-kebir-gate_dark_ujloxv.png'
+
+                      }
                       alt="Ksar El Kebir Gate"
-                      className="w-200 max-w-2xl h-auto object-contain drop-shadow-2xl"
+                      className="w-100 sm:w-250 max-w-2xl h-auto object-contain drop-shadow-2xl"
                     />
                   </div>
+
                 </div>
               </div>
 

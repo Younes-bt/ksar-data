@@ -1,5 +1,10 @@
 import React from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 
 export default function SupportTable({ data, isLoading, t, theme, language }) {
   // Function to format numbers with commas for better readability
@@ -57,15 +62,39 @@ export default function SupportTable({ data, isLoading, t, theme, language }) {
                       {row.السنة}
                     </span>
                   </TableCell>
-                  <TableCell className="font-medium max-w-md">
-                    <span 
-                      className="block" 
-                      title={row['الجمعية المستفيدة']}
-                      style={language === 'ar' ? { direction: 'rtl' } : { direction: 'ltr' }}
-                    >
-                      {row['الجمعية المستفيدة']}
+                  <TableCell className="font-medium max-w-30">
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <span 
+                            className="block truncate max-w-50 cursor-pointer tap-highlight-transparent" 
+                            style={language === 'ar' ? { direction: 'rtl' } : { direction: 'ltr' }}
+                          >
+                            {row['الجمعية المستفيدة']}
+                          </span>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto max-w-xs break-words p-3 bg-gray-200">
+                          <span style={language === 'ar' ? { direction: 'rtl' } : { direction: 'ltr' }}>
+                            {row['الجمعية المستفيدة']}
+                          </span>
+                        </PopoverContent>
+                      </Popover>
+                    </TableCell>
+                  <TableCell className="text-right font-semibold">
+                    <span className="text-green-600">
+                      {formattedAmount} DH
                     </span>
-                    {/* Show sport type as a small badge if identifiable */}
+                  </TableCell>
+                </TableRow>
+              );
+            })
+          )}
+        </TableBody>
+      </Table>
+    </div>
+  );
+}
+
+{/* Show sport type as a small badge if identifiable 
                     {row['الجمعية المستفيدة'].includes('كرة القدم') && (
                       <span className="inline-block  px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full">
                         {t?.supportpage?.football || 'Football'}
@@ -86,18 +115,4 @@ export default function SupportTable({ data, isLoading, t, theme, language }) {
                         {t?.supportpage?.athletics || 'Athletics'}
                       </span>
                     )}
-                  </TableCell>
-                  <TableCell className="text-right font-semibold">
-                    <span className="text-green-600">
-                      {formattedAmount} DH
-                    </span>
-                  </TableCell>
-                </TableRow>
-              );
-            })
-          )}
-        </TableBody>
-      </Table>
-    </div>
-  );
-}
+                      */}

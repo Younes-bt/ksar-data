@@ -1,5 +1,10 @@
 import React from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 
 export default function BudgetTable({ data, isLoading, t, theme, language }) {
   return (
@@ -8,11 +13,11 @@ export default function BudgetTable({ data, isLoading, t, theme, language }) {
         <TableHeader>
           <TableRow>
             <TableHead>Year</TableHead>
+            <TableHead >Label</TableHead> {/* Changed to generic "Label" */}
+            <TableHead className="text-right">Approved</TableHead>
             <TableHead>section</TableHead>
             <TableHead>Type</TableHead>
             <TableHead>Code</TableHead>
-            <TableHead>Label</TableHead> {/* Changed to generic "Label" */}
-            <TableHead className="text-right">Approved</TableHead>
           </TableRow>
         </TableHeader>
 
@@ -55,6 +60,31 @@ export default function BudgetTable({ data, isLoading, t, theme, language }) {
             data.map((row, idx) => (
               <TableRow key={idx} className={`${theme === 'dark' ? 'hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>
                 <TableCell className="font-medium">{row.year}</TableCell>
+                <TableCell className="max-w-45 truncate">
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <div className="cursor-pointer tap-highlight-transparent">
+                        {language === 'ar' ? (
+                          <span dir="rtl">{row.ar_label}</span>
+                        ) : (
+                          row.fr_label
+                        )}
+                      </div>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto max-w-xs break-words p-3 bg-gray-200">
+                      {language === 'ar' ? (
+                        <span dir="rtl">{row.ar_label}</span>
+                      ) : (
+                        row.fr_label
+                      )}
+                    </PopoverContent>
+                  </Popover>
+                </TableCell>
+                <TableCell className="text-right font-semibold">
+                  <span className="text-green-600">
+                    {Number(row.amount_approved).toLocaleString("fr-FR")} DH
+                  </span>
+                </TableCell>
                 <TableCell>
                   <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                     row.section === 'section' 
@@ -74,18 +104,8 @@ export default function BudgetTable({ data, isLoading, t, theme, language }) {
                   </span>
                 </TableCell>
                 <TableCell className="font-mono text-sm">{row.code}</TableCell>
-                <TableCell className="max-w-xs truncate" title={language === 'ar' ? row.ar_label : row.fr_label}>
-                  {language === 'ar' ? (
-                    <span dir="rtl">{row.ar_label}</span>
-                  ) : (
-                    row.fr_label
-                  )}
-                </TableCell>
-                <TableCell className="text-right font-semibold">
-                  <span className="text-green-600">
-                    {Number(row.amount_approved).toLocaleString("fr-FR")} DH
-                  </span>
-                </TableCell>
+                
+                
               </TableRow>
             ))
           )}
