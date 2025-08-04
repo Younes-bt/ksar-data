@@ -102,9 +102,10 @@ function Navbar({ language, setLanguage, theme, setTheme, t }) {
             <div className="flex flex-col space-y-1">
               {navItems.map(item => (
                 <Link
+                  style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif', fontSize:'1rem' } : { fontFamily: 'Inter, sans-serif', direction:'ltr', fontSize:'1rem' }}
                   key={item.path}
                   to={item.path}
-                  className={`font-sans font-semibold px-3 py-2 rounded-md transition-colors ${theme === 'dark' ? 'hover:bg-gray-800 text-white' : 'hover:bg-gray-100 text-gray-950'}`}
+                  className={`text-center font-sans font-semibold px-3 py-2 rounded-md transition-colors ${theme === 'dark' ? 'hover:bg-gray-800 text-white' : 'hover:bg-gray-100 text-gray-950'}`}
                   onClick={closeMobileMenu}
                 >
                   {item.label}
