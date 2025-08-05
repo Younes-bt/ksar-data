@@ -1,6 +1,11 @@
 // src/components/DataTable.jsx
 
 import React, { useState } from 'react';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 
 const formatCurrency = (value, language = 'fr') => {
   const locale = language === 'ar' ? 'ar-MA' : 'fr-MA';
@@ -141,12 +146,29 @@ const DataTable = ({
                   {row.year}
                 </td>
                 <td className={`
-                  px-4 py-3 text-sm text-nowrap
-                  ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}
-                  ${language === 'ar' ? 'text-right' : 'text-left'}
-                `}>
-                  {language === 'ar' ? (row.ar_label || row.fr_label || 'N/A') : (row.fr_label || row.ar_label || 'N/A')}
-                </td>
+  px-4 py-3 text-sm text-nowrap truncate max-w-20 md:max-w-30 lg:max-w-full
+  ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}
+  ${language === 'ar' ? 'text-right' : 'text-left'}
+`}>
+  <Popover>
+    <PopoverTrigger asChild>
+      <div className="cursor-pointer tap-highlight-transparent">
+        {language === 'ar' ? (
+          <span dir="rtl">{row.ar_label || row.fr_label || 'N/A'}</span>
+        ) : (
+          row.fr_label || row.ar_label || 'N/A'
+        )}
+      </div>
+    </PopoverTrigger>
+    <PopoverContent className="w-auto max-w-xs break-words p-3 bg-gray-200">
+      {language === 'ar' ? (
+        <span dir="rtl">{row.ar_label || row.fr_label || 'N/A'}</span>
+      ) : (
+        row.fr_label || row.ar_label || 'N/A'
+      )}
+    </PopoverContent>
+  </Popover>
+</td>
                 <td className={`
                   px-4 py-3 text-sm font-medium
                   ${theme === 'dark' ? 'text-blue-400' : 'text-blue-600'}
