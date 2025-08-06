@@ -148,7 +148,7 @@ export default function DecisionsTable({ data, isLoading, t, theme, language }) 
                     <TableCell className="font-medium">
                       {decision.decision_number}
                     </TableCell>
-                    <TableCell className="max-w-xs">
+                    <TableCell className="max-w-30 md:max-w-100">
                       <div className="truncate" title={decision.title}>
                         {decision.title}
                       </div>
@@ -173,39 +173,40 @@ export default function DecisionsTable({ data, isLoading, t, theme, language }) 
                   {isExpanded && (
                     <TableRow>
                       <TableCell colSpan="7" className={`${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'} p-6`}>
-                        <div className="space-y-4">
+                        <div className="space-y-4 ">
                           {/* Decision Title */}
-                          <div className="mb-4">
-                            <h3 className="text-lg font-semibold text-gray-200 mb-2">
+                          <div className="text-center p-3 bg-gray-300 rounded-lg w-90 md:w-full">
+                              <h3 className="text-lg font-semibold text-gray-950 mb-2 text-wrap">
                               {t?.decisionspage?.decision_details || 'تفاصيل القرار'}
                             </h3>
-                            <p className="text-gray-300 text-sm leading-relaxed">
+                            <p className="text-gray-900 text-sm leading-relaxed text-wrap">
                               {decision.title}
                             </p>
-                          </div>
+                            </div>
+                          
 
                           {/* Voting Summary */}
                           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                            <div className="text-center p-3 bg-gray-300 rounded-lg">
+                            <div className="text-center p-3 bg-gray-300 rounded-lg w-90 md:w-full">
                               <div className="text-2xl font-bold text-green-600">{decision.voting.accepted}</div>
                               <div className="text-sm text-green-700">{t?.decisionspage?.accepted || 'موافق'}</div>
                             </div>
-                            <div className="text-center p-3 bg-gray-300 rounded-lg">
+                            <div className="text-center p-3 bg-gray-300 rounded-lg w-90 md:w-full" w-90 md:w-full>
                               <div className="text-2xl font-bold text-red-600">{decision.voting.refused}</div>
                               <div className="text-sm text-red-700">{t?.decisionspage?.refused || 'رافض'}</div>
                             </div>
-                            <div className="text-center p-3 bg-gray-300 rounded-lg">
+                            <div className="text-center p-3 bg-gray-300 rounded-lg w-90 md:w-full">
                               <div className="text-2xl font-bold text-yellow-600">{decision.voting.abstained}</div>
                               <div className="text-sm text-yellow-700">{t?.decisionspage?.abstained || 'ممتنع'}</div>
                             </div>
-                            <div className="text-center p-3 bg-gray-300 rounded-lg">
+                            <div className="text-center p-3 bg-gray-300 rounded-lg w-90 md:w-full">
                               <div className="text-2xl font-bold text-blue-600">{decision.voting.present_members}</div>
                               <div className="text-sm text-blue-700">{t?.decisionspage?.present_members || 'الأعضاء الحاضرون'}</div>
                             </div>
                           </div>
 
                           {/* Members Lists */}
-                          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-90 md:w-full">
                             {/* Attendees */}
                             {decision.attendees && decision.attendees.length > 0 && (
                               <div>

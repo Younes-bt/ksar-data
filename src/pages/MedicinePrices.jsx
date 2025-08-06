@@ -183,7 +183,7 @@ export default function MedicinePrices({ data, loading, t, language, theme }) {
           className="w-full sm:w-1/2"
           dir="auto"
         />
-
+        {/*
         <Select onValueChange={(v) => setStatusFilter(v === "all" ? "" : v)} defaultValue="all">
           <SelectTrigger className={`w-full sm:w-1/4 ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
             <SelectValue placeholder={t?.medicinepage?.filter_by_status || "Filter by Status"} />
@@ -249,6 +249,7 @@ export default function MedicinePrices({ data, loading, t, language, theme }) {
             ))}
           </SelectContent>
         </Select>
+        */}
 
         <Select onValueChange={handleRowsPerPageChange} defaultValue="15">
           <SelectTrigger className={`w-full sm:w-32 ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
@@ -281,10 +282,10 @@ export default function MedicinePrices({ data, loading, t, language, theme }) {
       <MedicineTable t={t} data={paginatedData} isLoading={isFiltering} theme={theme} language={language}/>
 
       {/* Data Source Credit */}
-      <div className={`mt-4 p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
+      <div className={`mt-4 p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'} text-center`}>
         <div className="flex items-center gap-2 text-sm text-gray-600">
           <div>
-            <p className="font-medium">
+            <p className="font-medium text-gray-500">
               {t?.medicinepage?.data_source || 'Data Source'} :{' '}
               <a
                 href=""
@@ -296,7 +297,7 @@ export default function MedicinePrices({ data, loading, t, language, theme }) {
               </a>
               
             </p>
-            <p className="text-xs mt-1">
+            <p className="text-xs mt-1 text-gray-500">
               L'AGENCE MAROCAINE DES MEDICAMENTS ET DES PRODUITS DE SANTE (AMMPS) {' - '} {t?.medicinepage?.last_update || 'Last update'}: 04/08/2025
             </p>
           </div>

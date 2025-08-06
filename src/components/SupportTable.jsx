@@ -18,8 +18,8 @@ export default function SupportTable({ data, isLoading, t, theme, language }) {
         <TableHeader>
           <TableRow>
             <TableHead>{t?.supportpage?.year || 'Year'}</TableHead>
-            <TableHead>{t?.supportpage?.association_name || 'Association Name'}</TableHead>
-            <TableHead className="text-right">{t?.supportpage?.grant_amount || 'Grant Amount (DH)'}</TableHead>
+            <TableHead className="text-left">{t?.supportpage?.association_name || 'Association Name'}</TableHead>
+            <TableHead className="text-center">{t?.supportpage?.grant_amount || 'Grant Amount (DH)'}</TableHead>
           </TableRow>
         </TableHeader>
 
@@ -66,7 +66,7 @@ export default function SupportTable({ data, isLoading, t, theme, language }) {
                       <Popover>
                         <PopoverTrigger asChild>
                           <span 
-                            className="block truncate max-w-50 cursor-pointer tap-highlight-transparent" 
+                            className="block truncate max-w-50 md:max-w-80 text-left cursor-pointer tap-highlight-transparent" 
                             style={language === 'ar' ? { direction: 'rtl' } : { direction: 'ltr' }}
                           >
                             {row['الجمعية المستفيدة']}
@@ -79,7 +79,7 @@ export default function SupportTable({ data, isLoading, t, theme, language }) {
                         </PopoverContent>
                       </Popover>
                     </TableCell>
-                  <TableCell className="text-right font-semibold">
+                  <TableCell className="text-center font-semibold">
                     <span className="text-green-600">
                       {formattedAmount} DH
                     </span>

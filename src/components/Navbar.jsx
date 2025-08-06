@@ -20,6 +20,7 @@ function Navbar({ language, setLanguage, theme, setTheme, t }) {
 
   const groupedItems = [
     { path: "/search", label: t?.navbar?.search || "Budget" },
+    { path: "/decisions", label: t?.navbar?.decisions || "Decisions" },
     { path: "/attendance", label: t?.navbar?.attendance || "Attendance" },
     { path: "/support", label: t?.navbar?.support || "Support" },
   ]
@@ -139,9 +140,7 @@ function Navbar({ language, setLanguage, theme, setTheme, t }) {
               >
                 {t?.navbar?.home || "Home"}
               </Link>
-              <div className="text-center font-sans font-semibold px-3 py-2">
-                {t?.navbar?.services || "Services"}
-              </div>
+              
               {groupedItems.map(item => (
                 <Link
                   style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif', fontSize:'1rem' } : { fontFamily: 'Inter, sans-serif', direction:'ltr', fontSize:'1rem' }}

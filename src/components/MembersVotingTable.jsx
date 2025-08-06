@@ -77,13 +77,13 @@ export default function MembersVotingTable({ data, isLoading, t, theme, language
           <TableRow>
             <TableHead className="w-12">{t?.membersvotingpage?.rank || 'الترتيب'}</TableHead>
             <TableHead>{t?.membersvotingpage?.member_name || 'اسم العضو'}</TableHead>
+            <TableHead className="text-center">{t?.membersvotingpage?.acceptance_percentage || 'نسبة الموافقة'}</TableHead>
             <TableHead className="text-center">{t?.membersvotingpage?.total_participation || 'إجمالي المشاركة'}</TableHead>
             <TableHead className="text-center">{t?.membersvotingpage?.accepted_votes || 'أصوات الموافقة'}</TableHead>
             <TableHead className="text-center">{t?.membersvotingpage?.refused_votes || 'أصوات الرفض'}</TableHead>
             <TableHead className="text-center">{t?.membersvotingpage?.abstained_votes || 'أصوات الامتناع'}</TableHead>
             <TableHead className="text-center">{t?.membersvotingpage?.total_decisions || 'إجمالي القرارات'}</TableHead>
             <TableHead className="text-center">{t?.membersvotingpage?.participation_percentage || 'نسبة المشاركة'}</TableHead>
-            <TableHead className="text-center">{t?.membersvotingpage?.acceptance_percentage || 'نسبة الموافقة'}</TableHead>
           </TableRow>
         </TableHeader>
 
@@ -143,7 +143,7 @@ export default function MembersVotingTable({ data, isLoading, t, theme, language
                 >
                   <TableCell className="font-bold text-center">
                     <div className="flex items-center justify-center gap-2">
-                      {getPerformanceIcon(member.participationPercentage)}
+                      
                       <span className="text-sm font-semibold">#{rank}</span>
                     </div>
                   </TableCell>
@@ -154,6 +154,9 @@ export default function MembersVotingTable({ data, isLoading, t, theme, language
                         {member.name}
                       </span>
                     </div>
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {getAcceptancePercentageBadge(member.acceptancePercentage)}
                   </TableCell>
                   
                   <TableCell className="text-center">
@@ -185,7 +188,7 @@ export default function MembersVotingTable({ data, isLoading, t, theme, language
                   </TableCell>
                   
                   <TableCell className="text-center">
-                    <span className="flex items-center justify-center gap-1 font-bold text-gray-700">
+                    <span className="flex items-center justify-center gap-1 font-bold text-gray-500">
                       <Users size={14} />
                       {member.totalDecisions}
                     </span>
@@ -195,9 +198,7 @@ export default function MembersVotingTable({ data, isLoading, t, theme, language
                     {getParticipationPercentageBadge(member.participationPercentage)}
                   </TableCell>
                   
-                  <TableCell className="text-center">
-                    {getAcceptancePercentageBadge(member.acceptancePercentage)}
-                  </TableCell>
+                  
                 </TableRow>
               );
             })

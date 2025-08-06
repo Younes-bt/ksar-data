@@ -397,7 +397,7 @@ const processMemberVotingData = () => {
               className="w-full sm:w-1/2"
               dir="auto"
             />
-
+{/* Decision Details 
             <Select onValueChange={(v) => setDecisionFilter(v === "all" ? "" : v)} defaultValue="all">
               <SelectTrigger className={`w-full sm:w-1/4 ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
                 <SelectValue placeholder={t?.decisionspage?.filter_by_decision_type || "تصفية حسب نوع القرار"} />
@@ -420,7 +420,7 @@ const processMemberVotingData = () => {
                 </SelectItem>
               </SelectContent>
             </Select>
-
+ */}
             <Select onValueChange={(v) => setYearFilter(v === "all" ? "" : v)} defaultValue="all">
               <SelectTrigger className={`w-full sm:w-1/4 ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
                 <SelectValue placeholder={t?.decisionspage?.filter_by_year || "تصفية حسب السنة"} />
@@ -469,26 +469,18 @@ const processMemberVotingData = () => {
 
           <DecisionsTable t={t} data={paginatedData} isLoading={isFiltering} theme={theme} language={language}/>
 
-          <div className={`mt-4 p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
-            <div className="flex items-center gap-2 text-sm text-gray-600">
-              <div>
-                <p className="font-medium">
-                  {t?.decisionspage?.data_source || 'مصدر البيانات'} :{' '}
-                  <a
-                    href=""
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:text-blue-800 underline"
-                  >
-                    المجلس الجماعي القصر الكبير
-                  </a>
-                </p>
-                <p className="text-xs mt-1">
-                  {t?.decisionspage?.last_update || 'آخر تحديث'}: 05/08/2025
-                </p>
-              </div>
-            </div>
+          {/* Data Source Credit */}
+      <div className={`mt-4 p-4 text-center rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
+        <div className="flex items-center gap-2 text-sm text-gray-600">
+          <div>
+            <p className="font-medium">
+              {t?.supportpage?.data_source || 'Data Source'} : {t?.supportpage?.municipal_records || 'Municipal Records of Al Ksar Al Kabir'}
+              {' - '} {t?.supportpage?.years_range || 'Years'}: 2020-2025
+            </p>
+            
           </div>
+        </div>
+      </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-4">
             <Pagination className="mb-10">
@@ -565,7 +557,7 @@ const processMemberVotingData = () => {
             </Select>
           </div>
 
-          <div className="flex items-center justify-between mt-4">
+          <div className="flex items-center justify-between mt-4 mb-4">
             <p className="text-sm text-gray-600">
               {isMemberFiltering ? (
                 <span className="flex items-center gap-2">
@@ -577,58 +569,49 @@ const processMemberVotingData = () => {
               )}
             </p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            <div className={`p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
-              <div className="text-2xl font-bold text-blue-600">{processedMemberData.length}</div>
-              <div className="text-sm text-gray-500">{t?.membersvotingpage?.total_members || 'إجمالي الأعضاء'}</div>
+              {/*
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6 text-center">
+            <div className={`p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-300 border-gray-500' : 'bg-gray-200 border-gray-200'}`}>
+              <div className="text-3xl md:text-2xl font-bold text-blue-500">{processedMemberData.length}</div>
+              <div className="text-lg md:text-sm text-gray-950">{t?.membersvotingpage?.total_members || 'إجمالي الأعضاء'}</div>
             </div>
-            <div className={`p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
-              <div className="text-2xl font-bold text-green-600">
+            <div className={`p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-500' : 'bg-gray-200 border-gray-200'}`}>
+              <div className="text-3xl md:text-2xl font-bold text-green-600">
                 {processedMemberData.filter(m => parseFloat(m.participationPercentage) >= 90).length}
               </div>
-              <div className="text-sm text-gray-500">{t?.membersvotingpage?.high_participants || 'مشاركة عالية (90%+)'}</div>
+              <div className="text-lg md:text-sm text-gray-500">{t?.membersvotingpage?.high_participants || 'مشاركة عالية (90%+)'}</div>
             </div>
-            <div className={`p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
-              <div className="text-2xl font-bold text-yellow-600">
+            <div className={`p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-500' : 'bg-gray-200 border-gray-200'}`}>
+              <div className="text-3xl md:text-2xl font-bold text-yellow-600">
                 {processedMemberData.filter(m => {
                   const pct = parseFloat(m.participationPercentage);
                   return pct >= 50 && pct < 90;
                 }).length}
               </div>
-              <div className="text-sm text-gray-500">{t?.membersvotingpage?.medium_participants || 'مشاركة متوسطة (50-89%)'}</div>
+              <div className="text-lg md:text-sm text-gray-500">{t?.membersvotingpage?.medium_participants || 'مشاركة متوسطة (50-89%)'}</div>
             </div>
-            <div className={`p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
-              <div className="text-2xl font-bold text-red-600">
+            <div className={`p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-500' : 'bg-gray-200 border-gray-200'}`}>
+              <div className="text-3xl md:text-2xl font-bold text-red-500">
                 {processedMemberData.filter(m => parseFloat(m.participationPercentage) < 50).length}
               </div>
-              <div className="text-sm text-gray-500">{t?.membersvotingpage?.low_participants || 'مشاركة منخفضة (<50%)'}</div>
+              <div className="text-lg md:text-sm text-gray-500">{t?.membersvotingpage?.low_participants || 'مشاركة منخفضة (<50%)'}</div>
             </div>
           </div>
-
+*/}
           <MembersVotingTable t={t} data={paginatedMemberData} isLoading={isMemberFiltering} theme={theme} language={language}/>
 
-          <div className={`mt-4 p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
-            <div className="flex items-center gap-2 text-sm text-gray-600">
-              <div>
-                <p className="font-medium">
-                  {t?.membersvotingpage?.data_source || 'مصدر البيانات'} :{' '}
-                  <a
-                    href=""
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:text-blue-800 underline"
-                  >
-                    المجلس الجماعي لطنجة
-                  </a>
-                </p>
-                <p className="text-xs mt-1">
-                  {t?.membersvotingpage?.last_update || 'آخر تحديث'}: 05/08/2025
-                </p>
-              </div>
-            </div>
+          {/* Data Source Credit */}
+      <div className={`mt-4 p-4 text-center rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
+        <div className="flex items-center gap-2 text-sm text-gray-600">
+          <div>
+            <p className="font-medium">
+              {t?.supportpage?.data_source || 'Data Source'} : {t?.supportpage?.municipal_records || 'Municipal Records of Al Ksar Al Kabir'}
+              {' - '} {t?.supportpage?.years_range || 'Years'}: 2020-2024
+            </p>
+            
           </div>
-
+        </div>
+      </div>
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-4">
             <Pagination className="mb-10">
               <PaginationContent>

@@ -1,5 +1,10 @@
 import React from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 
 export default function MedicineTable({ data, isLoading, t, theme, language }) {
   return (
@@ -8,10 +13,10 @@ export default function MedicineTable({ data, isLoading, t, theme, language }) {
         <TableHeader>
           <TableRow>
             <TableHead>{t?.medicinepage?.medicine_name || 'Medicine Name'}</TableHead>
-            <TableHead>{t?.medicinepage?.dosage || 'Dosage'}</TableHead>
-            <TableHead>{t?.medicinepage?.form || 'Form'}</TableHead>
             <TableHead>{t?.medicinepage?.presentation || 'Presentation'}</TableHead>
             <TableHead className="text-right">{t?.medicinepage?.price || 'Price (DHS)'}</TableHead>
+            <TableHead>{t?.medicinepage?.dosage || 'Dosage'}</TableHead>
+            <TableHead>{t?.medicinepage?.form || 'Form'}</TableHead>
             <TableHead>{t?.medicinepage?.therapeutic_class || 'Therapeutic Class'}</TableHead>
             <TableHead>{t?.medicinepage?.status || 'Status'}</TableHead>
           </TableRow>
@@ -85,9 +90,29 @@ export default function MedicineTable({ data, isLoading, t, theme, language }) {
               
               return (
                 <TableRow key={idx} className={`${theme === 'dark' ? 'hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>
-                  <TableCell className="font-medium max-w-md">
+                  <TableCell className="font-medium max-w-xs truncate">
                     <span className="block truncate" title={row.specialite}>
                       {row.specialite}
+                    </span>
+                  </TableCell>
+                  <TableCell className="max-w-30 md:max-w-100 truncate">
+                    <Popover>
+                        <PopoverTrigger asChild>
+                          <span className="text-sm text-gray-500" title={row.presentation}>
+                      {row.presentation || "N/A"}
+                    </span>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto max-w-xs break-words p-3 bg-gray-200">
+                          <span className="text-sm text-gray-500" title={row.presentation}>
+                      {row.presentation || "N/A"}
+                    </span>
+                        </PopoverContent>
+                      </Popover>
+                    
+                  </TableCell>
+                  <TableCell className="text-right font-bold">
+                    <span className={price !== "N/A" ? "text-green-700" : "text-gray-500"}>
+                      {price !== "N/A" ? `${price} DH` : (t?.medicinepage?.price_na || "Price N/A")}
                     </span>
                   </TableCell>
                   <TableCell className="max-w-xs">
@@ -100,16 +125,8 @@ export default function MedicineTable({ data, isLoading, t, theme, language }) {
                       {row.forme || "N/A"}
                     </span>
                   </TableCell>
-                  <TableCell className="max-w-xs">
-                    <span className="text-sm text-gray-500" title={row.presentation}>
-                      {row.presentation || "N/A"}
-                    </span>
-                  </TableCell>
-                  <TableCell className="text-right font-bold">
-                    <span className={price !== "N/A" ? "text-green-700" : "text-gray-500"}>
-                      {price !== "N/A" ? `${price} DH` : (t?.medicinepage?.price_na || "Price N/A")}
-                    </span>
-                  </TableCell>
+                  
+                  
                   <TableCell className="max-w-xs">
                     <span className="text-sm text-gray-500" title={row.class_therapeutique}>
                       {row.class_therapeutique || "N/A"}
