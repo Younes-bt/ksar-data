@@ -24,7 +24,8 @@
     "about": "À propos",
     "contact": "Contact",
     "medicine": "Prix des médicaments",
-    "support": "subventions/aide"
+    "support": "subventions/aide",
+    "attendance": "Présence aux séances"
   },
   "rgphpage": {
     "Search_RGPH_Data": "Recherche dans les données RGPH",

@@ -9,14 +9,17 @@ import About from "./pages/About";
 import RgphPage from "./pages/RgphPage"; 
 import RgphInsights from "./pages/RgphInsights"; 
 import MedicinePrices from "./pages/MedicinePrices"; 
-import SupportGrants from "./pages/SupportGrants"; // Add support grants import
+import SupportGrants from "./pages/SupportGrants";
+import Attendance from "./pages/Attendance";
+import PersonsAttendance from "./pages/PersonsAttendance"; // Add persons attendance import
 import ContactUs from "./pages/ContactUs";
 
 function App() {
   const [budgetData, setBudgetData] = useState([]);
   const [rgphData, setRGPHData] = useState([]);
   const [medicineData, setMedicineData] = useState([]);
-  const [supportData, setSupportData] = useState([]); // Add support data state
+  const [supportData, setSupportData] = useState([]);
+  const [attendanceData, setAttendanceData] = useState([]); // Add attendance data state
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [language, setLanguage] = useState("ar");
@@ -32,7 +35,7 @@ function App() {
   useEffect(() => {
     setLoading(true);
     
-    // Load budget, RGPH, medicine, and support data concurrently
+    // Load budget, RGPH, medicine, support, and attendance data concurrently
     const loadBudgetData = fetch("/full_data_v6.json")
       .then(res => {
         if (!res.ok) {
@@ -93,26 +96,46 @@ function App() {
         throw err;
       });
 
+    // Add attendance data loading
+    const loadAttendanceData = fetch("/attendence_all.json") // Note: using your filename "attendence_all.json"
+      .then(res => {
+        console.log("Attendance data fetch response:", res.status, res.statusText);
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then(data => {
+        console.log("Attendance data loaded successfully:", data?.length, "files");
+        return data;
+      })
+      .catch(err => {
+        console.error("Attendance data fetch error:", err);
+        throw err;
+      });
+
     // Execute all promises
-    Promise.all([loadBudgetData, loadRGPHData, loadMedicineData, loadSupportData])
-      .then(([budgetData, rgphData, medicineData, supportData]) => {
+    Promise.all([loadBudgetData, loadRGPHData, loadMedicineData, loadSupportData, loadAttendanceData])
+      .then(([budgetData, rgphData, medicineData, supportData, attendanceData]) => {
         setBudgetData(budgetData);
         setRGPHData(rgphData);
         setMedicineData(medicineData || []);
-        setSupportData(supportData || []); // Set support data
+        setSupportData(supportData || []);
+        setAttendanceData(attendanceData || []); // Set attendance data
         console.log("Loaded budget data:", budgetData.length, "records");
         console.log("Loaded RGPH data:", rgphData.length, "records");
         console.log("Loaded medicine data:", medicineData?.length || 0, "records");
         console.log("Loaded support data:", supportData?.length || 0, "records");
+        console.log("Loaded attendance data:", attendanceData?.length || 0, "files");
         setError(null);
       })
       .catch((err) => {
         console.error("Data fetch error:", err);
         
         // Try to load individual datasets that might have succeeded
-        Promise.allSettled([loadBudgetData, loadRGPHData, loadMedicineData, loadSupportData])
+        Promise.allSettled([loadBudgetData, loadRGPHData, loadMedicineData, loadSupportData, loadAttendanceData])
           .then(results => {
-            const [budgetResult, rgphResult, medicineResult, supportResult] = results;
+            const [budgetResult, rgphResult, medicineResult, supportResult, attendanceResult] = results;
             
             if (budgetResult.status === 'fulfilled') {
               setBudgetData(budgetResult.value);
@@ -135,6 +158,13 @@ function App() {
             } else {
               console.warn("Support data failed to load:", supportResult.reason);
               setSupportData([]);
+            }
+            if (attendanceResult.status === 'fulfilled') {
+              setAttendanceData(attendanceResult.value);
+              console.log("Attendance data loaded successfully as fallback");
+            } else {
+              console.warn("Attendance data failed to load:", attendanceResult.reason);
+              setAttendanceData([]);
             }
             
             // Only show error if all datasets failed
@@ -271,6 +301,30 @@ function App() {
           element={
             <SupportGrants 
               data={supportData} 
+              loading={loading} 
+              t={t} 
+              language={language} 
+              theme={theme} 
+            />
+          } 
+        />
+        <Route 
+          path="/attendance" 
+          element={
+            <Attendance 
+              data={attendanceData} 
+              loading={loading} 
+              t={t} 
+              language={language} 
+              theme={theme} 
+            />
+          } 
+        />
+        <Route 
+          path="/persons-attendance" 
+          element={
+            <PersonsAttendance 
+              data={attendanceData} 
               loading={loading} 
               t={t} 
               language={language} 
