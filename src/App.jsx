@@ -11,7 +11,8 @@ import RgphInsights from "./pages/RgphInsights";
 import MedicinePrices from "./pages/MedicinePrices"; 
 import SupportGrants from "./pages/SupportGrants";
 import Attendance from "./pages/Attendance";
-import PersonsAttendance from "./pages/PersonsAttendance"; // Add persons attendance import
+import PersonsAttendance from "./pages/PersonsAttendance";
+import Decisions from "./pages/Decisions"; // Add Decisions import
 import ContactUs from "./pages/ContactUs";
 
 function App() {
@@ -19,7 +20,8 @@ function App() {
   const [rgphData, setRGPHData] = useState([]);
   const [medicineData, setMedicineData] = useState([]);
   const [supportData, setSupportData] = useState([]);
-  const [attendanceData, setAttendanceData] = useState([]); // Add attendance data state
+  const [attendanceData, setAttendanceData] = useState([]);
+  const [votingsData, setVotingsData] = useState([]); // Add votings data state
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [language, setLanguage] = useState("ar");
@@ -35,7 +37,7 @@ function App() {
   useEffect(() => {
     setLoading(true);
     
-    // Load budget, RGPH, medicine, support, and attendance data concurrently
+    // Load budget, RGPH, medicine, support, attendance, and votings data concurrently
     const loadBudgetData = fetch("/full_data_v6.json")
       .then(res => {
         if (!res.ok) {
@@ -96,8 +98,7 @@ function App() {
         throw err;
       });
 
-    // Add attendance data loading
-    const loadAttendanceData = fetch("/attendence_all.json") // Note: using your filename "attendence_all.json"
+    const loadAttendanceData = fetch("/attendence_all.json")
       .then(res => {
         console.log("Attendance data fetch response:", res.status, res.statusText);
         if (!res.ok) {
@@ -114,28 +115,48 @@ function App() {
         throw err;
       });
 
+    // Add votings data loading
+    const loadVotingsData = fetch("/votings.json")
+      .then(res => {
+        console.log("Votings data fetch response:", res.status, res.statusText);
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then(data => {
+        console.log("Votings data loaded successfully:", data?.length, "records");
+        return data;
+      })
+      .catch(err => {
+        console.error("Votings data fetch error:", err);
+        throw err;
+      });
+
     // Execute all promises
-    Promise.all([loadBudgetData, loadRGPHData, loadMedicineData, loadSupportData, loadAttendanceData])
-      .then(([budgetData, rgphData, medicineData, supportData, attendanceData]) => {
+    Promise.all([loadBudgetData, loadRGPHData, loadMedicineData, loadSupportData, loadAttendanceData, loadVotingsData])
+      .then(([budgetData, rgphData, medicineData, supportData, attendanceData, votingsData]) => {
         setBudgetData(budgetData);
         setRGPHData(rgphData);
         setMedicineData(medicineData || []);
         setSupportData(supportData || []);
-        setAttendanceData(attendanceData || []); // Set attendance data
+        setAttendanceData(attendanceData || []);
+        setVotingsData(votingsData || []); // Set votings data
         console.log("Loaded budget data:", budgetData.length, "records");
         console.log("Loaded RGPH data:", rgphData.length, "records");
         console.log("Loaded medicine data:", medicineData?.length || 0, "records");
         console.log("Loaded support data:", supportData?.length || 0, "records");
         console.log("Loaded attendance data:", attendanceData?.length || 0, "files");
+        console.log("Loaded votings data:", votingsData?.length || 0, "records");
         setError(null);
       })
       .catch((err) => {
         console.error("Data fetch error:", err);
         
         // Try to load individual datasets that might have succeeded
-        Promise.allSettled([loadBudgetData, loadRGPHData, loadMedicineData, loadSupportData, loadAttendanceData])
+        Promise.allSettled([loadBudgetData, loadRGPHData, loadMedicineData, loadSupportData, loadAttendanceData, loadVotingsData])
           .then(results => {
-            const [budgetResult, rgphResult, medicineResult, supportResult, attendanceResult] = results;
+            const [budgetResult, rgphResult, medicineResult, supportResult, attendanceResult, votingsResult] = results;
             
             if (budgetResult.status === 'fulfilled') {
               setBudgetData(budgetResult.value);
@@ -165,6 +186,13 @@ function App() {
             } else {
               console.warn("Attendance data failed to load:", attendanceResult.reason);
               setAttendanceData([]);
+            }
+            if (votingsResult.status === 'fulfilled') {
+              setVotingsData(votingsResult.value);
+              console.log("Votings data loaded successfully as fallback");
+            } else {
+              console.warn("Votings data failed to load:", votingsResult.reason);
+              setVotingsData([]);
             }
             
             // Only show error if all datasets failed
@@ -325,6 +353,18 @@ function App() {
           element={
             <PersonsAttendance 
               data={attendanceData} 
+              loading={loading} 
+              t={t} 
+              language={language} 
+              theme={theme} 
+            />
+          } 
+        />
+        <Route 
+          path="/decisions" 
+          element={
+            <Decisions 
+              data={votingsData} 
               loading={loading} 
               t={t} 
               language={language} 
