@@ -85,6 +85,7 @@ export default function DecisionsTable({ data, isLoading, t, theme, language }) 
         }`}
         onClick={() => setSelectedDecision(decision)}
       >
+        
         <div className="p-3">
           <div className="flex justify-between items-start mb-2">
             <span className="font-bold text-sm text-gray-900 dark:text-gray-100">{decision.decision_number}</span>
@@ -97,7 +98,7 @@ export default function DecisionsTable({ data, isLoading, t, theme, language }) 
             </div>
           </div>
           
-          <h3 className="font-semibold text-sm mb-2 line-clamp-2 text-gray-800 dark:text-gray-200" title={decision.title}>
+          <h3 className={`font-semibold text-sm mb-2 line-clamp-2 ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'}`} title={decision.title}>
             {decision.title}
           </h3>
           

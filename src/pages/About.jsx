@@ -385,10 +385,10 @@ const AboutUsPage = ({
                   </span>
                 </div>
                 <a 
-                  href="mailto:ksardata@opicom.tech"
+                  href="mailto:bt.younesse@gmail.com"
                   className={`text-lg font-mono ${themeClasses.textAccent} hover:underline`}
                 >
-                  ksardata@opicom.tech
+                  bt.younesse@gmail.com
                 </a>
               </div>
               <div className={`p-4 rounded-lg border ${themeClasses.iconBg} ${themeClasses.borderColor}`}>

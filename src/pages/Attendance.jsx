@@ -544,6 +544,7 @@ export default function Attendance({ data, loading, t, language, theme }) {
               )}
             </p>
           </div>
+            <p className='text-red-500 text-sm text-center mb-2'>اضغط على الجلسة لعرض التفاصيل</p>
 
           <AttendanceTable t={t} data={paginatedData} isLoading={isFiltering} theme={theme} language={language}/>
 

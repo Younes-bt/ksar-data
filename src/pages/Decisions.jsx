@@ -466,6 +466,7 @@ const processMemberVotingData = () => {
               )}
             </p>
           </div>
+            <p className='text-red-500 text-sm text-center mb-2'>اضغط على القرار لعرض التفاصيل</p>
 
           <DecisionsTable t={t} data={paginatedData} isLoading={isFiltering} theme={theme} language={language}/>
 

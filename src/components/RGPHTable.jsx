@@ -1,218 +1,226 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 export default function RGPHTable({ data, isLoading, t, theme, language, tableType = "part1" }) {
-  // Function to format numbers with proper locale
+  // --- Helper Functions ---
   const formatNumber = (value) => {
     if (value === null || value === undefined) return '-';
-    if (typeof value === 'number') {
-      return value.toLocaleString(language === 'ar' ? 'ar-MA' : 'fr-FR');
-    }
-    return value;
+    return value.toLocaleString(language === 'ar' ? 'ar-MA' : 'fr-FR');
   };
 
-  // Function to get theme color for different categories
   const getThemeColor = (theme) => {
     const themeColors = {
-      'DEMOGRAPHIE': 'bg-blue-100 text-blue-800',
-      'ACTIVITE ECONOMIQUE': 'bg-green-100 text-green-800',
-      'EDUCATION ': 'bg-purple-100 text-purple-800',
-      'LANGUES MATERNELLES': 'bg-orange-100 text-orange-800',
-      'CONDITIONS D\'HABITAT': 'bg-teal-100 text-teal-800'
+        'DEMOGRAPHIE': 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
+        'ACTIVITE ECONOMIQUE': 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
+        'EDUCATION ': 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
+        'LANGUES MATERNELLES': 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200',
+        'CONDITIONS D\'HABITAT': 'bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-200'
     };
-    return themeColors[theme] || 'bg-gray-100 text-gray-800';
+    return themeColors[theme] || 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
   };
 
-  // Render table headers based on table type
-  const renderTableHeaders = () => {
-    if (tableType === "part2") {
-      // Headers for housing conditions data (part2)
-      return (
-        <TableRow>
-          <TableHead className="min-w-[80px]">
-            {t?.rgphpage?.year || 'السنة' || 'Year'}
-          </TableHead>
-          <TableHead className="min-w-[120px]">
-            {t?.rgphpage?.theme || 'الموضوع' || 'Theme'}
-          </TableHead>
-          <TableHead className="min-w-[300px]">
-            {t?.rgphpage?.indicator || 'المؤشر' || 'Indicator'}
-          </TableHead>
-          <TableHead className="text-right min-w-[120px]">
-            {t?.rgphpage?.total_value || 'القيمة' || 'Value'}
-          </TableHead>
-        </TableRow>
-      );
-    } else {
-      // Headers for demographic data (part1) - original headers
-      return (
-        <TableRow>
-          <TableHead className="min-w-[80px]">
-            {t?.rgphpage?.year || 'السنة' || 'Year'}
-          </TableHead>
-          <TableHead className="min-w-[120px]">
-            {t?.rgphpage?.theme || 'الموضوع' || 'Theme'}
-          </TableHead>
-          <TableHead className="min-w-[300px]">
-            {t?.rgphpage?.indicator || 'المؤشر' || 'Indicator'}
-          </TableHead>
-          <TableHead className="text-right min-w-[100px]">
-            {t?.rgphpage?.male_percent || 'ذكور (%)' || 'Male (%)'}
-          </TableHead>
-          <TableHead className="text-right min-w-[100px]">
-            {t?.rgphpage?.male_count || 'ذكور' || 'Male'}
-          </TableHead>
-          <TableHead className="text-right min-w-[100px]">
-            {t?.rgphpage?.female_percent || 'إناث (%)' || 'Female (%)'}
-          </TableHead>
-          <TableHead className="text-right min-w-[100px]">
-            {t?.rgphpage?.female_count || 'إناث' || 'Female'}
-          </TableHead>
-          <TableHead className="text-right min-w-[100px]">
-            {t?.rgphpage?.total_percent || 'المجموع (%)' || 'Total (%)'}
-          </TableHead>
-          <TableHead className="text-right min-w-[120px]">
-            {t?.rgphpage?.total_count || 'المجموع' || 'Total'}
-          </TableHead>
-        </TableRow>
-      );
-    }
-  };
+  // --- Data Grouping for Mobile View ---
+  const groupedData = useMemo(() => {
+    if (!data) return [];
+    const groups = data.reduce((acc, row) => {
+      const key = language === 'ar' ? row.ar_Indicateur : row.fr_Indicateur;
+      if (!acc[key]) {
+        acc[key] = [];
+      }
+      acc[key].push(row);
+      return acc;
+    }, {});
+    // Sort years within each group, descending
+    Object.values(groups).forEach(group => group.sort((a, b) => b.Année - a.Année));
+    return Object.values(groups);
+  }, [data, language]);
 
-  // Render table rows based on table type
-  const renderTableRows = () => {
-    if (tableType === "part2") {
-      // Rows for housing conditions data (part2)
-      return data.map((row, idx) => (
-        <TableRow key={idx} className={`${theme === 'dark' ? 'hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>
-          <TableCell className="font-medium">{row.Année}</TableCell>
-          <TableCell>
-            <span className={`px-2 py-1 rounded-full text-xs font-medium ${getThemeColor(row.Thème)}`}>
-              {row.Thème}
-            </span>
-          </TableCell>
-          <TableCell className="max-w-xs" title={language === 'ar' ? row.ar_Indicateur : row.fr_Indicateur}>
-            {language === 'ar' ? (
-              <span dir="rtl" className="block text-right">{row.ar_Indicateur}</span>
-            ) : (
-              <span className="block">{row.fr_Indicateur}</span>
-            )}
-          </TableCell>
-          <TableCell className="text-right">
-            <span className="font-mono text-sm font-semibold text-blue-600">
-              {formatNumber(row.Ensemble)}
-              {/* Add % sign for percentage values */}
-              {row.fr_Indicateur?.includes('(%)')  || row.ar_Indicateur?.includes('(%)') ? '%' : ''}
-            </span>
-          </TableCell>
-        </TableRow>
-      ));
-    } else {
-      // Rows for demographic data (part1) - original rows
-      return data.map((row, idx) => (
-        <TableRow key={idx} className={`${theme === 'dark' ? 'hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>
-          <TableCell className="font-medium">{row.Année}</TableCell>
-          <TableCell>
-            <span className={`px-2 py-1 rounded-full text-xs font-medium ${getThemeColor(row.Thème)}`}>
-              {row.Thème}
-            </span>
-          </TableCell>
-          <TableCell className="max-w-xs" title={language === 'ar' ? row.ar_Indicateur : row.fr_Indicateur}>
-            {language === 'ar' ? (
-              <span dir="rtl" className="block text-right">{row.ar_Indicateur}</span>
-            ) : (
-              <span className="block">{row.fr_Indicateur}</span>
-            )}
-          </TableCell>
-          <TableCell className="text-right">
-            <span className="font-mono text-sm">
-              {formatNumber(row['Masculin (%)'])}
-              {row['Masculin (%)'] && typeof row['Masculin (%)'] === 'number' ? '%' : ''}
-            </span>
-          </TableCell>
-          <TableCell className="text-right">
-            <span className="font-mono text-sm text-blue-600">
-              {formatNumber(row.Masculin)}
-            </span>
-          </TableCell>
-          <TableCell className="text-right">
-            <span className="font-mono text-sm">
-              {formatNumber(row['Féminin (%)'])}
-              {row['Féminin (%)'] && typeof row['Féminin (%)'] === 'number' ? '%' : ''}
-            </span>
-          </TableCell>
-          <TableCell className="text-right">
-            <span className="font-mono text-sm text-pink-600">
-              {formatNumber(row.Féminin)}
-            </span>
-          </TableCell>
-          <TableCell className="text-right">
-            <span className="font-mono text-sm font-semibold">
-              {formatNumber(row['Ensemble (%)'])}
-              {row['Ensemble (%)'] && typeof row['Ensemble (%)'] === 'number' ? '%' : ''}
-            </span>
-          </TableCell>
-          <TableCell className="text-right">
-            <span className="font-mono text-sm font-semibold text-green-600">
-              {formatNumber(row.Ensemble)}
-            </span>
-          </TableCell>
-        </TableRow>
-      ));
-    }
-  };
+  // --- Sub-Components for Rendering ---
 
-  // Render loading skeleton
-  const renderLoadingSkeleton = () => {
-    const columnCount = tableType === "part2" ? 4 : 9;
-    return Array.from({ length: 5 }).map((_, idx) => (
-      <TableRow key={`loading-${idx}`}>
-        {Array.from({ length: columnCount }).map((_, colIdx) => (
-          <TableCell key={colIdx}>
-            <div className="h-4 bg-gray-200 rounded animate-pulse"></div>
-          </TableCell>
-        ))}
-      </TableRow>
-    ));
-  };
+  // Renders the stats for a single year within a grouped card
+  const YearDataBlock = ({ row }) => {
+    const isHousingData = tableType === "part2";
+    const isPercentage = (language === 'ar' ? row.ar_Indicateur : row.fr_Indicateur)?.includes('(%)');
 
-  // Render no data message
-  const renderNoDataMessage = () => {
-    const columnCount = tableType === "part2" ? 4 : 9;
     return (
-      <TableRow>
-        <TableCell colSpan={columnCount} className="text-center text-gray-500 py-8">
-          <div className="flex flex-col items-center gap-2">
-            <div className="text-4xl">📊</div>
-            <p className="text-lg font-medium">
-              {t?.rgphpage?.no_data || 'لا توجد بيانات مطابقة' || 'No matching data found'}
-            </p>
-            <p className="text-sm">
-              {t?.rgphpage?.adjust_filters || 'حاول تعديل مرشحات البحث' || 'Try adjusting your search filters'}
-            </p>
-          </div>
-        </TableCell>
-      </TableRow>
+        <div className="p-3 mt-2 border-t border-gray-200 dark:border-gray-700">
+            <h4 className="mb-2 font-bold text-gray-700 dark:text-gray-300">{row.Année}</h4>
+            {isHousingData ? (
+                 <div className="p-3 text-center bg-gray-100 rounded-lg dark:bg-gray-700">
+                    <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                        {formatNumber(row.Ensemble)}{isPercentage ? '%' : ''}
+                    </div>
+                    <div className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        {t?.rgphpage?.total_value || 'القيمة الإجمالية'}
+                    </div>
+                </div>
+            ) : (
+                <div className="grid grid-cols-3 gap-2 text-center">
+                    <div className="p-2 bg-gray-100 rounded-lg dark:bg-gray-700">
+                        <div className="text-lg font-bold text-blue-600 dark:text-blue-400">{formatNumber(row.Masculin)}</div>
+                        <div className="text-xs text-gray-600 dark:text-gray-400">{formatNumber(row['Masculin (%)'])}{row['Masculin (%)'] ? '%' : ''}</div>
+                    </div>
+                    <div className="p-2 bg-gray-100 rounded-lg dark:bg-gray-700">
+                        <div className="text-lg font-bold text-pink-600 dark:text-pink-400">{formatNumber(row.Féminin)}</div>
+                        <div className="text-xs text-gray-600 dark:text-gray-400">{formatNumber(row['Féminin (%)'])}{row['Féminin (%)'] ? '%' : ''}</div>
+                    </div>
+                    <div className="p-2 bg-gray-100 rounded-lg dark:bg-gray-700">
+                        <div className="text-lg font-bold text-green-600 dark:text-green-400">{formatNumber(row.Ensemble)}</div>
+                        <div className="text-xs text-gray-600 dark:text-gray-400">{formatNumber(row['Ensemble (%)'])}{row['Ensemble (%)'] ? '%' : ''}</div>
+                    </div>
+                </div>
+            )}
+        </div>
     );
   };
 
-  return (
-    <div className="overflow-auto rounded-md border max-h-[70vh] shadow-cyan-500/20 shadow-2xl">
-      <Table>
-        <TableHeader>
-          {renderTableHeaders()}
-        </TableHeader>
+  // The main card for a grouped indicator
+  const GroupedMobileCard = ({ group }) => {
+    const firstRow = group[0];
+    const indicator = language === 'ar' ? firstRow.ar_Indicateur : firstRow.fr_Indicateur;
 
-        <TableBody>
-          {isLoading ? (
-            renderLoadingSkeleton()
-          ) : data.length === 0 ? (
-            renderNoDataMessage()
-          ) : (
-            renderTableRows()
-          )}
-        </TableBody>
-      </Table>
+    return (
+      <div className={`mb-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+        <div className="p-3">
+          <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${getThemeColor(firstRow.Thème)}`}>
+            {firstRow.Thème}
+          </span>
+          <h3 className="mt-2 font-semibold text-gray-800 dark:text-gray-200" title={indicator}>
+            {indicator}
+          </h3>
+        </div>
+        {group.map(row => <YearDataBlock key={row.Année} row={row} />)}
+      </div>
+    );
+  };
+  
+  const renderMobileLoadingSkeleton = () => (
+    Array.from({ length: 3 }).map((_, idx) => (
+        <div key={`loading-card-${idx}`} className="p-3 mb-4 rounded-lg border bg-gray-50 dark:bg-gray-800 animate-pulse">
+            <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-24 mb-3"></div>
+            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full mb-4"></div>
+            {/* Year Block Skeleton */}
+            <div className="p-3 mt-2 border-t border-gray-200 dark:border-gray-700">
+                <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-16 mb-2"></div>
+                <div className="grid grid-cols-3 gap-2">
+                    <div className="h-12 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
+                    <div className="h-12 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
+                    <div className="h-12 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
+                </div>
+            </div>
+             {/* Year Block Skeleton */}
+             <div className="p-3 mt-2 border-t border-gray-200 dark:border-gray-700">
+                <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-16 mb-2"></div>
+                <div className="grid grid-cols-3 gap-2">
+                    <div className="h-12 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
+                    <div className="h-12 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
+                    <div className="h-12 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
+                </div>
+            </div>
+        </div>
+    ))
+  );
+
+  const NoDataMessage = () => (
+    <div className="text-center text-gray-500 py-8">
+      <div className="text-4xl mb-2">📊</div>
+      <p className="text-lg font-medium">{t?.rgphpage?.no_data || 'لا توجد بيانات مطابقة'}</p>
+      <p className="text-sm">{t?.rgphpage?.adjust_filters || 'حاول تعديل مرشحات البحث'}</p>
     </div>
+  );
+  
+  // --- Desktop Table ---
+  const DesktopTable = () => {
+    const columnCount = tableType === "part2" ? 4 : 9;
+    const renderHeaders = () => {
+        if (tableType === "part2") {
+            return (
+                <TableRow>
+                    <TableHead>{t?.rgphpage?.year || 'السنة'}</TableHead>
+                    <TableHead>{t?.rgphpage?.theme || 'الموضوع'}</TableHead>
+                    <TableHead>{t?.rgphpage?.indicator || 'المؤشر'}</TableHead>
+                    <TableHead className="text-right">{t?.rgphpage?.total_value || 'القيمة'}</TableHead>
+                </TableRow>
+            );
+        }
+        return (
+            <TableRow>
+                <TableHead>{t?.rgphpage?.year || 'السنة'}</TableHead>
+                <TableHead>{t?.rgphpage?.theme || 'الموضوع'}</TableHead>
+                <TableHead>{t?.rgphpage?.indicator || 'المؤشر'}</TableHead>
+                <TableHead className="text-right">{t?.rgphpage?.male_percent || 'ذكور (%)'}</TableHead>
+                <TableHead className="text-right">{t?.rgphpage?.male_count || 'ذكور'}</TableHead>
+                <TableHead className="text-right">{t?.rgphpage?.female_percent || 'إناث (%)'}</TableHead>
+                <TableHead className="text-right">{t?.rgphpage?.female_count || 'إناث'}</TableHead>
+                <TableHead className="text-right">{t?.rgphpage?.total_percent || 'المجموع (%)'}</TableHead>
+                <TableHead className="text-right">{t?.rgphpage?.total_count || 'المجموع'}</TableHead>
+            </TableRow>
+        );
+    };
+
+    const renderRows = () => data.map((row, idx) => {
+        const indicator = language === 'ar' ? row.ar_Indicateur : row.fr_Indicateur;
+        const isPercentage = indicator?.includes('(%)');
+        if (tableType === "part2") {
+            return (
+                <TableRow key={idx} className={`${theme === 'dark' ? 'hover:bg-gray-700' : 'bg-stone-50 hover:bg-gray-100'}`}>
+                    <TableCell>{row.Année}</TableCell>
+                    <TableCell><span className={`px-2 py-1 rounded-full text-xs font-medium ${getThemeColor(row.Thème)}`}>{row.Thème}</span></TableCell>
+                    <TableCell>{indicator}</TableCell>
+                    <TableCell className="text-right font-mono font-semibold text-blue-600">{formatNumber(row.Ensemble)}{isPercentage ? '%' : ''}</TableCell>
+                </TableRow>
+            );
+        }
+        return (
+            <TableRow key={idx} className={`${theme === 'dark' ? 'hover:bg-gray-700' : 'bg-stone-50 hover:bg-gray-100'}`}>
+                <TableCell>{row.Année}</TableCell>
+                <TableCell><span className={`px-2 py-1 rounded-full text-xs font-medium ${getThemeColor(row.Thème)}`}>{row.Thème}</span></TableCell>
+                <TableCell>{indicator}</TableCell>
+                <TableCell className="text-right font-mono">{formatNumber(row['Masculin (%)'])}{row['Masculin (%)'] ? '%' : ''}</TableCell>
+                <TableCell className="text-right font-mono text-blue-600">{formatNumber(row.Masculin)}</TableCell>
+                <TableCell className="text-right font-mono">{formatNumber(row['Féminin (%)'])}{row['Féminin (%)'] ? '%' : ''}</TableCell>
+                <TableCell className="text-right font-mono text-pink-600">{formatNumber(row.Féminin)}</TableCell>
+                <TableCell className="text-right font-mono font-semibold">{formatNumber(row['Ensemble (%)'])}{row['Ensemble (%)'] ? '%' : ''}</TableCell>
+                <TableCell className="text-right font-mono font-semibold text-green-600">{formatNumber(row.Ensemble)}</TableCell>
+            </TableRow>
+        );
+    });
+    
+    const renderLoading = () => Array.from({ length: 5 }).map((_, idx) => (
+        <TableRow key={`loading-${idx}`}>
+            {Array.from({ length: columnCount }).map((_, colIdx) => (
+                <TableCell key={colIdx}><div className="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div></TableCell>
+            ))}
+        </TableRow>
+    ));
+
+    return (
+        <div className="hidden lg:block overflow-auto rounded-md border max-h-[80vh] shadow-cyan-500/20 shadow-2xl">
+            <Table>
+                <TableHeader>{renderHeaders()}</TableHeader>
+                <TableBody>
+                    {isLoading ? renderLoading() : data.length === 0 ? <TableRow><TableCell colSpan={columnCount}><NoDataMessage /></TableCell></TableRow> : renderRows()}
+                </TableBody>
+            </Table>
+        </div>
+    );
+  };
+
+
+  return (
+    <>
+      {/* --- Mobile View --- */}
+      <div className="block lg:hidden">
+        {isLoading
+          ? renderMobileLoadingSkeleton()
+          : groupedData.length === 0
+            ? <NoDataMessage />
+            : groupedData.map((group, idx) => <GroupedMobileCard key={idx} group={group} />)
+        }
+      </div>
+
+      {/* --- Desktop View --- */}
+      <DesktopTable />
+    </>
   );
 }
