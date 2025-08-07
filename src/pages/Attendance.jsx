@@ -66,64 +66,128 @@ export default function Attendance({ data, loading, t, language, theme }) {
 
   // Process attendance data for person-based view
   const processAttendanceData = () => {
-    const personStats = {};
-
-    data.forEach(file => {
-      file.sessions.forEach(session => {
-        session.attendees?.forEach(person => {
-          if (!personStats[person.name]) {
-            personStats[person.name] = {
-              name: person.name,
-              role: person.role,
-              totalPresent: 0,
-              totalAbsentWithReason: 0,
-              totalAbsentWithoutReason: 0,
-              totalSessions: 0
-            };
-          }
-          personStats[person.name].totalPresent++;
-          personStats[person.name].totalSessions++;
+  const personStats = {};
+  
+  // Sort data chronologically by extracting dates from sessions
+  const sortedData = data.sort((a, b) => {
+    const getLatestDate = (file) => {
+      const dates = file.sessions.map(session => new Date(session.date));
+      return Math.max(...dates);
+    };
+    return getLatestDate(a) - getLatestDate(b);
+  });
+  
+  // Process each file and session
+  sortedData.forEach(file => {
+    file.sessions.forEach(session => {
+      const sessionDate = new Date(session.date);
+      
+      // Helper function to update person stats
+      const updatePersonStats = (person, status) => {
+        if (!personStats[person.name]) {
+          personStats[person.name] = {
+            name: person.name,
+            currentRole: person.role,
+            totalPresent: 0,
+            totalAbsentWithReason: 0,
+            totalAbsentWithoutReason: 0,
+            totalSessions: 0,
+            sessionHistory: [],
+            roleHistory: []
+          };
+        }
+        
+        const personStat = personStats[person.name];
+        
+        // Track role changes
+        const lastRole = personStat.roleHistory.length > 0 
+          ? personStat.roleHistory[personStat.roleHistory.length - 1].role 
+          : null;
+          
+        if (lastRole !== person.role) {
+          personStat.roleHistory.push({
+            role: person.role,
+            startDate: session.date,
+            sessionDate: sessionDate
+          });
+        }
+        
+        // Update current role to most recent
+        personStat.currentRole = person.role;
+        
+        // Update attendance stats
+        if (status === 'present') {
+          personStat.totalPresent++;
+        } else if (status === 'absent_with_reason') {
+          personStat.totalAbsentWithReason++;
+        } else if (status === 'absent_without_reason') {
+          personStat.totalAbsentWithoutReason++;
+        }
+        
+        personStat.totalSessions++;
+        
+        // Add to session history
+        personStat.sessionHistory.push({
+          date: session.date,
+          role: person.role,
+          status: status,
+          sessionType: session.session_type,
+          sessionNumber: session.session_number
         });
-
-        session.absentees_with_reason?.forEach(person => {
-          if (!personStats[person.name]) {
-            personStats[person.name] = {
-              name: person.name,
-              role: person.role,
-              totalPresent: 0,
-              totalAbsentWithReason: 0,
-              totalAbsentWithoutReason: 0,
-              totalSessions: 0
-            };
-          }
-          personStats[person.name].totalAbsentWithReason++;
-          personStats[person.name].totalSessions++;
-        });
-
-        session.absentees_without_reason?.forEach(person => {
-          if (!personStats[person.name]) {
-            personStats[person.name] = {
-              name: person.name,
-              role: person.role,
-              totalPresent: 0,
-              totalAbsentWithReason: 0,
-              totalAbsentWithoutReason: 0,
-              totalSessions: 0
-            };
-          }
-          personStats[person.name].totalAbsentWithoutReason++;
-          personStats[person.name].totalSessions++;
-        });
+      };
+      
+      // Process attendees
+      session.attendees?.forEach(person => {
+        updatePersonStats(person, 'present');
+      });
+      
+      // Process absentees with reason
+      session.absentees_with_reason?.forEach(person => {
+        updatePersonStats(person, 'absent_with_reason');
+      });
+      
+      // Process absentees without reason
+      session.absentees_without_reason?.forEach(person => {
+        updatePersonStats(person, 'absent_without_reason');
       });
     });
-
-    return Object.values(personStats).map(person => ({
-      ...person,
-      attendancePercentage: person.totalSessions > 0 
-        ? ((person.totalPresent / person.totalSessions) * 100).toFixed(1)
-        : 0
-    })).sort((a, b) => parseFloat(b.attendancePercentage) - parseFloat(a.attendancePercentage));
-  };
+  });
+  
+  // Calculate attendance percentages and finalize data
+  const processedData = Object.values(personStats).map(person => {
+    const attendancePercentage = person.totalSessions > 0 
+      ? ((person.totalPresent / person.totalSessions) * 100).toFixed(1)
+      : '0.0';
+    
+    // Determine if there was a role change
+    const hasRoleChange = person.roleHistory.length > 1;
+    
+    return {
+      name: person.name,
+      role: person.currentRole, // Current/latest role
+      totalPresent: person.totalPresent,
+      totalAbsentWithReason: person.totalAbsentWithReason,
+      totalAbsentWithoutReason: person.totalAbsentWithoutReason,
+      totalSessions: person.totalSessions,
+      attendancePercentage: attendancePercentage,
+      sessionHistory: person.sessionHistory,
+      roleHistory: person.roleHistory,
+      hasRoleChange: hasRoleChange,
+      // Additional info for display
+      firstRole: person.roleHistory.length > 0 ? person.roleHistory[0].role : person.currentRole,
+      roleChangeInfo: hasRoleChange ? {
+        from: person.roleHistory[0].role,
+        to: person.roleHistory[person.roleHistory.length - 1].role,
+        changeDate: person.roleHistory[1]?.startDate || null
+      } : null
+    };
+  });
+  
+  // Sort by attendance percentage (descending)
+  return processedData.sort((a, b) => 
+    parseFloat(b.attendancePercentage) - parseFloat(a.attendancePercentage)
+  );
+};
 
   const processedData = processAttendanceData();
 
@@ -483,26 +547,17 @@ export default function Attendance({ data, loading, t, language, theme }) {
 
           <AttendanceTable t={t} data={paginatedData} isLoading={isFiltering} theme={theme} language={language}/>
 
-          <div className={`mt-4 p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
-            <div className="flex items-center gap-2 text-sm text-gray-600">
-              <div>
-                <p className="font-medium">
-                  {t?.attendancepage?.data_source || 'مصدر البيانات'} :{' '}
-                  <a
-                    href=""
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:text-blue-800 underline"
-                  >
-                    المجلس الجماعي القصر الكبير
-                  </a>
-                </p>
-                <p className="text-xs mt-1">
-                  {t?.attendancepage?.last_update || 'آخر تحديث'}: 05/08/2025
-                </p>
-              </div>
-            </div>
+          <div className={`mt-4 p-4 text-center rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
+        <div className="flex items-center gap-2 text-sm text-gray-600">
+          <div>
+            <p className="font-medium">
+              {t?.supportpage?.data_source || 'Data Source'} : {t?.supportpage?.municipal_records || 'Municipal Records of Al Ksar Al Kabir'}
+              {' - '} {t?.supportpage?.years_range || 'Years'}: 2020-2024
+            </p>
+            
           </div>
+        </div>
+      </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-4">
             <Pagination className="mb-10">
@@ -565,7 +620,7 @@ export default function Attendance({ data, loading, t, language, theme }) {
                 ))}
               </SelectContent>
             </Select>
-
+                {/* 
             <Select onValueChange={(v) => setAttendanceFilter(v === "all" ? "" : v)} defaultValue="all">
               <SelectTrigger className={`w-full sm:w-1/4 ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
                 <SelectValue placeholder={t?.personsattendancepage?.filter_by_attendance || "تصفية حسب نسبة الحضور"} />
@@ -588,7 +643,7 @@ export default function Attendance({ data, loading, t, language, theme }) {
                 </SelectItem>
               </SelectContent>
             </Select>
-
+*/}
             <Select onValueChange={handlePersonRowsPerPageChange} defaultValue="15">
               <SelectTrigger className={`w-full sm:w-32 ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
                 <SelectValue placeholder={t?.personsattendancepage?.rows_per_page || "عدد الصفوف"} />
@@ -614,7 +669,7 @@ export default function Attendance({ data, loading, t, language, theme }) {
               )}
             </p>
           </div>
-
+{/* 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
             <div className={`p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
               <div className="text-2xl font-bold text-blue-600">{processedData.length}</div>
@@ -642,29 +697,20 @@ export default function Attendance({ data, loading, t, language, theme }) {
               <div className="text-sm text-gray-500">{t?.personsattendancepage?.needs_improvement || 'يحتاج تحسين (<50%)'}</div>
             </div>
           </div>
-
+*/}
           <PersonsAttendanceTable t={t} data={paginatedPersonData} isLoading={isPersonFiltering} theme={theme} language={language}/>
 
-          <div className={`mt-4 p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
-            <div className="flex items-center gap-2 text-sm text-gray-600">
-              <div>
-                <p className="font-medium">
-                  {t?.personsattendancepage?.data_source || 'مصدر البيانات'} :{' '}
-                  <a
-                    href=""
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:text-blue-800 underline"
-                  >
-                    المجلس الجماعي لطنجة
-                  </a>
-                </p>
-                <p className="text-xs mt-1">
-                  {t?.personsattendancepage?.last_update || 'آخر تحديث'}: 05/08/2025
-                </p>
-              </div>
-            </div>
+          <div className={`mt-4 p-4 text-center rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
+        <div className="flex items-center gap-2 text-sm text-gray-600">
+          <div>
+            <p className="font-medium">
+              {t?.supportpage?.data_source || 'Data Source'} : {t?.supportpage?.municipal_records || 'Municipal Records of Al Ksar Al Kabir'}
+              {' - '} {t?.supportpage?.years_range || 'Years'}: 2020-2024
+            </p>
+            
           </div>
+        </div>
+      </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-4">
             <Pagination className="mb-10">

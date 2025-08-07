@@ -193,24 +193,14 @@ export default function SearchPage({ data, loading, t, language, theme }) {
       <BudgetTable t={t} data={paginatedData} isLoading={isFiltering} theme={theme} language={language}/>
 
       {/* Data Source Credit */}
-      <div className={`mt-4 p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
+      <div className={`mt-4 p-4 text-center rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
         <div className="flex items-center gap-2 text-sm text-gray-600">
           <div>
             <p className="font-medium">
-              {t?.medicinepage?.data_source || 'Data Source'} :{' '}
-              <a
-                href="https://www.ksarelkebir.ma/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:text-blue-800 underline"
-              >
-                ksarelkebir.ma
-              </a>
-              {' - '} {t?.medicinepage?.last_update || 'Last update'}: 27/7/2025
+              {t?.supportpage?.data_source || 'Data Source'} : {t?.supportpage?.municipal_records || 'Municipal Records of Al Ksar Al Kabir'}
+              {' - '} 
             </p>
-            <p className="text-xs mt-1">
-              
-            </p>
+            
           </div>
         </div>
       </div>
