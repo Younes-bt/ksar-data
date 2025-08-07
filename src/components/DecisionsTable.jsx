@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronUp, Vote, CheckCircle, XCircle, MinusCircle, Users } from "lucide-react";
+import { ChevronDown, ChevronUp, Vote, CheckCircle, XCircle, MinusCircle, Users, Eye } from "lucide-react";
+import DecisionModal from "./DecisionModal"; // Assuming DecisionModal.jsx is in the same folder
 
 export default function DecisionsTable({ data, isLoading, t, theme, language }) {
   const [expandedRows, setExpandedRows] = useState(new Set());
+  const [selectedDecision, setSelectedDecision] = useState(null);
 
   const toggleRowExpansion = (index) => {
     const newExpanded = new Set(expandedRows);
@@ -17,11 +19,9 @@ export default function DecisionsTable({ data, isLoading, t, theme, language }) 
   };
 
   const formatDate = (dateString) => {
-    // Handle Arabic date format
     if (dateString.includes(' ')) {
-      return dateString; // Already in Arabic format
+      return dateString;
     }
-    
     const date = new Date(dateString);
     return date.toLocaleDateString('ar-MA', {
       year: 'numeric',
@@ -38,153 +38,79 @@ export default function DecisionsTable({ data, isLoading, t, theme, language }) 
         </span>
       );
     } else if (voting.accepted > voting.refused) {
-      return (
-        <span className="inline-block px-1.5 py-0.5 text-xs bg-blue-100 text-blue-800 rounded-full">
-          {t?.decisionspage?.majority || 'أغلبية'}
-        </span>
-      );
+        return (
+            <span className="inline-block px-1.5 py-0.5 text-xs bg-blue-100 text-blue-800 rounded-full">
+            {t?.decisionspage?.majority || 'أغلبية'}
+            </span>
+        );
     } else if (voting.refused > 0) {
-      return (
-        <span className="inline-block px-1.5 py-0.5 text-xs bg-red-100 text-red-800 rounded-full">
-          {t?.decisionspage?.contested || 'متنازع'}
-        </span>
-      );
+        return (
+            <span className="inline-block px-1.5 py-0.5 text-xs bg-red-100 text-red-800 rounded-full">
+            {t?.decisionspage?.contested || 'متنازع'}
+            </span>
+        );
     }
     return (
-      <span className="inline-block px-1.5 py-0.5 text-xs bg-gray-100 text-gray-800 rounded-full">
+        <span className="inline-block px-1.5 py-0.5 text-xs bg-gray-100 text-gray-800 rounded-full">
         {t?.decisionspage?.mixed || 'مختلط'}
-      </span>
+        </span>
     );
   };
 
   const getVotingStats = (voting) => (
-    <div className="flex gap-2 text-xs">
+    <div className="flex gap-4 text-xs">
       <span className="flex items-center gap-1 text-green-600">
-        <CheckCircle size={10} />
+        <CheckCircle size={12} />
         {voting.accepted}
       </span>
       <span className="flex items-center gap-1 text-red-600">
-        <XCircle size={10} />
+        <XCircle size={12} />
         {voting.refused}
       </span>
       <span className="flex items-center gap-1 text-yellow-600">
-        <MinusCircle size={10} />
+        <MinusCircle size={12} />
         {voting.abstained}
       </span>
     </div>
   );
 
   // Mobile card view for very small screens
-  const MobileCard = ({ decision, index }) => {
+  const MobileCard = ({ decision }) => {
     const totalVotes = decision.voting.accepted + decision.voting.refused + decision.voting.abstained;
-    const isExpanded = expandedRows.has(index);
 
     return (
-      <div className={`mb-3 rounded-lg border ${
-        theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
-      }`}>
+      <div
+        className={`mb-3 rounded-lg border cursor-pointer transition-all hover:shadow-lg ${
+            theme === 'dark' ? 'bg-gray-800 border-gray-700 hover:border-cyan-400' : 'bg-white border-gray-200 hover:border-cyan-500'
+        }`}
+        onClick={() => setSelectedDecision(decision)}
+      >
         <div className="p-3">
           <div className="flex justify-between items-start mb-2">
-            <div className="flex items-center gap-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => toggleRowExpansion(index)}
-                className="p-1 h-6 w-6"
-              >
-                {isExpanded ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
-              </Button>
-              <span className="font-bold text-sm">{decision.decision_number}</span>
-            </div>
-            <div className="flex gap-1 items-center">
-              <Vote size={12} />
-              <span className="text-xs font-bold">{totalVotes}</span>
+            <span className="font-bold text-sm text-gray-900 dark:text-gray-100">{decision.decision_number}</span>
+            <div className="flex gap-2 items-center text-xs text-gray-600 dark:text-gray-400">
+              <div className="flex items-center gap-1">
+                <Vote size={12} />
+                <span>{totalVotes}</span>
+              </div>
+              <Eye size={16} className="text-cyan-500" />
             </div>
           </div>
           
-          <h3 className="font-semibold text-sm mb-2 line-clamp-2" title={decision.title}>
+          <h3 className="font-semibold text-sm mb-2 line-clamp-2 text-gray-800 dark:text-gray-200" title={decision.title}>
             {decision.title}
           </h3>
           
-          <div className="flex justify-between items-center mb-2">
+          <div className="flex justify-between items-center mt-3">
             {getDecisionTypeBadge(decision.voting)}
-            <span className="text-xs text-gray-600">{formatDate(decision.date)}</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">{formatDate(decision.date)}</span>
           </div>
-          
-          <div className="mt-2">
-            {getVotingStats(decision.voting)}
+
+          {/* Voting stats, re-added to the card */}
+          <div className="flex justify-start pt-3 mt-3 border-t border-gray-200 dark:border-gray-700">
+             {getVotingStats(decision.voting)}
           </div>
         </div>
-
-        {/* Mobile Expanded Content */}
-        {isExpanded && (
-          <div className={`p-3 border-t ${theme === 'dark' ? 'bg-gray-900 border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
-            <div className="space-y-3">
-              {/* Decision Title */}
-              <div className="p-2 bg-gray-300 rounded text-center">
-                <h4 className="font-semibold text-gray-950 text-sm mb-1">
-                  {t?.decisionspage?.decision_details || 'تفاصيل القرار'}
-                </h4>
-                <p className="text-gray-900 text-xs leading-relaxed">
-                  {decision.title}
-                </p>
-              </div>
-
-              {/* Voting Summary */}
-              <div className="grid grid-cols-2 gap-2">
-                <div className="text-center p-2 bg-gray-300 rounded">
-                  <div className="text-lg font-bold text-green-600">{decision.voting.accepted}</div>
-                  <div className="text-xs text-green-700">{t?.decisionspage?.accepted || 'موافق'}</div>
-                </div>
-                <div className="text-center p-2 bg-gray-300 rounded">
-                  <div className="text-lg font-bold text-red-600">{decision.voting.refused}</div>
-                  <div className="text-xs text-red-700">{t?.decisionspage?.refused || 'رافض'}</div>
-                </div>
-                <div className="text-center p-2 bg-gray-300 rounded">
-                  <div className="text-lg font-bold text-yellow-600">{decision.voting.abstained}</div>
-                  <div className="text-xs text-yellow-700">{t?.decisionspage?.abstained || 'ممتنع'}</div>
-                </div>
-                <div className="text-center p-2 bg-gray-300 rounded">
-                  <div className="text-lg font-bold text-blue-600">{decision.voting.present_members}</div>
-                  <div className="text-xs text-blue-700">{t?.decisionspage?.present_members || 'حاضر'}</div>
-                </div>
-              </div>
-
-              {/* Members Lists */}
-              {decision.attendees && decision.attendees.length > 0 && (
-                <div>
-                  <h4 className="font-semibold text-gray-200 text-sm mb-2 flex items-center gap-1">
-                    <Users size={12} />
-                    {t?.decisionspage?.participants || 'المشاركون'} ({decision.attendees.length})
-                  </h4>
-                  <div className="max-h-32 overflow-y-auto space-y-1">
-                    {decision.attendees.slice(0, 3).map((memberName, memberIdx) => (
-                      <div key={memberIdx} className="p-1 bg-gray-300 rounded text-xs">
-                        <div className="font-medium text-gray-950 flex items-center justify-between">
-                          <span className="truncate">{memberName}</span>
-                          <span className="text-xs ml-1">
-                            {decision.abstained_members?.includes(memberName) ? (
-                              <span className="px-1 py-0.5 bg-yellow-100 text-yellow-800 rounded text-xs">ممتنع</span>
-                            ) : decision.refused_members?.includes(memberName) ? (
-                              <span className="px-1 py-0.5 bg-red-100 text-red-800 rounded text-xs">رافض</span>
-                            ) : (
-                              <span className="px-1 py-0.5 bg-green-100 text-green-800 rounded text-xs">موافق</span>
-                            )}
-                          </span>
-                        </div>
-                      </div>
-                    ))}
-                    {decision.attendees.length > 3 && (
-                      <div className="text-xs text-gray-500 text-center">
-                        وآخرين ({decision.attendees.length - 3})...
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
       </div>
     );
   };
@@ -195,30 +121,39 @@ export default function DecisionsTable({ data, isLoading, t, theme, language }) 
       <div className="block lg:hidden">
         {isLoading ? (
           Array.from({ length: 5 }).map((_, idx) => (
-            <div key={`loading-card-${idx}`} className="p-3 mb-3 rounded-lg border bg-gray-50 animate-pulse">
+            <div key={`loading-card-${idx}`} className="p-3 mb-3 rounded-lg border bg-gray-50 dark:bg-gray-800 animate-pulse">
               <div className="flex justify-between items-center mb-2">
-                <div className="h-4 bg-gray-200 rounded w-20"></div>
-                <div className="h-4 bg-gray-200 rounded w-12"></div>
+                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-20"></div>
+                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-12"></div>
               </div>
-              <div className="h-4 bg-gray-200 rounded w-full mb-2"></div>
+              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full mb-2"></div>
               <div className="flex justify-between items-center">
-                <div className="h-6 bg-gray-200 rounded w-16"></div>
-                <div className="h-4 bg-gray-200 rounded w-20"></div>
+                <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-16"></div>
+                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-20"></div>
               </div>
             </div>
           ))
         ) : data.length === 0 ? (
-          <div className="text-center text-gray-500 py-8">
+          <div className="text-center text-gray-500 dark:text-gray-400 py-8">
             <div className="text-4xl mb-2">📊</div>
             <p className="text-lg font-medium">{t?.decisionspage?.no_decisions_found || 'لم يتم العثور على قرارات مطابقة'}</p>
             <p className="text-sm">{t?.decisionspage?.adjust_filters || 'جرب تعديل المرشحات الخاصة بك'}</p>
           </div>
         ) : (
           data.map((decision, idx) => (
-            <MobileCard key={idx} decision={decision} index={idx} />
+            <MobileCard key={decision.decision_number || idx} decision={decision} />
           ))
         )}
       </div>
+
+        {/* Modal for Mobile View */}
+        <DecisionModal 
+            isOpen={!!selectedDecision}
+            onClose={() => setSelectedDecision(null)}
+            decision={selectedDecision}
+            t={t}
+            theme={theme}
+        />
 
       {/* Desktop Table View - Show on lg screens and larger */}
       <div className="hidden lg:block overflow-auto rounded-md border max-h-[70vh] shadow-cyan-500/20 shadow-2xl">
@@ -279,7 +214,7 @@ export default function DecisionsTable({ data, isLoading, t, theme, language }) 
                 const isExpanded = expandedRows.has(idx);
                 
                 return (
-                  <React.Fragment key={idx}>
+                  <React.Fragment key={decision.decision_number || idx}>
                     <TableRow className={`${theme === 'dark' ? 'hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>
                       <TableCell>
                         <Button
