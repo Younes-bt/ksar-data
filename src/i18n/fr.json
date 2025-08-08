@@ -274,5 +274,23 @@
     "excellent_performers": "Excellent (90%+)",
     "good_performers": "Bon (75-89%)",
     "needs_improvement": "Amélioration nécessaire (<50%)"
+  },
+  "table": {
+    "year": "Année",
+    "label": "Libellé",
+    "approved": "Approuvé",
+    "section": "Section",
+    "type": "Type",
+    "code": "Code",
+    "noData": "Aucune donnée correspondante trouvée",
+    "adjustFilters": "Essayez d'ajuster vos filtres de recherche"
+  },
+  "sections": {
+    "fonctionnement": "Fonctionnement",
+    "equipement": "Équipement"
+  },
+  "types": {
+    "credits": "Crédits",
+    "recettes": "Recettes"
   }
 }

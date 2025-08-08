@@ -247,5 +247,23 @@
     "excellent_performers": "Excellent (90%+)",
     "good_performers": "Good (75-89%)",
     "needs_improvement": "Needs Improvement (<50%)"
+  },
+  "table": {
+    "year": "Year",
+    "label": "Label",
+    "approved": "Approved",
+    "section": "Section",
+    "type": "Type",
+    "code": "Code",
+    "noData": "No matching data found",
+    "adjustFilters": "Try adjusting your search filters"
+  },
+  "sections": {
+    "fonctionnement": "Operations",
+    "equipement": "Equipment"
+  },
+  "types": {
+    "credits": "Credits",
+    "recettes": "Revenues"
   }
 }

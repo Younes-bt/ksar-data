@@ -7,17 +7,45 @@ import {
 } from "@/components/ui/popover"
 
 export default function BudgetTable({ data, isLoading, t, theme, language }) {
+  // Helper function to translate section values
+  const translateSection = (section) => {
+    if (!t.sections) return section; // fallback if translations not available
+    
+    switch(section) {
+      case 'Fonctionnement':
+        return t.sections.fonctionnement || section;
+      case 'Equipement':
+        return t.sections.equipement || section;
+      default:
+        return section;
+    }
+  };
+
+  // Helper function to translate type values
+  const translateType = (type) => {
+    if (!t.types) return type; // fallback if translations not available
+    
+    switch(type) {
+      case 'Crédits':
+        return t.types.credits || type;
+      case 'recettes':
+        return t.types.recettes || type;
+      default:
+        return type;
+    }
+  };
+
   return (
     <div className="overflow-auto rounded-md border max-h-[70vh] shadow-cyan-500/20 shadow-2xl">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Year</TableHead>
-            <TableHead >Label</TableHead> {/* Changed to generic "Label" */}
-            <TableHead className="text-right">Approved</TableHead>
-            <TableHead>section</TableHead>
-            <TableHead>Type</TableHead>
-            <TableHead>Code</TableHead>
+            <TableHead>{t.table.year}</TableHead>
+            <TableHead > {t.table.label} </TableHead> {/* Changed to generic "Label" */}
+            <TableHead className="text-right"> {t.table.approved} </TableHead>
+            <TableHead>{t.table.section} </TableHead>
+            <TableHead>{t.table.type}</TableHead>
+            <TableHead>{t.table.code}</TableHead>
           </TableRow>
         </TableHeader>
 
@@ -87,11 +115,11 @@ export default function BudgetTable({ data, isLoading, t, theme, language }) {
                 </TableCell>
                 <TableCell>
                   <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                    row.section === 'section' 
+                    row.section === 'Fonctionnement' 
                       ? 'bg-blue-100 text-blue-800' 
                       : 'bg-green-100 text-green-800'
                   }`}>
-                    {row.section}
+                    {translateSection(row.section)}
                   </span>
                 </TableCell>
                 <TableCell>
@@ -100,7 +128,7 @@ export default function BudgetTable({ data, isLoading, t, theme, language }) {
                       ? 'bg-blue-100 text-blue-800' 
                       : 'bg-green-100 text-green-800'
                   }`}>
-                    {row.type}
+                    {translateType(row.type)}
                   </span>
                 </TableCell>
                 <TableCell className="font-mono text-sm">{row.code}</TableCell>
