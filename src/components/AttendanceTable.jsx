@@ -67,13 +67,13 @@ export default function AttendanceTable({ data, isLoading, t, theme, language })
     return (
       <div
         className={`mb-3 rounded-lg border cursor-pointer transition-all hover:shadow-lg ${
-            theme === 'dark' ? 'bg-gray-800 border-gray-700 hover:border-cyan-400' : 'bg-white border-gray-200 hover:border-cyan-500'
+            theme === 'dark' ? 'bg-gray-800 border-gray-50 hover:border-cyan-400' : 'bg-white border-gray-500 hover:border-cyan-500'
         }`}
         onClick={() => setSelectedSession(session)}
       >
         <div className="p-3">
           <div className="flex justify-between items-start mb-2">
-            <span className="font-bold text-sm text-gray-900 dark:text-gray-100">{session.session_number}</span>
+            <span className={`font-bold text-sm ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'}`}>{session.session_number}</span>
             <div className="flex gap-2 items-center text-xs text-gray-600 dark:text-gray-400">
               <div className="flex items-center gap-1">
                 <Users size={12} />
@@ -83,7 +83,7 @@ export default function AttendanceTable({ data, isLoading, t, theme, language })
             </div>
           </div>
           
-          <h3 className="font-semibold text-sm mb-2 line-clamp-2 text-gray-800 dark:text-gray-200" title={`${session.session_type} - ${formatDate(session.date)}`}>
+          <h3 className={`font-semibold text-sm mb-2 line-clamp-2 ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'}`} title={`${session.session_type} - ${formatDate(session.date)}`}>
              {session.session_type} - {formatDate(session.date)}
           </h3>
           
@@ -210,22 +210,22 @@ export default function AttendanceTable({ data, isLoading, t, theme, language })
                     
                     {isExpanded && (
                       <TableRow>
-                        <TableCell colSpan="7" className={`${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'} p-6`}>
+                        <TableCell colSpan="7" className={`${theme === 'dark' ? 'bg-gray-800 border border-gray-700' : 'bg-white'} p-6`}>
                           <div className="space-y-4">
                             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                              <div className="text-center p-3 bg-gray-300 rounded-lg">
+                              <div className={`text-center p-3 ${theme === 'dark' ? 'bg-gray-700 border border-gray-100' : 'bg-gray-100 border border-gray-950'} rounded-lg`}>
                                 <div className="text-2xl font-bold text-green-600">{session.attendance.present}</div>
                                 <div className="text-sm text-green-700">{t?.attendancepage?.present || 'حاضر'}</div>
                               </div>
-                              <div className="text-center p-3 bg-gray-300 rounded-lg">
+                              <div className={`text-center p-3 ${theme === 'dark' ? 'bg-gray-700 border border-gray-100' : 'bg-gray-100 border border-gray-950'} rounded-lg`}>
                                 <div className="text-2xl font-bold text-yellow-600">{session.attendance.absent_with_reason}</div>
                                 <div className="text-sm text-yellow-700">{t?.attendancepage?.absent_with_reason || 'غائب بعذر'}</div>
                               </div>
-                              <div className="text-center p-3 bg-gray-300 rounded-lg">
+                              <div className={`text-center p-3 ${theme === 'dark' ? 'bg-gray-700 border border-gray-100' : 'bg-gray-100 border border-gray-950'} rounded-lg`}>
                                 <div className="text-2xl font-bold text-red-600">{session.attendance.absent_without_reason}</div>
                                 <div className="text-sm text-red-700">{t?.attendancepage?.absent_without_reason || 'غائب بدون عذر'}</div>
                               </div>
-                              <div className="text-center p-3 bg-gray-300 rounded-lg">
+                              <div className={`text-center p-3 ${theme === 'dark' ? 'bg-gray-700 border border-gray-100' : 'bg-gray-100 border border-gray-950'} rounded-lg`}>
                                 <div className="text-2xl font-bold text-gray-600">{session.attendance.vacant_positions}</div>
                                 <div className="text-sm text-gray-700">{t?.attendancepage?.vacant_positions || 'مناصب شاغرة'}</div>
                               </div>
@@ -234,14 +234,14 @@ export default function AttendanceTable({ data, isLoading, t, theme, language })
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                               {session.attendees && session.attendees.length > 0 && (
                                 <div>
-                                  <h4 className="font-semibold text-gray-200 mb-2 flex items-center gap-2">
+                                  <h4 className={`font-semibold ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'} mb-2 flex items-center gap-2`}>
                                     <UserCheck size={16} />
                                     {t?.attendancepage?.present_members || 'الأعضاء الحاضرون'} ({session.attendees.length})
                                   </h4>
                                   <div className="max-h-60 overflow-y-auto space-y-1">
                                     {session.attendees.map((member, memberIdx) => (
-                                      <div key={memberIdx} className="p-2 bg-gray-300 rounded text-sm">
-                                        <div className="font-medium text-gray-950">{member.name} - ( {member.role} )</div>
+                                      <div key={memberIdx} className={`p-2 ${theme === 'dark' ? 'bg-gray-700 border border-gray-100' : 'bg-gray-100 border border-gray-950'} ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'} rounded text-sm`}>
+                                        <div className="font-medium">{member.name} - ( {member.role} )</div>
                                       </div>
                                     ))}
                                   </div>
@@ -251,14 +251,14 @@ export default function AttendanceTable({ data, isLoading, t, theme, language })
                               <div className="space-y-4">
                                 {session.absentees_with_reason && session.absentees_with_reason.length > 0 && (
                                   <div>
-                                    <h4 className="font-semibold text-gray-200 mb-2 flex items-center gap-2">
+                                    <h4 className={`font-semibold ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'} mb-2 flex items-center gap-2`}>
                                       <UserX size={16} />
                                       {t?.attendancepage?.absent_with_reason_members || 'غائبون بعذر'} ({session.absentees_with_reason.length})
                                     </h4>
                                     <div className="max-h-32 overflow-y-auto space-y-1">
                                       {session.absentees_with_reason.map((member, memberIdx) => (
-                                        <div key={memberIdx} className="p-2 bg-gray-300 rounded text-sm">
-                                          <div className="font-medium text-gray-950">{member.name} - {member.role}</div>
+                                        <div key={memberIdx} className={`p-2 rounded text-sm ${theme === 'dark' ? 'bg-gray-700 border border-gray-100' : 'bg-gray-100 border border-gray-950'} ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'}`}>
+                                          <div className="font-medium">{member.name} - {member.role}</div>
                                         </div>
                                       ))}
                                     </div>
@@ -267,14 +267,14 @@ export default function AttendanceTable({ data, isLoading, t, theme, language })
 
                                 {session.absentees_without_reason && session.absentees_without_reason.length > 0 && (
                                   <div>
-                                    <h4 className="font-semibold text-gray-200 mb-2 flex items-center gap-2">
+                                    <h4 className={`font-semibold ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'} mb-2 flex items-center gap-2`}>
                                       <UserX size={16} />
                                       {t?.attendancepage?.absent_without_reason_members || 'غائبون بدون عذر'} ({session.absentees_without_reason.length})
                                     </h4>
                                     <div className="max-h-32 overflow-y-auto space-y-1">
                                       {session.absentees_without_reason.map((member, memberIdx) => (
-                                        <div key={memberIdx} className="p-2 bg-gray-300 rounded text-sm">
-                                          <div className="font-medium text-gray-950">{member.name} - {member.role}</div>
+                                        <div key={memberIdx} className={`p-2 rounded text-sm ${theme === 'dark' ? 'bg-gray-700 border border-gray-100' : 'bg-gray-100 border border-gray-950'} ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'}`}>
+                                          <div className="font-medium">{member.name} - {member.role}</div>
                                         </div>
                                       ))}
                                     </div>

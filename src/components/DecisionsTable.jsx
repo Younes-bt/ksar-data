@@ -19,15 +19,37 @@ export default function DecisionsTable({ data, isLoading, t, theme, language }) 
   };
 
   const formatDate = (dateString) => {
-    if (dateString.includes(' ')) {
-      return dateString;
+        // Handle new date format DD/MM/YYYY
+        if (dateString.includes('-')) {
+            const [day, month, year] = dateString.split('-');
+            const date = new Date(year, month - 1, day);
+            return date.toLocaleDateString('ar-MA', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+        // Handle old format if still present
+        if (dateString.includes(' ')) {
+            return dateString;
+        }
+        const date = new Date(dateString);
+        return date.toLocaleDateString('ar-MA', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    };
+
+  const getDecisionTitle = (decision) => {
+    // Return appropriate title based on language preference
+    if (language === 'fr' && decision.title_fr) {
+      return decision.title_fr;
     }
-    const date = new Date(dateString);
-    return date.toLocaleDateString('ar-MA', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
+    if (language === 'en' && decision.title_en) {
+      return decision.title_en;
+    }
+    return decision.title; // Default to Arabic
   };
 
   const getDecisionTypeBadge = (voting) => {
@@ -59,7 +81,7 @@ export default function DecisionsTable({ data, isLoading, t, theme, language }) 
 
   const getVotingStats = (voting) => (
     <div className="flex gap-4 text-xs">
-      <span className="flex items-center gap-1 text-green-600">
+      <span className="flex items-center gap-1 text-green-700">
         <CheckCircle size={12} />
         {voting.accepted}
       </span>
@@ -67,7 +89,7 @@ export default function DecisionsTable({ data, isLoading, t, theme, language }) 
         <XCircle size={12} />
         {voting.refused}
       </span>
-      <span className="flex items-center gap-1 text-yellow-600">
+      <span className="flex items-center gap-1 text-orange-700">
         <MinusCircle size={12} />
         {voting.abstained}
       </span>
@@ -81,14 +103,14 @@ export default function DecisionsTable({ data, isLoading, t, theme, language }) 
     return (
       <div
         className={`mb-3 rounded-lg border cursor-pointer transition-all hover:shadow-lg ${
-            theme === 'dark' ? 'bg-gray-800 border-gray-700 hover:border-cyan-400' : 'bg-white border-gray-200 hover:border-cyan-500'
+            theme === 'dark' ? 'bg-gray-800 border-gray-50 hover:border-cyan-400' : 'bg-white border-gray-500 hover:border-cyan-500'
         }`}
         onClick={() => setSelectedDecision(decision)}
       >
         
         <div className="p-3">
           <div className="flex justify-between items-start mb-2">
-            <span className="font-bold text-sm text-gray-900 dark:text-gray-100">{decision.decision_number}</span>
+            <span className={`text-sm ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'}`}>{decision.decision_number}</span>
             <div className="flex gap-2 items-center text-xs text-gray-600 dark:text-gray-400">
               <div className="flex items-center gap-1">
                 <Vote size={12} />
@@ -98,13 +120,13 @@ export default function DecisionsTable({ data, isLoading, t, theme, language }) 
             </div>
           </div>
           
-          <h3 className={`font-semibold text-sm mb-2 line-clamp-2 ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'}`} title={decision.title}>
-            {decision.title}
+          <h3 className={`font-semibold text-center text-sm mb-2 line-clamp-2 ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'}`} title={getDecisionTitle(decision)}>
+            {getDecisionTitle(decision)}
           </h3>
           
           <div className="flex justify-between items-center mt-3">
             {getDecisionTypeBadge(decision.voting)}
-            <span className="text-xs text-gray-500 dark:text-gray-400">{formatDate(decision.date)}</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400" style={language === 'ar' ? {direction:'rtl'} : {direction:'ltr'}}>{formatDate(decision.date)}</span>
           </div>
 
           {/* Voting stats, re-added to the card */}
@@ -154,6 +176,7 @@ export default function DecisionsTable({ data, isLoading, t, theme, language }) 
             decision={selectedDecision}
             t={t}
             theme={theme}
+            language={language}
         />
 
       {/* Desktop Table View - Show on lg screens and larger */}
@@ -231,12 +254,12 @@ export default function DecisionsTable({ data, isLoading, t, theme, language }) 
                         <span className="text-xs">{decision.decision_number}</span>
                       </TableCell>
                       <TableCell className="max-w-xs">
-                        <div className="truncate text-xs" title={decision.title}>
-                          {decision.title}
+                        <div className="truncate text-xs" title={getDecisionTitle(decision)}>
+                          {getDecisionTitle(decision)}
                         </div>
                       </TableCell>
                       <TableCell>
-                        <span className="text-xs">{formatDate(decision.date)}</span>
+                        <span className="text-xs" style={language === 'ar' ? {direction:'rtl'} : {direction:'ltr'}}>{decision.date}</span>
                       </TableCell>
                       <TableCell>
                         {getDecisionTypeBadge(decision.voting)}
@@ -254,34 +277,36 @@ export default function DecisionsTable({ data, isLoading, t, theme, language }) 
                     
                     {isExpanded && (
                       <TableRow>
-                        <TableCell colSpan="7" className={`${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'} p-6`}>
+                        <TableCell colSpan="7" className={`${
+                    theme === 'dark' ? 'bg-gray-800 border border-gray-700' : 'bg-white'
+                } p-6`}>
                           <div className="space-y-4 ">
                             {/* Decision Title */}
-                            <div className="text-center p-3 bg-gray-300 rounded-lg w-90 md:w-full">
+                            <div className={`text-center p-3 ${theme === 'dark' ? 'bg-gray-700 border border-gray-100' : 'bg-gray-100 border border-gray-950'} ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'} rounded-lg w-90 md:w-full`}>
                                 <h3 className="text-lg font-semibold text-gray-950 mb-2 text-wrap">
                                 {t?.decisionspage?.decision_details || 'تفاصيل القرار'}
                               </h3>
                               <p className="text-gray-900 text-sm leading-relaxed text-wrap">
-                                {decision.title}
+                                {getDecisionTitle(decision)}
                               </p>
                               </div>
                             
 
                             {/* Voting Summary */}
                             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                              <div className="text-center p-3 bg-gray-300 rounded-lg w-90 md:w-full">
+                              <div className={`text-center p-3 ${theme === 'dark' ? 'bg-gray-700 border border-gray-100' : 'bg-gray-100 border border-gray-950'} rounded-lg w-90 md:w-full`}>
                                 <div className="text-2xl font-bold text-green-600">{decision.voting.accepted}</div>
                                 <div className="text-sm text-green-700">{t?.decisionspage?.accepted || 'موافق'}</div>
                               </div>
-                              <div className="text-center p-3 bg-gray-300 rounded-lg w-90 md:w-full" w-90 md:w-full>
+                              <div className={`text-center p-3 ${theme === 'dark' ? 'bg-gray-700 border border-gray-100' : 'bg-gray-100 border border-gray-950'} rounded-lg w-90 md:w-full`} w-90 md:w-full>
                                 <div className="text-2xl font-bold text-red-600">{decision.voting.refused}</div>
                                 <div className="text-sm text-red-700">{t?.decisionspage?.refused || 'رافض'}</div>
                               </div>
-                              <div className="text-center p-3 bg-gray-300 rounded-lg w-90 md:w-full">
+                              <div className={`text-center p-3 ${theme === 'dark' ? 'bg-gray-700 border border-gray-100' : 'bg-gray-100 border border-gray-950'} rounded-lg w-90 md:w-full`}>
                                 <div className="text-2xl font-bold text-yellow-600">{decision.voting.abstained}</div>
                                 <div className="text-sm text-yellow-700">{t?.decisionspage?.abstained || 'ممتنع'}</div>
                               </div>
-                              <div className="text-center p-3 bg-gray-300 rounded-lg w-90 md:w-full">
+                              <div className={`text-center p-3 ${theme === 'dark' ? 'bg-gray-700 border border-gray-100' : 'bg-gray-100 border border-gray-950'} rounded-lg w-90 md:w-full`}>
                                 <div className="text-2xl font-bold text-blue-600">{decision.voting.present_members}</div>
                                 <div className="text-sm text-blue-700">{t?.decisionspage?.present_members || 'الأعضاء الحاضرون'}</div>
                               </div>
@@ -292,14 +317,14 @@ export default function DecisionsTable({ data, isLoading, t, theme, language }) 
                               {/* Attendees */}
                               {decision.attendees && decision.attendees.length > 0 && (
                                 <div>
-                                  <h4 className="font-semibold text-gray-200 mb-2 flex items-center gap-2">
+                                  <h4 className={`font-semibold ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'} mb-2 flex items-center gap-2`}>
                                     <Users size={16} />
                                     {t?.decisionspage?.participants || 'المشاركون في التصويت'} ({decision.attendees.length})
                                   </h4>
                                   <div className="max-h-60 overflow-y-auto space-y-1">
                                     {decision.attendees.map((memberName, memberIdx) => (
-                                      <div key={memberIdx} className="p-2 bg-gray-300 rounded text-sm">
-                                        <div className="font-medium text-gray-950 flex items-center justify-between">
+                                      <div key={memberIdx} className={`p-2 ${theme === 'dark' ? 'bg-gray-700 border border-gray-100' : 'bg-gray-100 border border-gray-950'} ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'} rounded text-sm`}>
+                                        <div className="font-medium  flex items-center justify-between">
                                           <span>{memberName}</span>
                                           <span className="text-xs">
                                             {decision.abstained_members?.includes(memberName) ? (
@@ -322,13 +347,13 @@ export default function DecisionsTable({ data, isLoading, t, theme, language }) 
                                 {/* Abstained Members */}
                                 {decision.abstained_members && decision.abstained_members.length > 0 && (
                                   <div>
-                                    <h4 className="font-semibold text-gray-200 mb-2 flex items-center gap-2">
+                                    <h4 className={`font-semibold ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'} mb-2 flex items-center gap-2`}>
                                       <MinusCircle size={16} />
                                       {t?.decisionspage?.abstained_members || 'الأعضاء الممتنعون'} ({decision.abstained_members.length})
                                     </h4>
                                     <div className="max-h-32 overflow-y-auto space-y-1">
                                       {decision.abstained_members.map((member, memberIdx) => (
-                                        <div key={memberIdx} className="p-2 bg-gray-300 rounded text-sm">
+                                        <div key={memberIdx} className={`p-2  rounded text-sm ${theme === 'dark' ? 'bg-gray-700 border border-gray-100' : 'bg-gray-100 border border-gray-950'} ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'}`}>
                                           <div className="font-medium text-gray-950">{member}</div>
                                         </div>
                                       ))}
@@ -339,13 +364,13 @@ export default function DecisionsTable({ data, isLoading, t, theme, language }) 
                                 {/* Refused Members */}
                                 {decision.refused_members && decision.refused_members.length > 0 && (
                                   <div>
-                                    <h4 className="font-semibold text-gray-200 mb-2 flex items-center gap-2">
+                                    <h4 className={`font-semibold ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'} mb-2 flex items-center gap-2`}>
                                       <XCircle size={16} />
                                       {t?.decisionspage?.refused_members || 'الأعضاء الرافضون'} ({decision.refused_members.length})
                                     </h4>
                                     <div className="max-h-32 overflow-y-auto space-y-1">
                                       {decision.refused_members.map((member, memberIdx) => (
-                                        <div key={memberIdx} className="p-2 bg-gray-300 rounded text-sm">
+                                        <div key={memberIdx} className={`p-2  rounded text-sm ${theme === 'dark' ? 'bg-gray-700 border border-gray-100' : 'bg-gray-100 border border-gray-950'} ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'}`}>
                                           <div className="font-medium text-gray-950">{member}</div>
                                         </div>
                                       ))}
@@ -362,7 +387,7 @@ export default function DecisionsTable({ data, isLoading, t, theme, language }) 
                                   <span className="font-medium">{t?.decisionspage?.decision_number || 'رقم القرار'}:</span> {decision.decision_number}
                                 </div>
                                 <div>
-                                  <span className="font-medium">{t?.decisionspage?.decision_date || 'تاريخ القرار'}:</span> {formatDate(decision.date)}
+                                  <span className="font-medium" style={language === 'ar' ? {direction:'rtl'} : {direction:'ltr'}}>{t?.decisionspage?.decision_date || 'تاريخ القرار'}:</span> {formatDate(decision.date)}
                                 </div>
                                 <div>
                                   <span className="font-medium">{t?.decisionspage?.expressed_votes || 'الأصوات المعبر عنها'}:</span> {decision.voting.expressed_votes}

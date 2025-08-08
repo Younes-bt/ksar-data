@@ -33,12 +33,35 @@ export default function Decisions({ data, loading, t, language, theme }) {
   const [memberCurrentPage, setMemberCurrentPage] = useState(1);
   const [memberRowsPerPage, setMemberRowsPerPage] = useState(15);
 
+  // Helper function to extract year and month from new date format
+  const extractDateComponents = (dateString) => {
+    if (dateString.includes('-')) {
+      // New format: DD/MM/YYYY
+      const [day, month, year] = dateString.split('-');
+      return { year, month };
+    } else if (dateString.includes(' ')) {
+      // Old format: "04 ماي 2023"
+      const parts = dateString.split(' ');
+      const year = parts[2];
+      const month = getMonthNumber(parts[1]);
+      return { year, month };
+    } else if (dateString.includes('-')) {
+      // ISO format: YYYY-MM-DD
+      const [year, month] = dateString.split('-');
+      return { year, month };
+    }
+    return { year: '', month: '' };
+  };
+
   // Process data for decisions view (flatten decisions)
-  const flattenedData = data.map(decision => ({
-    ...decision,
-    year: decision.date.split(' ')[2] || decision.date.split('-')[0],
-    month: getMonthNumber(decision.date.split(' ')[1]) || decision.date.split('-')[1]
-  }));
+  const flattenedData = data.map(decision => {
+    const { year, month } = extractDateComponents(decision.date);
+    return {
+      ...decision,
+      year,
+      month
+    };
+  });
 
   // Get month number from Arabic month name
   function getMonthNumber(arabicMonth) {
@@ -70,6 +93,17 @@ export default function Decisions({ data, loading, t, language, theme }) {
   const getUniqueMonths = () => {
     const months = [...new Set(flattenedData.map(item => item.month).filter(Boolean))];
     return months.sort();
+  };
+
+  // Helper function to get decision title based on language
+  const getDecisionTitle = (decision) => {
+    if (language === 'fr' && decision.title_fr) {
+      return decision.title_fr;
+    }
+    if (language === 'en' && decision.title_en) {
+      return decision.title_en;
+    }
+    return decision.title; // Default to Arabic
   };
 
   // Process voting data for members view
@@ -150,12 +184,16 @@ const processMemberVotingData = () => {
       if (search) {
         const normalizedSearch = normalizeText(search);
         temp = temp.filter(decision => {
-          const title = normalizeText(decision.title);
+          const title = normalizeText(getDecisionTitle(decision));
+          const titleFr = normalizeText(decision.title_fr);
+          const titleEn = normalizeText(decision.title_en);
           const decisionNumber = normalizeText(decision.decision_number);
           const date = normalizeText(decision.date);
 
           return (
             title?.includes(normalizedSearch) ||
+            titleFr?.includes(normalizedSearch) ||
+            titleEn?.includes(normalizedSearch) ||
             decisionNumber?.includes(normalizedSearch) ||
             date?.includes(normalizedSearch)
           );
@@ -193,7 +231,7 @@ const processMemberVotingData = () => {
     }, 100);
 
     return () => clearTimeout(timeoutId);
-  }, [search, decisionFilter, yearFilter, monthFilter, data]);
+  }, [search, decisionFilter, yearFilter, monthFilter, data, language]);
 
   // Effect for member filtering
   useEffect(() => {
@@ -361,21 +399,10 @@ const processMemberVotingData = () => {
   };
 
   return (
-    <div className={`p-5 md:px-40 md:py-10 space-y-4 min-h-screen ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
-      {/* Decision Details 
-      <style jsx>{`
-        [data-state="active"] {
-          background-color: #2563eb !important;
-          color: #ffffff !important;
-        }
-        [data-state="active"]:hover {
-          background-color: #1e40af !important;
-        }
-        .tabs-list {
-          border-radius: 0.375rem;
-        }
-      `}</style>
-      */}
+    <div style={language === 'ar' ? 
+          { fontFamily: 'Noto Kufi Arabic, sans-serif', direction:'rtl' } : 
+          { fontFamily: 'Inter, sans-serif', direction:'ltr' }
+        }  className={`p-5 md:px-40 md:py-10 space-y-4 min-h-screen ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
 
       <h1 style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif', direction:'rtl', fontSize:'2rem' } : { fontFamily: 'Inter, sans-serif', direction:'ltr', fontSize:'2rem' }} className="text-center mb-10">
         {t?.decisionspage?.search_decisions_data || 'بيانات قرارات المجلس'}
@@ -397,30 +424,7 @@ const processMemberVotingData = () => {
               className="w-full sm:w-1/2"
               dir="auto"
             />
-{/* Decision Details 
-            <Select onValueChange={(v) => setDecisionFilter(v === "all" ? "" : v)} defaultValue="all">
-              <SelectTrigger className={`w-full sm:w-1/4 ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
-                <SelectValue placeholder={t?.decisionspage?.filter_by_decision_type || "تصفية حسب نوع القرار"} />
-              </SelectTrigger>
-              <SelectContent className={`${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
-                <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="all">
-                  {t?.decisionspage?.all_decision_types || 'جميع الأنواع'}
-                </SelectItem>
-                <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="unanimous">
-                  {t?.decisionspage?.unanimous_decisions || 'قرارات بالإجماع'}
-                </SelectItem>
-                <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="majority">
-                  {t?.decisionspage?.majority_decisions || 'قرارات بالأغلبية'}
-                </SelectItem>
-                <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="contested">
-                  {t?.decisionspage?.contested_decisions || 'قرارات متنازع عليها'}
-                </SelectItem>
-                <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="abstained">
-                  {t?.decisionspage?.abstained_decisions || 'قرارات بامتناع'}
-                </SelectItem>
-              </SelectContent>
-            </Select>
- */}
+
             <Select onValueChange={(v) => setYearFilter(v === "all" ? "" : v)} defaultValue="all">
               <SelectTrigger className={`w-full sm:w-1/4 ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
                 <SelectValue placeholder={t?.decisionspage?.filter_by_year || "تصفية حسب السنة"} />
@@ -466,8 +470,9 @@ const processMemberVotingData = () => {
               )}
             </p>
           </div>
-            <p className='text-red-500 text-sm text-center mb-2'>اضغط على القرار لعرض التفاصيل</p>
-
+              <p className='text-red-500 text-sm text-center mb-2'>
+                {t?.decisionspage?.click_for_details || 'اضغط على القرار لعرض التفاصيل'}
+              </p>
           <DecisionsTable t={t} data={paginatedData} isLoading={isFiltering} theme={theme} language={language}/>
 
           {/* Data Source Credit */}
@@ -570,35 +575,7 @@ const processMemberVotingData = () => {
               )}
             </p>
           </div>
-              {/*
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6 text-center">
-            <div className={`p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-300 border-gray-500' : 'bg-gray-200 border-gray-200'}`}>
-              <div className="text-3xl md:text-2xl font-bold text-blue-500">{processedMemberData.length}</div>
-              <div className="text-lg md:text-sm text-gray-950">{t?.membersvotingpage?.total_members || 'إجمالي الأعضاء'}</div>
-            </div>
-            <div className={`p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-500' : 'bg-gray-200 border-gray-200'}`}>
-              <div className="text-3xl md:text-2xl font-bold text-green-600">
-                {processedMemberData.filter(m => parseFloat(m.participationPercentage) >= 90).length}
-              </div>
-              <div className="text-lg md:text-sm text-gray-500">{t?.membersvotingpage?.high_participants || 'مشاركة عالية (90%+)'}</div>
-            </div>
-            <div className={`p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-500' : 'bg-gray-200 border-gray-200'}`}>
-              <div className="text-3xl md:text-2xl font-bold text-yellow-600">
-                {processedMemberData.filter(m => {
-                  const pct = parseFloat(m.participationPercentage);
-                  return pct >= 50 && pct < 90;
-                }).length}
-              </div>
-              <div className="text-lg md:text-sm text-gray-500">{t?.membersvotingpage?.medium_participants || 'مشاركة متوسطة (50-89%)'}</div>
-            </div>
-            <div className={`p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-500' : 'bg-gray-200 border-gray-200'}`}>
-              <div className="text-3xl md:text-2xl font-bold text-red-500">
-                {processedMemberData.filter(m => parseFloat(m.participationPercentage) < 50).length}
-              </div>
-              <div className="text-lg md:text-sm text-gray-500">{t?.membersvotingpage?.low_participants || 'مشاركة منخفضة (<50%)'}</div>
-            </div>
-          </div>
-*/}
+
           <MembersVotingTable t={t} data={paginatedMemberData} isLoading={isMemberFiltering} theme={theme} language={language}/>
 
           {/* Data Source Credit */}

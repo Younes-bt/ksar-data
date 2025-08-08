@@ -2,10 +2,44 @@ import React from "react";
 import { X, Vote, CheckCircle, XCircle, MinusCircle, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export default function DecisionModal({ decision, isOpen, onClose, t, theme }) {
+export default function DecisionModal({ decision, isOpen, onClose, t, theme, language }) {
     if (!isOpen || !decision) {
         return null;
     }
+
+    const getDecisionTitle = (decision) => {
+        // Return appropriate title based on language preference
+        if (language === 'fr' && decision.title_fr) {
+            return decision.title_fr;
+        }
+        if (language === 'en' && decision.title_en) {
+            return decision.title_en;
+        }
+        return decision.title; // Default to Arabic
+    };
+
+    const formatDate = (dateString) => {
+        // Handle new date format DD/MM/YYYY
+        if (dateString.includes('-')) {
+            const [day, month, year] = dateString.split('-');
+            const date = new Date(year, month - 1, day);
+            return date.toLocaleDateString('ar-MA', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+        // Handle old format if still present
+        if (dateString.includes(' ')) {
+            return dateString;
+        }
+        const date = new Date(dateString);
+        return date.toLocaleDateString('ar-MA', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    };
 
     const acceptedMembers = decision.attendees?.filter(
         (member) =>
@@ -41,7 +75,10 @@ export default function DecisionModal({ decision, isOpen, onClose, t, theme }) {
                                 {decision.decision_number}
                             </h4>
                             <p className="text-sm leading-relaxed ">
-                                {decision.title}
+                                {getDecisionTitle(decision)}
+                            </p>
+                            <p className="text-xs text-gray-500 mt-2" style={language === 'ar' ? {direction:'rtl'} : {direction:'ltr'}}>
+                                {formatDate(decision.date)}
                             </p>
                         </div>
 

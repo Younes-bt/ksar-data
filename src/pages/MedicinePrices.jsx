@@ -168,7 +168,10 @@ export default function MedicinePrices({ data, loading, t, language, theme }) {
   };
 
   return (
-    <div className={`p-5 md:px-40 md:py-10 space-y-4 min-h-screen ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
+    <div style={language === 'ar' ? 
+          { fontFamily: 'Noto Kufi Arabic, sans-serif' } : 
+          { fontFamily: 'Inter, sans-serif', direction:'ltr' }
+        }  className={`p-5 md:px-40 md:py-10 space-y-4 min-h-screen ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
       
       <h1 style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif', direction:'rtl', fontSize:'2rem' } : { fontFamily: 'Inter, sans-serif', direction:'ltr', fontSize:'2rem' }} className="text-center mb-10">
         {t?.medicinepage?.search_medicine_data || 'Search Medicine Prices'}

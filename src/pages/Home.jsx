@@ -27,7 +27,10 @@ const Home = ({ t, language, theme }) => {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div style={language === 'ar' ? 
+          { fontFamily: 'Noto Kufi Arabic, sans-serif' } : 
+          { fontFamily: 'Inter, sans-serif', direction:'ltr' }
+        }  className="min-h-screen relative overflow-hidden">
       {/* HERO SECTION */}
       <div className={`relative overflow-hidden ${themeClasses.bg}`}>
         {/* Animated Dark Blue Gradient Background */}
@@ -72,12 +75,12 @@ const Home = ({ t, language, theme }) => {
                 {/* Main Description */}
                 <div className="space-y-6 text-center">
                   
-                  <h2 style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif', direction:'rtl', fontSize:'1.50rem' } : undefined} className={`text-xl lg:text-2xl font-bold leading-relaxed ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'}`}>
+                  <h2 style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif', direction:'rtl' } : undefined} className={`text-xl md:text-4xl font-bold leading-relaxed ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'}`}>
                     {t?.home?.welcomeMessage || 'WELCOME TO KSAR-DATA'}
                   </h2>
 
                   
-                  <p style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif', direction:'rtl', fontSize:'1.25rem' } : undefined} className={`text-base lg:text-sm leading-relaxed max-w-xl ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'}`}>
+                  <p style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif', direction:'rtl' } : undefined} className={`text-base md:text-xl leading-relaxed max-w-xl ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'}`}>
                     {t?.home?.subtitle || 'An interactive web application aimed at helping users explore public data related to the city of Ksar El Kebir in a visual and user-friendly way.'}
                   </p>
                 </div>

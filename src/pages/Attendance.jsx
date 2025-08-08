@@ -440,7 +440,10 @@ export default function Attendance({ data, loading, t, language, theme }) {
 `}</style>
 
   return (
-    <div className={`p-5 md:px-40 md:py-10 space-y-4 min-h-screen ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
+    <div style={language === 'ar' ? 
+          { fontFamily: 'Noto Kufi Arabic, sans-serif', direction:'rtl' } : 
+          { fontFamily: 'Inter, sans-serif', direction:'ltr' }
+        }  className={`p-5 md:px-40 md:py-10 space-y-4 min-h-screen ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
       <h1 style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif', direction:'rtl', fontSize:'2rem' } : { fontFamily: 'Inter, sans-serif', direction:'ltr', fontSize:'2rem' }} className="text-center mb-10">
         {t?.attendancepage?.search_attendance_data || 'بيانات حضور الجلسات'}
       </h1>
@@ -544,8 +547,9 @@ export default function Attendance({ data, loading, t, language, theme }) {
               )}
             </p>
           </div>
-            <p className='text-red-500 text-sm text-center mb-2'>اضغط على الجلسة لعرض التفاصيل</p>
-
+<p className='text-red-500 text-sm text-center mb-2'>
+                {t?.attendancepage?.click_for_details || 'اضغط على الجلسة لعرض التفاصيل'}
+              </p>
           <AttendanceTable t={t} data={paginatedData} isLoading={isFiltering} theme={theme} language={language}/>
 
           <div className={`mt-4 p-4 text-center rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
@@ -553,7 +557,7 @@ export default function Attendance({ data, loading, t, language, theme }) {
           <div>
             <p className="font-medium">
               {t?.supportpage?.data_source || 'Data Source'} : {t?.supportpage?.municipal_records || 'Municipal Records of Al Ksar Al Kabir'}
-              {' - '} {t?.supportpage?.years_range || 'Years'}: 2020-2024
+              {' - '} {t?.supportpage?.years_range || 'Years'}: 2021-2025
             </p>
             
           </div>

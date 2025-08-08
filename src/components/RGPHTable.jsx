@@ -41,30 +41,31 @@ export default function RGPHTable({ data, isLoading, t, theme, language, tableTy
   const YearDataBlock = ({ row }) => {
     const isHousingData = tableType === "part2";
     const isPercentage = (language === 'ar' ? row.ar_Indicateur : row.fr_Indicateur)?.includes('(%)');
+    const blockStyle = `rounded-lg ${theme === 'dark' ? 'bg-gray-700 border border-gray-100' : 'bg-gray-100 border border-gray-950'}`;
 
     return (
         <div className="p-3 mt-2 border-t border-gray-200 dark:border-gray-700">
-            <h4 className="mb-2 font-bold text-gray-700 dark:text-gray-300">{row.Année}</h4>
+            <h4 className={`mb-2 font-bold ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'}`}>{row.Année}</h4>
             {isHousingData ? (
-                 <div className="p-3 text-center bg-gray-100 rounded-lg dark:bg-gray-700">
+                 <div className={`p-3 text-center ${blockStyle}`}>
                     <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
                         {formatNumber(row.Ensemble)}{isPercentage ? '%' : ''}
                     </div>
-                    <div className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <div className={`text-sm font-medium ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'}`}>
                         {t?.rgphpage?.total_value || 'القيمة الإجمالية'}
                     </div>
                 </div>
             ) : (
                 <div className="grid grid-cols-3 gap-2 text-center">
-                    <div className="p-2 bg-gray-100 rounded-lg dark:bg-gray-700">
+                    <div className={`p-2 ${blockStyle}`}>
                         <div className="text-lg font-bold text-blue-600 dark:text-blue-400">{formatNumber(row.Masculin)}</div>
                         <div className="text-xs text-gray-600 dark:text-gray-400">{formatNumber(row['Masculin (%)'])}{row['Masculin (%)'] ? '%' : ''}</div>
                     </div>
-                    <div className="p-2 bg-gray-100 rounded-lg dark:bg-gray-700">
+                    <div className={`p-2 ${blockStyle}`}>
                         <div className="text-lg font-bold text-pink-600 dark:text-pink-400">{formatNumber(row.Féminin)}</div>
                         <div className="text-xs text-gray-600 dark:text-gray-400">{formatNumber(row['Féminin (%)'])}{row['Féminin (%)'] ? '%' : ''}</div>
                     </div>
-                    <div className="p-2 bg-gray-100 rounded-lg dark:bg-gray-700">
+                    <div className={`p-2 ${blockStyle}`}>
                         <div className="text-lg font-bold text-green-600 dark:text-green-400">{formatNumber(row.Ensemble)}</div>
                         <div className="text-xs text-gray-600 dark:text-gray-400">{formatNumber(row['Ensemble (%)'])}{row['Ensemble (%)'] ? '%' : ''}</div>
                     </div>
@@ -80,12 +81,14 @@ export default function RGPHTable({ data, isLoading, t, theme, language, tableTy
     const indicator = language === 'ar' ? firstRow.ar_Indicateur : firstRow.fr_Indicateur;
 
     return (
-      <div className={`mb-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+      <div className={`mb-3 rounded-lg border transition-all hover:shadow-lg ${
+        theme === 'dark' ? 'bg-gray-800 border-gray-50 hover:border-cyan-400' : 'bg-white border-gray-500 hover:border-cyan-500'
+      }`}>
         <div className="p-3">
           <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${getThemeColor(firstRow.Thème)}`}>
             {firstRow.Thème}
           </span>
-          <h3 className="mt-2 font-semibold text-gray-800 dark:text-gray-200" title={indicator}>
+          <h3 className={`mt-2 font-semibold ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'}`} title={indicator}>
             {indicator}
           </h3>
         </div>
@@ -96,7 +99,7 @@ export default function RGPHTable({ data, isLoading, t, theme, language, tableTy
   
   const renderMobileLoadingSkeleton = () => (
     Array.from({ length: 3 }).map((_, idx) => (
-        <div key={`loading-card-${idx}`} className="p-3 mb-4 rounded-lg border bg-gray-50 dark:bg-gray-800 animate-pulse">
+        <div key={`loading-card-${idx}`} className="p-3 mb-3 rounded-lg border bg-gray-50 dark:bg-gray-800 animate-pulse">
             <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-24 mb-3"></div>
             <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full mb-4"></div>
             {/* Year Block Skeleton */}
@@ -122,7 +125,7 @@ export default function RGPHTable({ data, isLoading, t, theme, language, tableTy
   );
 
   const NoDataMessage = () => (
-    <div className="text-center text-gray-500 py-8">
+    <div className="text-center text-gray-500 dark:text-gray-400 py-8">
       <div className="text-4xl mb-2">📊</div>
       <p className="text-lg font-medium">{t?.rgphpage?.no_data || 'لا توجد بيانات مطابقة'}</p>
       <p className="text-sm">{t?.rgphpage?.adjust_filters || 'حاول تعديل مرشحات البحث'}</p>
@@ -136,24 +139,24 @@ export default function RGPHTable({ data, isLoading, t, theme, language, tableTy
         if (tableType === "part2") {
             return (
                 <TableRow>
-                    <TableHead>{t?.rgphpage?.year || 'السنة'}</TableHead>
-                    <TableHead>{t?.rgphpage?.theme || 'الموضوع'}</TableHead>
-                    <TableHead>{t?.rgphpage?.indicator || 'المؤشر'}</TableHead>
-                    <TableHead className="text-right">{t?.rgphpage?.total_value || 'القيمة'}</TableHead>
+                    <TableHead className="text-xs">{t?.rgphpage?.year || 'السنة'}</TableHead>
+                    <TableHead className="text-xs">{t?.rgphpage?.theme || 'الموضوع'}</TableHead>
+                    <TableHead className="text-xs">{t?.rgphpage?.indicator || 'المؤشر'}</TableHead>
+                    <TableHead className="text-right text-xs">{t?.rgphpage?.total_value || 'القيمة'}</TableHead>
                 </TableRow>
             );
         }
         return (
             <TableRow>
-                <TableHead>{t?.rgphpage?.year || 'السنة'}</TableHead>
-                <TableHead>{t?.rgphpage?.theme || 'الموضوع'}</TableHead>
-                <TableHead>{t?.rgphpage?.indicator || 'المؤشر'}</TableHead>
-                <TableHead className="text-right">{t?.rgphpage?.male_percent || 'ذكور (%)'}</TableHead>
-                <TableHead className="text-right">{t?.rgphpage?.male_count || 'ذكور'}</TableHead>
-                <TableHead className="text-right">{t?.rgphpage?.female_percent || 'إناث (%)'}</TableHead>
-                <TableHead className="text-right">{t?.rgphpage?.female_count || 'إناث'}</TableHead>
-                <TableHead className="text-right">{t?.rgphpage?.total_percent || 'المجموع (%)'}</TableHead>
-                <TableHead className="text-right">{t?.rgphpage?.total_count || 'المجموع'}</TableHead>
+                <TableHead className="text-xs">{t?.rgphpage?.year || 'السنة'}</TableHead>
+                <TableHead className="text-xs">{t?.rgphpage?.theme || 'الموضوع'}</TableHead>
+                <TableHead className="text-xs">{t?.rgphpage?.indicator || 'المؤشر'}</TableHead>
+                <TableHead className="text-right text-xs">{t?.rgphpage?.male_percent || 'ذكور (%)'}</TableHead>
+                <TableHead className="text-right text-xs">{t?.rgphpage?.male_count || 'ذكور'}</TableHead>
+                <TableHead className="text-right text-xs">{t?.rgphpage?.female_percent || 'إناث (%)'}</TableHead>
+                <TableHead className="text-right text-xs">{t?.rgphpage?.female_count || 'إناث'}</TableHead>
+                <TableHead className="text-right text-xs">{t?.rgphpage?.total_percent || 'المجموع (%)'}</TableHead>
+                <TableHead className="text-right text-xs">{t?.rgphpage?.total_count || 'المجموع'}</TableHead>
             </TableRow>
         );
     };
@@ -163,25 +166,25 @@ export default function RGPHTable({ data, isLoading, t, theme, language, tableTy
         const isPercentage = indicator?.includes('(%)');
         if (tableType === "part2") {
             return (
-                <TableRow key={idx} className={`${theme === 'dark' ? 'hover:bg-gray-700' : 'bg-stone-50 hover:bg-gray-100'}`}>
-                    <TableCell>{row.Année}</TableCell>
+                <TableRow key={idx} className={`${theme === 'dark' ? 'hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>
+                    <TableCell className="text-xs">{row.Année}</TableCell>
                     <TableCell><span className={`px-2 py-1 rounded-full text-xs font-medium ${getThemeColor(row.Thème)}`}>{row.Thème}</span></TableCell>
-                    <TableCell>{indicator}</TableCell>
-                    <TableCell className="text-right font-mono font-semibold text-blue-600">{formatNumber(row.Ensemble)}{isPercentage ? '%' : ''}</TableCell>
+                    <TableCell className="text-xs">{indicator}</TableCell>
+                    <TableCell className="text-right font-mono font-semibold text-blue-600 text-xs">{formatNumber(row.Ensemble)}{isPercentage ? '%' : ''}</TableCell>
                 </TableRow>
             );
         }
         return (
-            <TableRow key={idx} className={`${theme === 'dark' ? 'hover:bg-gray-700' : 'bg-stone-50 hover:bg-gray-100'}`}>
-                <TableCell>{row.Année}</TableCell>
+            <TableRow key={idx} className={`${theme === 'dark' ? 'hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>
+                <TableCell className="text-xs">{row.Année}</TableCell>
                 <TableCell><span className={`px-2 py-1 rounded-full text-xs font-medium ${getThemeColor(row.Thème)}`}>{row.Thème}</span></TableCell>
-                <TableCell>{indicator}</TableCell>
-                <TableCell className="text-right font-mono">{formatNumber(row['Masculin (%)'])}{row['Masculin (%)'] ? '%' : ''}</TableCell>
-                <TableCell className="text-right font-mono text-blue-600">{formatNumber(row.Masculin)}</TableCell>
-                <TableCell className="text-right font-mono">{formatNumber(row['Féminin (%)'])}{row['Féminin (%)'] ? '%' : ''}</TableCell>
-                <TableCell className="text-right font-mono text-pink-600">{formatNumber(row.Féminin)}</TableCell>
-                <TableCell className="text-right font-mono font-semibold">{formatNumber(row['Ensemble (%)'])}{row['Ensemble (%)'] ? '%' : ''}</TableCell>
-                <TableCell className="text-right font-mono font-semibold text-green-600">{formatNumber(row.Ensemble)}</TableCell>
+                <TableCell className="text-xs">{indicator}</TableCell>
+                <TableCell className="text-right font-mono text-xs">{formatNumber(row['Masculin (%)'])}{row['Masculin (%)'] ? '%' : ''}</TableCell>
+                <TableCell className="text-right font-mono text-blue-600 text-xs">{formatNumber(row.Masculin)}</TableCell>
+                <TableCell className="text-right font-mono text-xs">{formatNumber(row['Féminin (%)'])}{row['Féminin (%)'] ? '%' : ''}</TableCell>
+                <TableCell className="text-right font-mono text-pink-600 text-xs">{formatNumber(row.Féminin)}</TableCell>
+                <TableCell className="text-right font-mono font-semibold text-xs">{formatNumber(row['Ensemble (%)'])}{row['Ensemble (%)'] ? '%' : ''}</TableCell>
+                <TableCell className="text-right font-mono font-semibold text-green-600 text-xs">{formatNumber(row.Ensemble)}</TableCell>
             </TableRow>
         );
     });
@@ -195,7 +198,7 @@ export default function RGPHTable({ data, isLoading, t, theme, language, tableTy
     ));
 
     return (
-        <div className="hidden lg:block overflow-auto rounded-md border max-h-[80vh] shadow-cyan-500/20 shadow-2xl">
+        <div className="hidden lg:block overflow-auto rounded-md border max-h-[70vh] shadow-cyan-500/20 shadow-2xl">
             <Table>
                 <TableHeader>{renderHeaders()}</TableHeader>
                 <TableBody>

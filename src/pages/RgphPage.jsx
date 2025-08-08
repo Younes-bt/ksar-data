@@ -200,13 +200,16 @@ export default function RgphPage({ data, loading, t, language, theme }) {
   );
 
   return (
-    <div className={`p-5 md:px-40 md:py-10 space-y-4 min-h-screen ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
+    <div style={language === 'ar' ? 
+          { fontFamily: 'Noto Kufi Arabic, sans-serif', direction:'rtl' } : 
+          { fontFamily: 'Inter, sans-serif', direction:'ltr' }
+        }  className={`p-5 md:px-40 md:py-10 space-y-4 min-h-screen ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
       <h1 
         style={language === 'ar' ? 
-          { fontFamily: 'Noto Kufi Arabic, sans-serif', direction:'rtl', fontSize:'2rem' } : 
-          { fontFamily: 'Inter, sans-serif', direction:'ltr', fontSize:'2rem' }
+          { fontFamily: 'Noto Kufi Arabic, sans-serif', direction:'rtl' } : 
+          { fontFamily: 'Inter, sans-serif', direction:'ltr' }
         } 
-        className="text-center mb-10"
+        className="text-center mb-10 text-md sm:text-3xl"
       >
         {t?.rgphpage?.Search_RGPH_Data || 'البحث في بيانات الإحصاء العام للسكان والسكنى' || 'Search RGPH Data'}
       </h1>

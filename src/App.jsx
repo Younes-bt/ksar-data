@@ -116,7 +116,7 @@ function App() {
       });
 
     // Add votings data loading
-    const loadVotingsData = fetch("/votings.json")
+    const loadVotingsData = fetch("/voting_sort_2.json")
       .then(res => {
         console.log("Votings data fetch response:", res.status, res.statusText);
         if (!res.ok) {
