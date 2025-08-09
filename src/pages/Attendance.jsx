@@ -33,6 +33,10 @@ export default function Attendance({ data, loading, t, language, theme }) {
   const [isPersonFiltering, setIsPersonFiltering] = useState(false);
   const [personCurrentPage, setPersonCurrentPage] = useState(1);
   const [personRowsPerPage, setPersonRowsPerPage] = useState(15);
+  const [sortConfig, setSortConfig] = useState({ 
+    key: 'attendancePercentage', 
+    direction: 'desc' 
+  }); // Default sort by attendance percentage descending
 
   // Flatten sessions data for session-based view
   const flattenedData = data.flatMap(file => 
@@ -66,128 +70,125 @@ export default function Attendance({ data, loading, t, language, theme }) {
 
   // Process attendance data for person-based view
   const processAttendanceData = () => {
-  const personStats = {};
-  
-  // Sort data chronologically by extracting dates from sessions
-  const sortedData = data.sort((a, b) => {
-    const getLatestDate = (file) => {
-      const dates = file.sessions.map(session => new Date(session.date));
-      return Math.max(...dates);
-    };
-    return getLatestDate(a) - getLatestDate(b);
-  });
-  
-  // Process each file and session
-  sortedData.forEach(file => {
-    file.sessions.forEach(session => {
-      const sessionDate = new Date(session.date);
-      
-      // Helper function to update person stats
-      const updatePersonStats = (person, status) => {
-        if (!personStats[person.name]) {
-          personStats[person.name] = {
-            name: person.name,
-            currentRole: person.role,
-            totalPresent: 0,
-            totalAbsentWithReason: 0,
-            totalAbsentWithoutReason: 0,
-            totalSessions: 0,
-            sessionHistory: [],
-            roleHistory: []
-          };
-        }
-        
-        const personStat = personStats[person.name];
-        
-        // Track role changes
-        const lastRole = personStat.roleHistory.length > 0 
-          ? personStat.roleHistory[personStat.roleHistory.length - 1].role 
-          : null;
-          
-        if (lastRole !== person.role) {
-          personStat.roleHistory.push({
-            role: person.role,
-            startDate: session.date,
-            sessionDate: sessionDate
-          });
-        }
-        
-        // Update current role to most recent
-        personStat.currentRole = person.role;
-        
-        // Update attendance stats
-        if (status === 'present') {
-          personStat.totalPresent++;
-        } else if (status === 'absent_with_reason') {
-          personStat.totalAbsentWithReason++;
-        } else if (status === 'absent_without_reason') {
-          personStat.totalAbsentWithoutReason++;
-        }
-        
-        personStat.totalSessions++;
-        
-        // Add to session history
-        personStat.sessionHistory.push({
-          date: session.date,
-          role: person.role,
-          status: status,
-          sessionType: session.session_type,
-          sessionNumber: session.session_number
-        });
+    const personStats = {};
+    
+    // Sort data chronologically by extracting dates from sessions
+    const sortedData = data.sort((a, b) => {
+      const getLatestDate = (file) => {
+        const dates = file.sessions.map(session => new Date(session.date));
+        return Math.max(...dates);
       };
-      
-      // Process attendees
-      session.attendees?.forEach(person => {
-        updatePersonStats(person, 'present');
-      });
-      
-      // Process absentees with reason
-      session.absentees_with_reason?.forEach(person => {
-        updatePersonStats(person, 'absent_with_reason');
-      });
-      
-      // Process absentees without reason
-      session.absentees_without_reason?.forEach(person => {
-        updatePersonStats(person, 'absent_without_reason');
+      return getLatestDate(a) - getLatestDate(b);
+    });
+    
+    // Process each file and session
+    sortedData.forEach(file => {
+      file.sessions.forEach(session => {
+        const sessionDate = new Date(session.date);
+        
+        // Helper function to update person stats
+        const updatePersonStats = (person, status) => {
+          if (!personStats[person.name]) {
+            personStats[person.name] = {
+              name: person.name,
+              currentRole: person.role,
+              totalPresent: 0,
+              totalAbsentWithReason: 0,
+              totalAbsentWithoutReason: 0,
+              totalSessions: 0,
+              sessionHistory: [],
+              roleHistory: []
+            };
+          }
+          
+          const personStat = personStats[person.name];
+          
+          // Track role changes
+          const lastRole = personStat.roleHistory.length > 0 
+            ? personStat.roleHistory[personStat.roleHistory.length - 1].role 
+            : null;
+            
+          if (lastRole !== person.role) {
+            personStat.roleHistory.push({
+              role: person.role,
+              startDate: session.date,
+              sessionDate: sessionDate
+            });
+          }
+          
+          // Update current role to most recent
+          personStat.currentRole = person.role;
+          
+          // Update attendance stats
+          if (status === 'present') {
+            personStat.totalPresent++;
+          } else if (status === 'absent_with_reason') {
+            personStat.totalAbsentWithReason++;
+          } else if (status === 'absent_without_reason') {
+            personStat.totalAbsentWithoutReason++;
+          }
+          
+          personStat.totalSessions++;
+          
+          // Add to session history
+          personStat.sessionHistory.push({
+            date: session.date,
+            role: person.role,
+            status: status,
+            sessionType: session.session_type,
+            sessionNumber: session.session_number
+          });
+        };
+        
+        // Process attendees
+        session.attendees?.forEach(person => {
+          updatePersonStats(person, 'present');
+        });
+        
+        // Process absentees with reason
+        session.absentees_with_reason?.forEach(person => {
+          updatePersonStats(person, 'absent_with_reason');
+        });
+        
+        // Process absentees without reason
+        session.absentees_without_reason?.forEach(person => {
+          updatePersonStats(person, 'absent_without_reason');
+        });
       });
     });
-  });
-  
-  // Calculate attendance percentages and finalize data
-  const processedData = Object.values(personStats).map(person => {
-    const attendancePercentage = person.totalSessions > 0 
-      ? ((person.totalPresent / person.totalSessions) * 100).toFixed(1)
-      : '0.0';
     
-    // Determine if there was a role change
-    const hasRoleChange = person.roleHistory.length > 1;
+    // Calculate attendance percentages and finalize data
+    const processedData = Object.values(personStats).map(person => {
+      const attendancePercentage = person.totalSessions > 0 
+        ? ((person.totalPresent / person.totalSessions) * 100).toFixed(1)
+        : '0.0';
+      
+      // Determine if there was a role change
+      const hasRoleChange = person.roleHistory.length > 1;
+      
+      return {
+        name: person.name,
+        role: person.currentRole, // Current/latest role
+        totalPresent: person.totalPresent,
+        totalAbsentWithReason: person.totalAbsentWithReason,
+        totalAbsentWithoutReason: person.totalAbsentWithoutReason,
+        totalSessions: person.totalSessions,
+        attendancePercentage: attendancePercentage,
+        sessionHistory: person.sessionHistory,
+        roleHistory: person.roleHistory,
+        hasRoleChange: hasRoleChange,
+        // Additional info for display
+        firstRole: person.roleHistory.length > 0 ? person.roleHistory[0].role : person.currentRole,
+        roleChangeInfo: hasRoleChange ? {
+          from: person.roleHistory[0].role,
+          to: person.roleHistory[person.roleHistory.length - 1].role,
+          changeDate: person.roleHistory[1]?.startDate || null
+        } : null
+      };
+    });
     
-    return {
-      name: person.name,
-      role: person.currentRole, // Current/latest role
-      totalPresent: person.totalPresent,
-      totalAbsentWithReason: person.totalAbsentWithReason,
-      totalAbsentWithoutReason: person.totalAbsentWithoutReason,
-      totalSessions: person.totalSessions,
-      attendancePercentage: attendancePercentage,
-      sessionHistory: person.sessionHistory,
-      roleHistory: person.roleHistory,
-      hasRoleChange: hasRoleChange,
-      // Additional info for display
-      firstRole: person.roleHistory.length > 0 ? person.roleHistory[0].role : person.currentRole,
-      roleChangeInfo: hasRoleChange ? {
-        from: person.roleHistory[0].role,
-        to: person.roleHistory[person.roleHistory.length - 1].role,
-        changeDate: person.roleHistory[1]?.startDate || null
-      } : null
-    };
-  });
-  
-  // Sort by attendance percentage (descending)
-  return processedData.sort((a, b) => 
-    parseFloat(b.attendancePercentage) - parseFloat(a.attendancePercentage)
-  );
-};
+    return processedData;
+  };
 
   const processedData = processAttendanceData();
 
@@ -195,6 +196,57 @@ export default function Attendance({ data, loading, t, language, theme }) {
   const getUniqueRoles = () => {
     const roles = [...new Set(processedData.map(item => item.role).filter(Boolean))];
     return roles.sort();
+  };
+
+  // Sorting function for person data
+  const sortPersonData = (data, sortConfig) => {
+    if (!sortConfig) return data;
+
+    const { key, direction } = sortConfig;
+    
+    return [...data].sort((a, b) => {
+      let aValue = a[key];
+      let bValue = b[key];
+
+      // Convert to numbers for numeric fields
+      if (['totalPresent', 'totalAbsentWithReason', 'totalAbsentWithoutReason', 'totalSessions', 'attendancePercentage'].includes(key)) {
+        aValue = parseFloat(aValue) || 0;
+        bValue = parseFloat(bValue) || 0;
+      }
+
+      // Handle string sorting (case insensitive)
+      if (typeof aValue === 'string' && typeof bValue === 'string') {
+        aValue = aValue.toLowerCase();
+        bValue = bValue.toLowerCase();
+      }
+
+      if (aValue < bValue) {
+        return direction === 'asc' ? -1 : 1;
+      }
+      if (aValue > bValue) {
+        return direction === 'asc' ? 1 : -1;
+      }
+      return 0;
+    });
+  };
+
+  // Handle sorting
+  const handleSort = (key) => {
+    let direction = 'desc'; // Default to descending for better UX
+    
+    if (sortConfig && sortConfig.key === key) {
+      // If already sorting by this key, toggle direction
+      direction = sortConfig.direction === 'asc' ? 'desc' : 'asc';
+    } else if (['totalAbsentWithReason', 'totalAbsentWithoutReason'].includes(key)) {
+      // For absence columns, start with ascending (lower is better)
+      direction = 'asc';
+    } else if (key === 'name' || key === 'role') {
+      // For text columns, start with ascending (A-Z)
+      direction = 'asc';
+    }
+    
+    setSortConfig({ key, direction });
+    setPersonCurrentPage(1); // Reset to first page when sorting
   };
 
   // Effect for session-based filtering
@@ -250,13 +302,14 @@ export default function Attendance({ data, loading, t, language, theme }) {
     return () => clearTimeout(timeoutId);
   }, [search, sessionTypeFilter, yearFilter, monthFilter, data]);
 
-  // Effect for person-based filtering
+  // Effect for person-based filtering and sorting
   useEffect(() => {
     setIsPersonFiltering(true);
     
     const timeoutId = setTimeout(() => {
       let temp = processedData;
 
+      // Apply filters first
       if (personSearch) {
         const normalizedSearch = normalizeText(personSearch);
         temp = temp.filter(person => {
@@ -292,13 +345,16 @@ export default function Attendance({ data, loading, t, language, theme }) {
         });
       }
 
+      // Apply sorting after filtering
+      temp = sortPersonData(temp, sortConfig);
+
       setFilteredPersonData(temp);
       setIsPersonFiltering(false);
       setPersonCurrentPage(1);
     }, 100);
 
     return () => clearTimeout(timeoutId);
-  }, [personSearch, roleFilter, attendanceFilter, data]);
+  }, [personSearch, roleFilter, attendanceFilter, data, sortConfig]);
 
   // Calculate paginated data for sessions
   const totalRows = filteredData.length;
@@ -426,24 +482,14 @@ export default function Attendance({ data, loading, t, language, theme }) {
     return pageNumbers;
   };
 
-  <style jsx>{`
-  [data-state="active"] {
-    background-color: #2563eb !important; /* Blue background for active tab */
-    color: #ffffff !important; /* White text for active tab */
-  }
-  [data-state="active"]:hover {
-    background-color: #1e40af !important; /* Slightly darker blue on hover */
-  }
-  .tabs-list {
-    border-radius: 0.375rem; /* Optional: Match Shadcn's default border radius */
-  }
-`}</style>
-
   return (
     <div style={language === 'ar' ? 
           { fontFamily: 'Noto Kufi Arabic, sans-serif', direction:'rtl' } : 
           { fontFamily: 'Inter, sans-serif', direction:'ltr' }
         }  className={`p-5 md:px-40 md:py-10 space-y-4 min-h-screen ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
+      
+      
+
       <h1 style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif', direction:'rtl', fontSize:'2rem' } : { fontFamily: 'Inter, sans-serif', direction:'ltr', fontSize:'2rem' }} className="text-center mb-10">
         {t?.attendancepage?.search_attendance_data || 'بيانات حضور الجلسات'}
       </h1>
@@ -547,22 +593,23 @@ export default function Attendance({ data, loading, t, language, theme }) {
               )}
             </p>
           </div>
-<p className='text-red-500 text-sm text-center mb-2'>
-                {t?.attendancepage?.click_for_details || 'اضغط على الجلسة لعرض التفاصيل'}
-              </p>
+
+          <p className='text-red-500 text-sm text-center mb-2'>
+            {t?.attendancepage?.click_for_details || 'اضغط على الجلسة لعرض التفاصيل'}
+          </p>
+
           <AttendanceTable t={t} data={paginatedData} isLoading={isFiltering} theme={theme} language={language}/>
 
           <div className={`mt-4 p-4 text-center rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
-        <div className="flex items-center gap-2 text-sm text-gray-600">
-          <div>
-            <p className="font-medium">
-              {t?.supportpage?.data_source || 'Data Source'} : {t?.supportpage?.municipal_records || 'Municipal Records of Al Ksar Al Kabir'}
-              {' - '} {t?.supportpage?.years_range || 'Years'}: 2021-2025
-            </p>
-            
+            <div className="flex items-center gap-2 text-sm text-gray-600">
+              <div>
+                <p className="font-medium">
+                  {t?.supportpage?.data_source || 'Data Source'} : {t?.supportpage?.municipal_records || 'Municipal Records of Al Ksar Al Kabir'}
+                  {' - '} {t?.supportpage?.years_range || 'Years'}: 2021-2025
+                </p>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-4">
             <Pagination className="mb-10">
@@ -605,7 +652,7 @@ export default function Attendance({ data, loading, t, language, theme }) {
               className="w-full sm:w-1/2"
               dir="auto"
             />
-{/*
+
             <Select onValueChange={(v) => setRoleFilter(v === "all" ? "" : v)} defaultValue="all">
               <SelectTrigger className={`w-full sm:w-1/4 ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
                 <SelectValue placeholder={t?.personsattendancepage?.filter_by_role || "تصفية حسب المنصب"} />
@@ -648,7 +695,7 @@ export default function Attendance({ data, loading, t, language, theme }) {
                 </SelectItem>
               </SelectContent>
             </Select>
-*/}
+
             <Select onValueChange={handlePersonRowsPerPageChange} defaultValue="15">
               <SelectTrigger className={`w-full sm:w-32 ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
                 <SelectValue placeholder={t?.personsattendancepage?.rows_per_page || "عدد الصفوف"} />
@@ -674,7 +721,7 @@ export default function Attendance({ data, loading, t, language, theme }) {
               )}
             </p>
           </div>
-{/* 
+
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
             <div className={`p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
               <div className="text-2xl font-bold text-blue-600">{processedData.length}</div>
@@ -702,20 +749,26 @@ export default function Attendance({ data, loading, t, language, theme }) {
               <div className="text-sm text-gray-500">{t?.personsattendancepage?.needs_improvement || 'يحتاج تحسين (<50%)'}</div>
             </div>
           </div>
-*/}
-          <PersonsAttendanceTable t={t} data={paginatedPersonData} isLoading={isPersonFiltering} theme={theme} language={language}/>
+
+          <PersonsAttendanceTable 
+            t={t} 
+            data={paginatedPersonData} 
+            isLoading={isPersonFiltering} 
+            theme={theme} 
+            language={language}
+            sortConfig={sortConfig}
+            onSort={handleSort}
+          />
 
           <div className={`mt-4 p-4 text-center rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
-        <div className="flex items-center gap-2 text-sm text-gray-600">
-          <div>
-            <p className="font-medium">
-              {t?.supportpage?.data_source || 'Data Source'} : {t?.supportpage?.municipal_records || 'Municipal Records of Al Ksar Al Kabir'}
-              
-            </p>
-            
+            <div className="flex items-center gap-2 text-sm text-gray-600">
+              <div>
+                <p className="font-medium">
+                  {t?.supportpage?.data_source || 'Data Source'} : {t?.supportpage?.municipal_records || 'Municipal Records of Al Ksar Al Kabir'}
+                </p>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-4">
             <Pagination className="mb-10">

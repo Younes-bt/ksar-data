@@ -1,8 +1,16 @@
 import React from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { UserCheck, UserX, Users, TrendingUp, TrendingDown, ArrowRight, Info } from "lucide-react";
+import { UserCheck, UserX, Users, TrendingUp, TrendingDown, ArrowRight, Info, ChevronUp, ChevronDown, ChevronsUpDown } from "lucide-react";
 
-export default function PersonsAttendanceTable({ data, isLoading, t, theme, language }) {
+export default function PersonsAttendanceTable({ 
+  data, 
+  isLoading, 
+  t, 
+  theme, 
+  language,
+  sortConfig,
+  onSort
+}) {
   
   // Translation function for member names
   const translateMemberName = (arabicName) => {
@@ -192,6 +200,30 @@ export default function PersonsAttendanceTable({ data, isLoading, t, theme, lang
       return roleMap[role] || translateRole(role);
     }
   };
+
+  // Function to get sorting icon based on current sort state
+  const getSortingIcon = (columnKey) => {
+    if (!sortConfig || sortConfig.key !== columnKey) {
+      return <ChevronsUpDown size={12} className="opacity-40" />;
+    }
+    
+    return sortConfig.direction === 'asc' 
+      ? <ChevronUp size={12} className="text-blue-600" />
+      : <ChevronDown size={12} className="text-blue-600" />;
+  };
+
+  // Function to create sortable header cell
+  const SortableHeader = ({ columnKey, children, className = "" }) => (
+    <TableHead 
+      className={`cursor-pointer select-none hover:bg-gray-50 ${theme === 'dark' ? 'hover:bg-gray-700' : ''} transition-colors ${className}`}
+      onClick={() => onSort && onSort(columnKey)}
+    >
+      <div className="flex items-center justify-center gap-1">
+        <span>{children}</span>
+        {getSortingIcon(columnKey)}
+      </div>
+    </TableHead>
+  );
   
   const getAttendancePercentageBadge = (percentage) => {
     const pct = parseFloat(percentage);
@@ -396,9 +428,31 @@ export default function PersonsAttendanceTable({ data, isLoading, t, theme, lang
               <TableHead className="w-12 text-xs">{t?.personsattendancepage?.rank || 'الترتيب'}</TableHead>
               <TableHead className="text-xs">{t?.personsattendancepage?.member_name || 'اسم العضو'}</TableHead>
               <TableHead className="text-center text-xs">{t?.personsattendancepage?.role || 'المنصب'}</TableHead>
-              <TableHead className="text-center text-xs">{t?.personsattendancepage?.total_presence || 'حضور'}</TableHead>
-              <TableHead className="text-center text-xs lg:table-cell hidden">{t?.personsattendancepage?.absent_with_reason || 'بعذر'}</TableHead>
-              <TableHead className="text-center text-xs lg:table-cell hidden">{t?.personsattendancepage?.absent_without_reason || 'بدون عذر'}</TableHead>
+              
+              {/* Sortable Presence Column */}
+              <SortableHeader 
+                columnKey="totalPresent" 
+                className="text-center text-xs"
+              >
+                {t?.personsattendancepage?.total_presence || 'حضور'}
+              </SortableHeader>
+              
+              {/* Sortable Absent With Reason Column */}
+              <SortableHeader 
+                columnKey="totalAbsentWithReason" 
+                className="text-center text-xs lg:table-cell hidden"
+              >
+                {t?.personsattendancepage?.absent_with_reason || 'بعذر'}
+              </SortableHeader>
+              
+              {/* Sortable Absent Without Reason Column */}
+              <SortableHeader 
+                columnKey="totalAbsentWithoutReason" 
+                className="text-center text-xs lg:table-cell hidden"
+              >
+                {t?.personsattendancepage?.absent_without_reason || 'بدون عذر'}
+              </SortableHeader>
+              
               <TableHead className="text-center text-xs">{t?.personsattendancepage?.total_sessions || 'المجموع'}</TableHead>
               <TableHead className="text-center text-xs">{t?.personsattendancepage?.attendance_percentage || 'النسبة'}</TableHead>
             </TableRow>

@@ -83,7 +83,10 @@
     "showing": "عرض",
     "of": "من",
     "results": "نتيجة",
-    "total": "إجمالي"
+    "total": "إجمالي",
+    "no_sort": "بدون ترتيب",
+    "highest_first": "من الأكثر للأقل",
+    "lowest_first": "من الأقل للأكثر"
   }, 
   "medicinepage": {
       "search_medicine_data": "البحث في أسعار الأدوية",

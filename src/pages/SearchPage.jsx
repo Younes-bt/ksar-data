@@ -18,6 +18,7 @@ export default function SearchPage({ data, loading, t, language, theme }) {
   const [search, setSearch] = useState("");
   const [yearFilter, setYearFilter] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
+  const [sortFilter, setSortFilter] = useState(""); // New sort state
   const [filteredData, setFilteredData] = useState([]);
   const [isFiltering, setIsFiltering] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -51,13 +52,31 @@ export default function SearchPage({ data, loading, t, language, theme }) {
       }
       if (typeFilter) temp = temp.filter(row => row.type === typeFilter);
 
+      // Filter to show only entries with approved amount > 0
+      temp = temp.filter(row => Number(row.amount_approved) > 0);
+
+      // Apply sorting based on approved amount
+      if (sortFilter) {
+        temp = [...temp].sort((a, b) => {
+          const amountA = Number(a.amount_approved);
+          const amountB = Number(b.amount_approved);
+          
+          if (sortFilter === 'asc') {
+            return amountA - amountB;
+          } else if (sortFilter === 'desc') {
+            return amountB - amountA;
+          }
+          return 0;
+        });
+      }
+
       setFilteredData(temp);
       setIsFiltering(false);
       setCurrentPage(1); // Reset to first page when filters change
     }, 100);
 
     return () => clearTimeout(timeoutId);
-  }, [search, yearFilter, typeFilter, data]);
+  }, [search, yearFilter, typeFilter, sortFilter, data]); // Added sortFilter to dependencies
 
   // Calculate paginated data
   const totalRows = filteredData.length;
@@ -139,7 +158,7 @@ export default function SearchPage({ data, loading, t, language, theme }) {
         />
 
         <Select onValueChange={(v) => setYearFilter(v === "all" ? "" : v)} defaultValue="all">
-          <SelectTrigger className={`w-full sm:w-1/4 ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
+          <SelectTrigger className={`w-full sm:w-1/6 ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
             <SelectValue placeholder="Filter by Year" />
           </SelectTrigger>
           <SelectContent className={`${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
@@ -154,7 +173,7 @@ export default function SearchPage({ data, loading, t, language, theme }) {
         </Select>
 
         <Select onValueChange={(v) => setTypeFilter(v === "all" ? "" : v)} defaultValue="all">
-          <SelectTrigger className={`w-full sm:w-1/4 ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
+          <SelectTrigger className={`w-full sm:w-1/6 ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
             <SelectValue placeholder="Filter by Type" />
           </SelectTrigger>
           <SelectContent className={`${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
@@ -163,12 +182,26 @@ export default function SearchPage({ data, loading, t, language, theme }) {
             <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="recettes">{t?.searchpage?.recettes || 'Recettes'}</SelectItem>
           </SelectContent>
         </Select>
-        <Select onValueChange={handleRowsPerPageChange} defaultValue="10">
+
+        {/* New Sort by Approved Amount filter */}
+        <Select onValueChange={(v) => setSortFilter(v === "none" ? "" : v)} defaultValue="none">
+          <SelectTrigger className={`w-full sm:w-1/6 ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
+            <SelectValue placeholder="Sort by Amount" />
+          </SelectTrigger>
+          <SelectContent className={`${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
+            <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="none">{t?.searchpage?.no_sort || 'No sorting'}</SelectItem>
+            <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="desc">{t?.searchpage?.highest_first || 'Highest first'}</SelectItem>
+            <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="asc">{t?.searchpage?.lowest_first || 'Lowest first'}</SelectItem>
+          </SelectContent>
+        </Select>
+
+        <Select onValueChange={handleRowsPerPageChange} defaultValue="15">
           <SelectTrigger className={`w-full sm:w-32 ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
             <SelectValue placeholder="Rows per page" />
           </SelectTrigger>
           <SelectContent className={`${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
             <SelectItem value="10" className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>10</SelectItem>
+            <SelectItem value="15" className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>15</SelectItem>
             <SelectItem value="20" className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>20</SelectItem>
             <SelectItem value="50" className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>50</SelectItem>
           </SelectContent>
