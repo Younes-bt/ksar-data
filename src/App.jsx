@@ -14,6 +14,8 @@ import Attendance from "./pages/Attendance";
 import PersonsAttendance from "./pages/PersonsAttendance";
 import Decisions from "./pages/Decisions"; // Add Decisions import
 import ContactUs from "./pages/ContactUs";
+import Download from "./pages/Download";
+
 
 function App() {
   const [budgetData, setBudgetData] = useState([]);
@@ -38,7 +40,7 @@ function App() {
     setLoading(true);
     
     // Load budget, RGPH, medicine, support, attendance, and votings data concurrently
-    const loadBudgetData = fetch("/full_data_v6.json")
+    const loadBudgetData = fetch("full_data_v6.json")
       .then(res => {
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
@@ -392,6 +394,16 @@ function App() {
             />
           } 
         />
+        <Route 
+  path="/download" 
+  element={
+    <Download 
+      t={t} 
+      language={language} 
+      theme={theme} 
+    />
+  } 
+/>
       </Routes>
     </Router>
   );

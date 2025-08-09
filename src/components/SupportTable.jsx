@@ -10,7 +10,6 @@ import { TrendingUp, Trophy } from "lucide-react";
 export default function SupportTable({ data, isLoading, t, theme, language }) {
   // Function to format numbers with commas for better readability
   const formatNumber = (num) => {
-    // Ensure num is a valid number before formatting
     const number = parseFloat(num);
     if (isNaN(number)) {
       return num; // Return original value if not a number
@@ -18,10 +17,24 @@ export default function SupportTable({ data, isLoading, t, theme, language }) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
+  // Function to get the correct association name based on the current language
+  const getAssociationName = (row) => {
+    switch (language) {
+      case 'en':
+        return row.name_en || row['الجمعية المستفيدة']; // Fallback to Arabic name
+      case 'fr':
+        return row.name_fr || row['الجمعية المستفيدة']; // Fallback to Arabic name
+      case 'ar':
+      default:
+        return row['الجمعية المستفيدة'];
+    }
+  };
+
   // Mobile card view for small screens
   const MobileCard = ({ row }) => {
     const grantAmount = parseFloat(row.المنحة.replace(/,/g, ''));
     const formattedAmount = formatNumber(grantAmount);
+    const associationName = getAssociationName(row);
 
     return (
       <div className={`p-3 mb-3 rounded-lg border ${
@@ -31,7 +44,7 @@ export default function SupportTable({ data, isLoading, t, theme, language }) {
           {/* Left side: Association Name and Year */}
           <div className="flex-grow">
             <h3 className="font-semibold text-sm mb-2 break-words" style={language === 'ar' ? { direction: 'rtl' } : { direction: 'ltr' }}>
-              {row['الجمعية المستفيدة']}
+              {associationName}
             </h3>
             <span className="inline-block px-2 py-0.5 text-xs bg-blue-100 text-blue-800 rounded-full">
               {row.السنة}
@@ -126,6 +139,7 @@ export default function SupportTable({ data, isLoading, t, theme, language }) {
               data.map((row, idx) => {
                 const grantAmount = parseFloat(row.المنحة.replace(/,/g, ''));
                 const formattedAmount = formatNumber(grantAmount);
+                const associationName = getAssociationName(row);
                 
                 return (
                   <TableRow key={idx} className={`${theme === 'dark' ? 'hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>
@@ -138,15 +152,15 @@ export default function SupportTable({ data, isLoading, t, theme, language }) {
                       <Popover>
                         <PopoverTrigger asChild>
                           <span 
-                            className="block truncate max-w-xs cursor-pointer" 
-                            style={language === 'ar' ? { direction: 'rtl', textAlign: 'right' } : { direction: 'ltr' }}
+                            className="block max-w-xs cursor-pointer" 
+                            style={language === 'ar' ? { direction: 'rtl', textAlign: 'right' } : { direction: 'ltr', textAlign: 'left' }}
                           >
-                            {row['الجمعية المستفيدة']}
+                            {associationName}
                           </span>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto max-w-md break-words p-3 bg-gray-800 text-white border-gray-600">
                           <span style={language === 'ar' ? { direction: 'rtl' } : { direction: 'ltr' }}>
-                            {row['الجمعية المستفيدة']}
+                            {associationName}
                           </span>
                         </PopoverContent>
                       </Popover>

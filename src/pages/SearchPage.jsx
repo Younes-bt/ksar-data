@@ -176,6 +176,7 @@ export default function SearchPage({ data, loading, t, language, theme }) {
       </div>
 
       {/* Results info */}
+      
       <div className="flex items-center justify-between">
         <p className="text-sm text-gray-600">
           {isFiltering ? (

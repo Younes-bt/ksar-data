@@ -14,6 +14,7 @@ function Navbar({ language, setLanguage, theme, setTheme, t }) {
     { path: "/rgph", label: t?.navbar?.RGPH || "RGPH" },
     { path: "/insights", label: t?.navbar?.insights || "Insights" },
     { path: "/medicines", label: t?.navbar?.medicine || "Medicine Prices" },
+    { path: "/download", label: t?.navbar?.download || "download" },
     { path: "/about", label: t?.navbar?.about || "About" },
     { path: "/contactUs", label: t?.navbar?.contact || "Contact" },
   ]
