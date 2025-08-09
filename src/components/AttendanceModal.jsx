@@ -39,7 +39,7 @@ export default function AttendanceModal({ session, isOpen, onClose, t, theme }) 
                         {/* Session Info */}
                         <div className={`p-3 text-center rounded-lg ${theme === 'dark' ? 'bg-gray-700 border border-gray-100' : 'bg-gray-100 border border-gray-950'} ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'}`}>
                             <h4 className="mb-1 text-base font-semibold">
-                                {t?.attendancepage?.session || 'جلسة'} رقم {session.session_number}
+                                {t?.attendancepage?.session || 'الجلسة'} - {session.session_number}
                             </h4>
                             <p className="text-sm leading-relaxed">
                                 {formatDate(session.date)} - {session.time}
@@ -47,23 +47,25 @@ export default function AttendanceModal({ session, isOpen, onClose, t, theme }) 
                         </div>
 
                         {/* Attendance Summary */}
-                        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                        <div className="grid grid-cols-3 gap-3 sm:grid-cols-4">
                             <div className={`p-2 text-center rounded-lg ${theme === 'dark' ? 'bg-gray-700 border border-gray-100' : 'bg-gray-100 border border-gray-950'}`}>
                                 <div className="text-xl font-bold text-green-600">{session.attendance.present}</div>
                                 <div className="text-xs text-green-700 dark:text-green-500">{t?.attendancepage?.present || 'حاضر'}</div>
                             </div>
                             <div className={`p-2 text-center rounded-lg ${theme === 'dark' ? 'bg-gray-700 border border-gray-100' : 'bg-gray-100 border border-gray-950'}`}>
-                                <div className="text-xl font-bold text-yellow-600">{session.attendance.absent_with_reason}</div>
-                                <div className="text-xs text-yellow-700 dark:text-yellow-500">{t?.attendancepage?.absent_with_reason || 'غائب بعذر'}</div>
+                                <div className="text-xl font-bold text-orange-500">{session.attendance.absent_with_reason}</div>
+                                <div className="text-xs text-orange-500 dark:text-yellow-500">{t?.attendancepage?.absent_with_reason || 'غائب بعذر'}</div>
                             </div>
                             <div className={`p-2 text-center rounded-lg ${theme === 'dark' ? 'bg-gray-700 border border-gray-100' : 'bg-gray-100 border border-gray-950'}`}>
                                 <div className="text-xl font-bold text-red-600">{session.attendance.absent_without_reason}</div>
                                 <div className="text-xs text-red-700 dark:text-red-500">{t?.attendancepage?.absent_without_reason || 'غائب بدون عذر'}</div>
                             </div>
+                            {/* 
                             <div className={`p-2 text-center rounded-lg ${theme === 'dark' ? 'bg-gray-700 border border-gray-100' : 'bg-gray-100 border border-gray-950'}`}>
                                 <div className="text-xl font-bold text-gray-600">{session.attendance.vacant_positions}</div>
                                 <div className="text-xs text-gray-700 dark:text-gray-500">{t?.attendancepage?.vacant_positions || 'مناصب شاغرة'}</div>
                             </div>
+                            */}
                         </div>
 
                         {/* Present Members */}

@@ -48,7 +48,7 @@ const ContactUsPage = ({
           },
           socialLinks: [
             { name: 'Facebook', icon: Facebook, url: '#', color: 'hover:text-blue-600' },
-            { name: 'Twitter/X', icon: Twitter, url: '#', color: 'hover:text-sky-500' },
+            { name: 'X', icon: Twitter, url: '#', color: 'hover:text-sky-500' },
             { name: 'LinkedIn', icon: Linkedin, url: '#', color: 'hover:text-blue-700' },
             { name: 'WhatsApp', icon: MessageSquare, url: '#', color: 'hover:text-green-500' }
           ]
@@ -196,82 +196,9 @@ ${formData.message}
         <div className="container mx-auto px-6 lg:px-12">
           <div className="grid lg:grid-cols-2 gap-12">
             
-            {/* Contact Form */}
-            <div className={`rounded-lg border shadow-lg p-8 ${themeClasses.cardBg} ${themeClasses.borderColor}`}>
-              <div className="mb-8">
-                <h2 className={`text-3xl font-bold mb-4 ${themeClasses.textPrimary}`}>
-                  {t.formTitle}
-                </h2>
-                <p className={`text-lg ${themeClasses.textSecondary}`}>
-                  {t.formSubtitle}
-                </p>
-              </div>
-
-              <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Name Field */}
-                <div>
-                  <label className={`block text-sm font-medium mb-2 ${themeClasses.textPrimary}`}>
-                    <User className={`w-4 h-4 inline ${language === 'ar' ? 'ml-2' : 'mr-2'}`} />
-                    {t.namePlaceholder}
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    placeholder={t.namePlaceholder}
-                    required
-                    className={`w-full px-4 py-3 rounded-lg border ${themeClasses.inputBg} ${themeClasses.inputBorder} ${themeClasses.textPrimary} ${themeClasses.inputFocus} focus:ring-2 focus:ring-opacity-50 transition-colors`}
-                  />
-                </div>
-
-                {/* Contact Field */}
-                <div>
-                  <label className={`block text-sm font-medium mb-2 ${themeClasses.textPrimary}`}>
-                    <Mail className={`w-4 h-4 inline ${language === 'ar' ? 'ml-2' : 'mr-2'}`} />
-                    {t.contactPlaceholder}
-                  </label>
-                  <input
-                    type="text"
-                    name="contact"
-                    value={formData.contact}
-                    onChange={handleInputChange}
-                    placeholder={t.contactPlaceholder}
-                    required
-                    className={`w-full px-4 py-3 rounded-lg border ${themeClasses.inputBg} ${themeClasses.inputBorder} ${themeClasses.textPrimary} ${themeClasses.inputFocus} focus:ring-2 focus:ring-opacity-50 transition-colors`}
-                  />
-                </div>
-
-                {/* Message Field */}
-                <div>
-                  <label className={`block text-sm font-medium mb-2 ${themeClasses.textPrimary}`}>
-                    <MessageCircle className={`w-4 h-4 inline ${language === 'ar' ? 'ml-2' : 'mr-2'}`} />
-                    {t.messagePlaceholder}
-                  </label>
-                  <textarea
-                    name="message"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    placeholder={t.messagePlaceholder}
-                    required
-                    rows={6}
-                    className={`w-full px-4 py-3 rounded-lg border ${themeClasses.inputBg} ${themeClasses.inputBorder} ${themeClasses.textPrimary} ${themeClasses.inputFocus} focus:ring-2 focus:ring-opacity-50 transition-colors resize-vertical`}
-                  />
-                </div>
-
-                {/* Submit Button */}
-                <button
-                  type="submit"
-                  className={`w-full px-6 py-3 rounded-lg ${themeClasses.buttonBg} text-white font-semibold transition-colors flex items-center justify-center`}
-                >
-                  <Send className={`w-5 h-5 ${language === 'ar' ? 'ml-2' : 'mr-2'}`} />
-                  {t.sendButton}
-                </button>
-              </form>
-            </div>
 
             {/* Contact Info & Social Media */}
-            <div className="space-y-8">
+            <div className="space-y-8 ">
               
               {/* Contact Information */}
               <div className={`rounded-lg border shadow-lg p-8 ${themeClasses.cardBg} ${themeClasses.borderColor}`}>

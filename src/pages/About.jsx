@@ -83,7 +83,7 @@ const AboutUsPage = ({
               title: 'كيف بنيناها',
               icon: Code,
               content: {
-                description: 'KSAR-DATA مبني باستخدام تقنيات مفتوحة المصدر: React، TailwindCSS، Pandas، وبيانات  من مصادر رسمية.',
+                description: 'تم إنجاز مشروع "KSAR-DATA" وفق منهجية عمل دقيقة ومراحل متكاملة، بهدف ضمان أعلى مستويات الجودة والموثوقية للبيانات. اعتمدنا في جميع مراحل المشروع على تقنيات مفتوحة المصدر، مما أتاح لنا مرونة عالية في التطوير وسهولة في التعامل مع البيانات. فيما يلي عرض مفصل لخطوات تنفيذ المشروع: \n\nالمرحلة الأولى: البحث وجمع البيانات \nبدأت رحلتنا بتحديد وتجميع المصادر الرسمية الموثوقة للبيانات المتعلقة بمدينة القصر الكبير. ركزنا على جمع الملفات والتقارير الصادرة عن الجهات الحكومية والمؤسسات المحلية، والتي كانت متاحة في الغالب بصيغة PDF، لضمان دقة وأصالة المعلومات.\n\nالمرحلة الثانية: استخلاص ومعالجة البيانات الأولية \n في هذه المرحلة، قمنا بتحميل ملفات PDF وتجهيزها للمعالجة. استخدمنا أدوات برمجية متخصصة لتحويل هذه الملفات إلى نصوص قابلة للتحليل. وشمل ذلك:التفريغ النصي: بالاعتماد على لغة البرمجة "بايثون" ومكتبتها القوية "PyPDF2"، تمكنا من استخراج النصوص بكفاءة. وفي الحالات التي كانت فيها المستندات ممسوحة ضوئيًا، لجأنا إلى تقنيات التعرف الضوئي على الحروف (OCR) لضمان عدم فقدان أي بيانات.تنظيف البيانات وتحويلها: بعد استخراج النصوص، استخدمنا مكتبة "Pandas" في "بايثون" لتنظيف البيانات من الأخطاء والتكرار، ومن ثم تحويلها إلى صيغ منظمة مثل CSV وJSON، لتسهيل استيرادها والتعامل معها في المراحل اللاحقة.\n\nالمرحلة الثالثة: تحليل البيانات وتجهيزها\nخضعت البيانات المنظمة لعمليات معالجة وتحليل متقدمة للتأكد من دقتها وتوافقها مع الهيكلية المعتمدة للمشروع. وقد هدفت هذه المرحلة إلى إعداد بيانات جاهزة وموثوقة للعرض والاستخدام النهائي.\n\nالمرحلة الرابعة: تطوير البنية التحتية التقنية للمشروعشملت هذه المرحلة الجوانب التقنية لتطوير المنصة:\nتطوير واجهة المستخدم (Frontend):\n تم تصميم وبناء واجهة مستخدم عصرية وسهلة الاستخدام بالاعتماد على مكتبة "React.js". كما استخدمنا إطار العمل "Tailwind CSS" لضمان تجربة مستخدم سلسة ومتجاوبة على مختلف الأجهزة والشاشات.',
                 tech: 'Open Source • React • TailwindCSS • ShadCN • Recharts • Pandas • Python'
               }
             },
@@ -111,167 +111,197 @@ const AboutUsPage = ({
 
       case 'en':
         return {
-          // Hero Section
-          
-          heroMission: 'KSAR-DATA is a local initiative to make Ksar El Kebir\'s public data open, visual, and easy to understand.',
-          heroSubtitle1: 'Transparency through data',
-          heroSubtitle2: 'Explore budgets, demographics, and key insights about your city',
+  // Hero Section
+  
+  heroMission: 'A local initiative to make the public data of Ksar El Kebir open, visible, and easy to understand.',
 
-          // Accordion Sections
-          sections: [
-            {
-              id: 'why',
-              title: 'Why We Built KSAR-DATA',
-              icon: Target,
-              content: {
-                description: 'Public data about our city exists, but it\'s often hard to access, full of jargon, and presented in static PDFs. KSAR-DATA changes that by transforming raw numbers into interactive charts, clear insights, and local stories.',
-                points: [
-                  'No political affiliation',
-                  'Non-commercial — built for education, civic awareness, and community engagement'
-                ]
-              }
-            },
-            {
-              id: 'what',
-              title: 'What You\'ll Find on KSAR-DATA',
-              icon: BarChart3,
-              content: {
-                items: [
-                  {
-                    icon: Building2,
-                    title: 'Budget Explorer',
-                    description: 'Track where public money comes from and where it goes'
-                  },
-                  {
-                    icon: Users,
-                    title: 'Population Insights',
-                    description: 'Understand the demographics of Ksar El Kebir (age, education, etc.)'
-                  },
-                  {
-                    icon: TrendingUp,
-                    title: 'Interactive Charts',
-                    description: 'Visualize multi-year trends in a clear and simple way'
-                  },
-                  {
-                    icon: Brain,
-                    title: 'Did You Know?',
-                    description: 'Surprising local facts from official statistics'
-                  }
-                ]
-              }
-            },
-            {
-              id: 'how',
-              title: 'How We Built It',
-              icon: Code,
-              content: {
-                description: 'KSAR-DATA is built using open-source technologies: React, TailwindCSS, Pandas, and CSV data from government sources.',
-                tech: 'Open Source • React • TailwindCSS • Pandas'
-              }
-            },
-            {
-              id: 'team',
-              title: 'Who\'s Behind It',
-              icon: Users,
-              content: {
-                description: 'KSAR-DATA is a project by Younes El Mourabit, full-stack developer and founder of OPICOM Tech. Built as part of an effort to give back to the community, promote transparency, and encourage civic engagement through open data.',
-                quote: 'This is just the beginning. We believe in the power of accessible information. If it helps one student, citizen, or journalist understand their city better — it\'s worth it.'
-              }
-            },
-            {
-              id: 'contact',
-              title: 'Contact & Contribution',
-              icon: Mail,
-              content: {
-                description: 'Want to report an error? Suggest a dataset? Collaborate with us?',
-                contactEmail: 'Email us at',
-                contactSocial: 'or message us via our Facebook page'
-              }
-            }
-          ]
-        };
+  // Accordion Sections
+  sections: [
+    {
+      id: 'why',
+      title: 'Why did we create KSAR-DATA?',
+      icon: Target,
+      content: {
+        description: 'Public data about our city is available… but accessing it is difficult, browsing is boring, and it is often presented in complex administrative PDF files without any tools for understanding or comparison. Ksar-Data was born from the need to understand the city’s budget, then evolved into an open initiative: towards a more aware and informed community.',
+        points: [
+          'We have no connection to any political party',
+          'The project is non-profit and was developed entirely without external funding',
+          'The sole goal is awareness and serving the community'
+        ]
+      }
+    },
+    {
+      id: 'what',
+      title: 'What you will find in KSAR-DATA',
+      icon: BarChart3,
+      content: {
+        items: [
+          {
+            icon: Building2,
+            title: 'Budget Explorer',
+            description: 'Track where public funds come from and where they go'
+          },
+          {
+            icon: Users,
+            title: 'Population Insights',
+            description: 'Understanding the demographics of Ksar El Kebir (age, education, etc.)'
+          },
+          {
+            icon: TrendingUp,
+            title: 'Interactive Charts',
+            description: 'Visualize multi-year trends clearly and simply'
+          },
+          {
+            icon: Brain,
+            title: 'Did you know?',
+            description: 'Amazing local facts from official statistics'
+          }
+        ]
+      }
+    },
+    {
+      id: 'how',
+      title: 'How we built it',
+      icon: Code,
+      content: {
+        description: `The "KSAR-DATA" project was accomplished following a precise methodology and comprehensive phases to ensure the highest levels of data quality and reliability. Throughout all project phases, we relied on open source technologies, which gave us high flexibility in development and ease of data handling. Below is a detailed presentation of the project implementation steps:
+
+Phase 1: Research and Data Collection  
+Our journey began by identifying and gathering official reliable data sources related to Ksar El Kebir. We focused on collecting files and reports issued by government bodies and local institutions, mostly available in PDF format, to guarantee data accuracy and authenticity.
+
+Phase 2: Extracting and Processing Raw Data  
+In this phase, we downloaded PDF files and prepared them for processing. We used specialized software tools to convert these files into analyzable text. This included:  
+- Text extraction: Using Python and its powerful "PyPDF2" library, we efficiently extracted text. For scanned documents, we applied Optical Character Recognition (OCR) techniques to avoid any data loss.  
+- Data cleaning and transformation: After text extraction, we used Python’s "Pandas" library to clean the data from errors and duplicates, then converted it into organized formats such as CSV and JSON for easier import and handling in later stages.
+
+Phase 3: Data Analysis and Preparation  
+The organized data underwent advanced processing and analysis to ensure its accuracy and compatibility with the project’s structure. This phase aimed to prepare reliable, ready-to-use data for display and final usage.
+
+Phase 4: Developing the Technical Infrastructure  
+This phase covered the technical aspects of platform development:  
+- Frontend development: We designed and built a modern, user-friendly interface using the React.js library. We also used the Tailwind CSS framework to ensure a smooth, responsive user experience across various devices and screen sizes.`,
+        tech: 'Open Source • React • TailwindCSS • ShadCN • Recharts • Pandas • Python'
+      }
+    },
+    {
+      id: 'team',
+      title: 'Who is behind the project',
+      icon: Users,
+      content: {
+        description: 'KSAR-DATA is a project by Younes Bettate, a full-stack developer. It was built as part of an effort to give back to the community, promote transparency, and encourage civic engagement through open data.',
+        quote: 'This is just the beginning. We strongly believe in the power of accessible information. If it helps even one student, citizen, or journalist better understand their city — it’s worth it.'
+      }
+    },
+    {
+      id: 'contact',
+      title: 'Contact and Contribution',
+      icon: Mail,
+      content: {
+        description: 'Want to report an error? Suggest a dataset? Collaborate with us?',
+        contactEmail: 'Write to us at',
+        contactSocial: 'or connect with us via our Facebook page'
+      }
+    }
+  ]
+};
+
 
       default: // French
         return {
-          // Hero Section
-          
-          heroMission: 'KSAR-DATA est une initiative locale pour rendre les données publiques de Ksar El Kebir ouvertes, visuelles et faciles à comprendre.',
-          heroSubtitle1: 'Transparence par les données',
-          heroSubtitle2: 'Explorez les budgets, la démographie et les insights clés de votre ville',
+  // Hero Section
+  
+  heroMission: 'Une initiative locale visant à rendre les données publiques de la ville de Ksar El Kebir ouvertes, visibles et faciles à comprendre.',
 
-          // Accordion Sections
-          sections: [
-            {
-              id: 'why',
-              title: 'Pourquoi Nous Avons Créé KSAR-DATA',
-              icon: Target,
-              content: {
-                description: 'Les données publiques sur notre ville existent, mais elles sont souvent difficiles d\'accès, pleines de jargon, et présentées dans des PDFs statiques. KSAR-DATA change cela en transformant les chiffres bruts en graphiques interactifs, insights clairs, et histoires locales.',
-                points: [
-                  'Aucune affiliation politique',
-                  'Non commercial — construit pour l\'éducation, la sensibilisation civique et l\'engagement communautaire'
-                ]
-              }
-            },
-            {
-              id: 'what',
-              title: 'Ce Que Vous Trouverez sur KSAR-DATA',
-              icon: BarChart3,
-              content: {
-                items: [
-                  {
-                    icon: Building2,
-                    title: 'Explorateur de Budget',
-                    description: 'Suivez d\'où vient l\'argent public et où il va'
-                  },
-                  {
-                    icon: Users,
-                    title: 'Insights de Population',
-                    description: 'Comprenez la démographie de Ksar El Kebir (âge, éducation, etc.)'
-                  },
-                  {
-                    icon: TrendingUp,
-                    title: 'Graphiques Interactifs',
-                    description: 'Visualisez les tendances multi-années de manière claire et simple'
-                  },
-                  {
-                    icon: Brain,
-                    title: 'Le Saviez-Vous ?',
-                    description: 'Faits locaux surprenants des statistiques officielles'
-                  }
-                ]
-              }
-            },
-            {
-              id: 'how',
-              title: 'Comment Nous L\'Avons Construit',
-              icon: Code,
-              content: {
-                description: 'KSAR-DATA est construit avec des technologies open-source : React, TailwindCSS, Pandas, et des données CSV de sources gouvernementales.',
-                tech: 'Open Source • React • TailwindCSS • Pandas'
-              }
-            },
-            {
-              id: 'team',
-              title: 'Qui Est Derrière',
-              icon: Users,
-              content: {
-                description: 'KSAR-DATA est un projet de Younes El Mourabit, développeur full-stack et fondateur d\'OPICOM Tech. Construit dans le cadre d\'un effort pour redonner à la communauté, promouvoir la transparence, et encourager l\'engagement civique par les données ouvertes.',
-                quote: 'Ce n\'est que le début. Nous croyons au pouvoir de l\'information accessible. Si cela aide un étudiant, un citoyen, ou un journaliste à mieux comprendre sa ville — cela en vaut la peine.'
-              }
-            },
-            {
-              id: 'contact',
-              title: 'Contact & Contribution',
-              icon: Mail,
-              content: {
-                description: 'Vous voulez signaler une erreur ? Suggérer un dataset ? Collaborer avec nous ?',
-                contactEmail: 'Écrivez-nous à',
-                contactSocial: 'ou contactez-nous via notre page Facebook'
-              }
-            }
-          ]
-        };
+  // Accordion Sections
+  sections: [
+    {
+      id: 'why',
+      title: 'Pourquoi avons-nous créé KSAR-DATA ?',
+      icon: Target,
+      content: {
+        description: 'Les données publiques de notre ville sont disponibles… mais y accéder est difficile, la navigation est ennuyeuse, et elles sont souvent présentées dans des fichiers PDF administratifs complexes, sans outils pour comprendre ou comparer. Ksar-Data est née du besoin de comprendre le budget de la ville, puis a évolué en une initiative ouverte : vers une communauté plus consciente et mieux informée.',
+        points: [
+          "Nous n'avons aucun lien avec une quelconque organisation politique",
+          "Le projet est à but non lucratif et a été développé entièrement sans financement externe",
+          "Le seul but est la sensibilisation et le service à la communauté"
+        ]
+      }
+    },
+    {
+      id: 'what',
+      title: 'Ce que vous trouverez dans KSAR-DATA',
+      icon: BarChart3,
+      content: {
+        items: [
+          {
+            icon: Building2,
+            title: 'Explorateur de Budget',
+            description: "Suivez d'où viennent les fonds publics et où ils vont"
+          },
+          {
+            icon: Users,
+            title: 'Aperçus de la Population',
+            description: 'Comprendre la démographie de Ksar El Kebir (âge, éducation, etc.)'
+          },
+          {
+            icon: TrendingUp,
+            title: 'Graphiques Interactifs',
+            description: 'Visualiser clairement et simplement les tendances pluriannuelles'
+          },
+          {
+            icon: Brain,
+            title: 'Le saviez-vous ?',
+            description: 'Faits locaux étonnants tirés des statistiques officielles'
+          }
+        ]
+      }
+    },
+    {
+      id: 'how',
+      title: 'Comment nous l\'avons construit',
+      icon: Code,
+      content: {
+        description: `Le projet "KSAR-DATA" a été réalisé selon une méthodologie précise et des phases complètes, afin d'assurer les plus hauts niveaux de qualité et de fiabilité des données. Tout au long des phases du projet, nous nous sommes appuyés sur des technologies open source, ce qui nous a offert une grande flexibilité dans le développement et une facilité de gestion des données. Voici une présentation détaillée des étapes de réalisation du projet :
+
+Phase 1 : Recherche et collecte des données  
+Notre parcours a commencé par l'identification et la collecte des sources de données officielles et fiables relatives à Ksar El Kebir. Nous avons ciblé la collecte de fichiers et de rapports émis par des organismes gouvernementaux et des institutions locales, principalement disponibles au format PDF, afin de garantir la précision et l'authenticité des informations.
+
+Phase 2 : Extraction et traitement des données brutes  
+Lors de cette phase, nous avons téléchargé les fichiers PDF et les avons préparés pour le traitement. Nous avons utilisé des outils logiciels spécialisés pour convertir ces fichiers en textes analysables. Cela incluait :  
+- Extraction de texte : En utilisant Python et sa puissante bibliothèque "PyPDF2", nous avons extrait efficacement les textes. Pour les documents scannés, nous avons appliqué des techniques de reconnaissance optique de caractères (OCR) pour éviter toute perte de données.  
+- Nettoyage et transformation des données : Après extraction du texte, nous avons utilisé la bibliothèque "Pandas" de Python pour nettoyer les données des erreurs et doublons, puis les convertir en formats organisés tels que CSV et JSON, facilitant ainsi leur importation et gestion aux étapes suivantes.
+
+Phase 3 : Analyse et préparation des données  
+Les données organisées ont subi des traitements et analyses avancées pour en assurer la précision et la compatibilité avec la structure du projet. Cette phase visait à préparer des données fiables et prêtes à l'affichage et à l'utilisation finale.
+
+Phase 4 : Développement de l'infrastructure technique  
+Cette phase a couvert les aspects techniques du développement de la plateforme :  
+- Développement frontend : Nous avons conçu et construit une interface utilisateur moderne et conviviale en utilisant la bibliothèque React.js. Nous avons également utilisé le framework Tailwind CSS pour garantir une expérience utilisateur fluide et responsive sur divers appareils et tailles d'écran.`,
+        tech: 'Open Source • React • TailwindCSS • ShadCN • Recharts • Pandas • Python'
+      }
+    },
+    {
+      id: 'team',
+      title: 'Qui est derrière le projet',
+      icon: Users,
+      content: {
+        description: 'KSAR-DATA est un projet de Younes Bettate, développeur full-stack. Il a été construit dans le cadre d’un effort pour rendre à la communauté, promouvoir la transparence, et encourager la participation citoyenne à travers les données ouvertes.',
+        quote: 'Ce n’est que le début. Nous croyons fermement au pouvoir de l’information accessible. Si cela aide ne serait-ce qu’un étudiant, citoyen, ou journaliste à mieux comprendre sa ville — cela en vaut la peine.'
+      }
+    },
+    {
+      id: 'contact',
+      title: 'Contact et Contribution',
+      icon: Mail,
+      content: {
+        description: 'Vous voulez signaler une erreur ? Proposer un jeu de données ? Collaborer avec nous ?',
+        contactEmail: 'Écrivez-nous à',
+        contactSocial: 'ou contactez-nous via notre page Facebook'
+      }
+    }
+  ]
+};
+
     }
   };
 
@@ -468,7 +498,7 @@ const AboutUsPage = ({
                       </span>
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-6">
+                  <AccordionContent className="px-6 pb-6 whitespace-pre-line">
                     {renderSectionContent(section)}
                   </AccordionContent>
                 </AccordionItem>

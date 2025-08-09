@@ -8,11 +8,34 @@ export default function RGPHTable({ data, isLoading, t, theme, language, tableTy
     return value.toLocaleString(language === 'ar' ? 'ar-MA' : 'fr-FR');
   };
 
+  // Helper function to translate theme/subject values
+  const translateTheme = (themeValue) => {
+    if (!t.subjects) return themeValue; // fallback if translations not available
+    
+    switch(themeValue) {
+      case 'DEMOGRAPHIE':
+        return t.subjects.demographie || themeValue;
+      case 'ACTIVITE ECONOMIQUE':
+        return t.subjects.activiteEconomique || themeValue;
+      case 'EDUCATION':
+        return t.subjects.education || themeValue;
+      case 'EDUCATION ':
+        return t.subjects.education || themeValue; // Handle the space variant
+      case 'LANGUES MATERNELLES':
+        return t.subjects.languesMaternelles || themeValue;
+      case 'CONDITIONS D\'HABITAT':
+        return t.subjects.conditionsHabitat || themeValue;
+      default:
+        return themeValue;
+    }
+  };
+
   const getThemeColor = (theme) => {
     const themeColors = {
         'DEMOGRAPHIE': 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
         'ACTIVITE ECONOMIQUE': 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
         'EDUCATION ': 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
+        'EDUCATION': 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
         'LANGUES MATERNELLES': 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200',
         'CONDITIONS D\'HABITAT': 'bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-200'
     };
@@ -86,7 +109,7 @@ export default function RGPHTable({ data, isLoading, t, theme, language, tableTy
       }`}>
         <div className="p-3">
           <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${getThemeColor(firstRow.Thème)}`}>
-            {firstRow.Thème}
+            {translateTheme(firstRow.Thème)}
           </span>
           <h3 className={`mt-2 font-semibold ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'}`} title={indicator}>
             {indicator}
@@ -148,9 +171,9 @@ export default function RGPHTable({ data, isLoading, t, theme, language, tableTy
         }
         return (
             <TableRow>
-                <TableHead className="text-xs">{t?.rgphpage?.year || 'السنة'}</TableHead>
-                <TableHead className="text-xs">{t?.rgphpage?.theme || 'الموضوع'}</TableHead>
-                <TableHead className="text-xs">{t?.rgphpage?.indicator || 'المؤشر'}</TableHead>
+                <TableHead className="text-xs text-center">{t?.rgphpage?.year || 'السنة'}</TableHead>
+                <TableHead className="text-xs text-center">{t?.rgphpage?.theme || 'الموضوع'}</TableHead>
+                <TableHead className="text-xs text-center">{t?.rgphpage?.indicator || 'المؤشر'}</TableHead>
                 <TableHead className="text-right text-xs">{t?.rgphpage?.male_percent || 'ذكور (%)'}</TableHead>
                 <TableHead className="text-right text-xs">{t?.rgphpage?.male_count || 'ذكور'}</TableHead>
                 <TableHead className="text-right text-xs">{t?.rgphpage?.female_percent || 'إناث (%)'}</TableHead>
@@ -168,7 +191,7 @@ export default function RGPHTable({ data, isLoading, t, theme, language, tableTy
             return (
                 <TableRow key={idx} className={`${theme === 'dark' ? 'hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>
                     <TableCell className="text-xs">{row.Année}</TableCell>
-                    <TableCell><span className={`px-2 py-1 rounded-full text-xs font-medium ${getThemeColor(row.Thème)}`}>{row.Thème}</span></TableCell>
+                    <TableCell><span className={`px-2 py-1 rounded-full text-xs font-medium ${getThemeColor(row.Thème)}`}>{translateTheme(row.Thème)}</span></TableCell>
                     <TableCell className="text-xs">{indicator}</TableCell>
                     <TableCell className="text-right font-mono font-semibold text-blue-600 text-xs">{formatNumber(row.Ensemble)}{isPercentage ? '%' : ''}</TableCell>
                 </TableRow>
@@ -177,7 +200,7 @@ export default function RGPHTable({ data, isLoading, t, theme, language, tableTy
         return (
             <TableRow key={idx} className={`${theme === 'dark' ? 'hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>
                 <TableCell className="text-xs">{row.Année}</TableCell>
-                <TableCell><span className={`px-2 py-1 rounded-full text-xs font-medium ${getThemeColor(row.Thème)}`}>{row.Thème}</span></TableCell>
+                <TableCell><span className={`px-2 py-1 rounded-full text-xs font-medium ${getThemeColor(row.Thème)}`}>{translateTheme(row.Thème)}</span></TableCell>
                 <TableCell className="text-xs">{indicator}</TableCell>
                 <TableCell className="text-right font-mono text-xs">{formatNumber(row['Masculin (%)'])}{row['Masculin (%)'] ? '%' : ''}</TableCell>
                 <TableCell className="text-right font-mono text-blue-600 text-xs">{formatNumber(row.Masculin)}</TableCell>

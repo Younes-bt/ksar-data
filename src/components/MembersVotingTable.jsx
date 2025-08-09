@@ -4,6 +4,91 @@ import { Vote, CheckCircle, XCircle, MinusCircle, TrendingUp, TrendingDown, User
 
 export default function MembersVotingTable({ data, isLoading, t, theme, language }) {
   
+  // Translation function for member names
+  const translateMemberName = (arabicName) => {
+    if (language === 'ar') return arabicName;
+    
+    const nameTranslations = {
+      en: {
+        'محمد السيمو': 'Mohamed Essimo',
+        'عبد الله المنصوري': 'Abdellah El Mansouri',
+        'سعيد القزدار': 'Said El Qazdar',
+        'حسن صيكوك': 'Hassan Saykook',
+        'محمد المجدوب': 'Mohamed El Majdoub',
+        'صلاح الدين الحميدي': 'Salah Eddine El Hamidi',
+        'غزلان الشعيبي': 'Ghizlane Chaibi',
+        'سعيدة بوعشة': 'Saida Bouacha',
+        'يوسف الريسوني': 'Youssef Er-Rissani',
+        'فاطمة القرقري': 'Fatima El Qarqari',
+        'العزيز الغرباوي': 'El Aziz El Gharbaoui',
+        'محمد الشريع': 'Mohamed Ech-Charia',
+        'محمد العكال': 'Mohamed El Aakal',
+        'محمد الزهري': 'Mohamed Ezzahri',
+        'سليمان لخضر': 'Souleiman Lakhder',
+        'عبد السلام الزناكي': 'Abdessalam Ezzanaki',
+        'زينب السيمو': 'Zineb Essimo',
+        'فاطمة شعوان': 'Fatima Chaouane',
+        'مصطفى الحاجي': 'Mostafa El Hajji',
+        'فطيمة الزهراء حاثم': 'Fatima Zahra Hatim',
+        'رشيدة الزياني': 'Rachida Ezzayani',
+        'رضوان النادي': 'Redouane Ennadi',
+        'حنان تمتام': 'Hanan Ettamtam',
+        'امل طريبق': 'Amal Tribiq',
+        'أحمد بكور': 'Ahmed Bakkour',
+        'الهام ركع': 'Ilham Rekaa',
+        'حسن الحسناوي': 'Hassan El Hasnaoui',
+        'محمد توفيق الشاوش': 'Mohamed Toufiq Ech-Chaouch',
+        'فاطمة برهون': 'Fatima Barhoune',
+        'عبد السلام البياتي': 'Abdessalam El Bayati',
+        'أسماء البكوري': 'Asmaa El Bekkouri',
+        'عبد الرحمان علمي لعروسي ضباب': 'Abderrahmane Alami Laâroussi Dabbab',
+        'رشيد صبار': 'Rachid Sebbar',
+        'محمد ماجدي': 'Mohamed Majdi',
+        'خالد المودن': 'Khalid El Mouden'
+      },
+      fr: {
+        'محمد السيمو': 'Mohamed Essimo',
+        'عبد الله المنصوري': 'Abdellah El Mansouri',
+        'سعيد القزدار': 'Said El Qazdar',
+        'حسن صيكوك': 'Hassan Saykook',
+        'محمد المجدوب': 'Mohamed El Majdoub',
+        'صلاح الدين الحميدي': 'Salah Eddine El Hamidi',
+        'غزلان الشعيبي': 'Ghizlane Chaibi',
+        'سعيدة بوعشة': 'Saida Bouacha',
+        'يوسف الريسوني': 'Youssef Er-Rissani',
+        'فاطمة القرقري': 'Fatima El Qarqari',
+        'العزيز الغرباوي': 'El Aziz El Gharbaoui',
+        'محمد الشريع': 'Mohamed Ech-Charia',
+        'محمد العكال': 'Mohamed El Aakal',
+        'محمد الزهري': 'Mohamed Ezzahri',
+        'سليمان لخضر': 'Souleiman Lakhder',
+        'عبد السلام الزناكي': 'Abdessalam Ezzanaki',
+        'زينب السيمو': 'Zineb Essimo',
+        'فاطمة شعوان': 'Fatima Chaouane',
+        'مصطفى الحاجي': 'Mostafa El Hajji',
+        'فطيمة الزهراء حاثم': 'Fatima Zahra Hatim',
+        'رشيدة الزياني': 'Rachida Ezzayani',
+        'رضوان النادي': 'Redouane Ennadi',
+        'حنان تمتام': 'Hanan Ettamtam',
+        'امل طريبق': 'Amal Tribiq',
+        'احمد بكور': 'Ahmed Bakkour',
+        'الهام ركع': 'Ilham Rekaa',
+        'حسن الحسناوي': 'Hassan El Hasnaoui',
+        'محمد توفيق الشاوش': 'Mohamed Toufiq Ech-Chaouch',
+        'فاطمة برهون': 'Fatima Barhoune',
+        'عبد السلام البياتي': 'Abdessalam El Bayati',
+        'أسماء البكوري': 'Asmaa El Bekkouri',
+        'عبد الرحمان علمي لعروسي ضباب': 'Abderrahmane Alami Laâroussi Dabbab',
+        'رشيد صبار': 'Rachid Sebbar',
+        'محمد ماجدي': 'Mohamed Majdi',
+        'خالد المودن': 'Khalid El Mouden'
+      }
+    };
+    
+    const targetLang = language === 'fr' ? 'fr' : 'en';
+    return nameTranslations[targetLang][arabicName] || arabicName;
+  };
+
   const getParticipationPercentageBadge = (percentage) => {
     const pct = parseFloat(percentage);
     
@@ -92,7 +177,7 @@ export default function MembersVotingTable({ data, isLoading, t, theme, language
       </div>
       
       <h3 className="font-semibold text-sm mb-2" title={member.name}>
-        {member.name}
+        {translateMemberName(member.name)}
       </h3>
       
       <div className="mb-2">
@@ -102,26 +187,46 @@ export default function MembersVotingTable({ data, isLoading, t, theme, language
       <div className="grid grid-cols-2 gap-2 text-xs">
         <div className="flex items-center gap-1">
           <Vote size={12} className="text-blue-600" />
-          <span>مشارك: {member.totalParticipated}</span>
+          <span>
+            {language === 'ar' ? `مشارك: ${member.totalParticipated}` : 
+             language === 'fr' ? `Participé: ${member.totalParticipated}` : 
+             `Participated: ${member.totalParticipated}`}
+          </span>
         </div>
         <div className="flex items-center gap-1">
           <CheckCircle size={12} className="text-green-600" />
-          <span>موافق: {member.totalAccepted}</span>
+          <span>
+            {language === 'ar' ? `موافق: ${member.totalAccepted}` : 
+             language === 'fr' ? `Accepté: ${member.totalAccepted}` : 
+             `Accepted: ${member.totalAccepted}`}
+          </span>
         </div>
         <div className="flex items-center gap-1">
           <XCircle size={12} className="text-red-600" />
-          <span>رافض: {member.totalRefused}</span>
+          <span>
+            {language === 'ar' ? `رافض: ${member.totalRefused}` : 
+             language === 'fr' ? `Refusé: ${member.totalRefused}` : 
+             `Refused: ${member.totalRefused}`}
+          </span>
         </div>
         <div className="flex items-center gap-1">
           <MinusCircle size={12} className="text-yellow-600" />
-          <span>ممتنع: {member.totalAbstained}</span>
+          <span>
+            {language === 'ar' ? `ممتنع: ${member.totalAbstained}` : 
+             language === 'fr' ? `Abstenu: ${member.totalAbstained}` : 
+             `Abstained: ${member.totalAbstained}`}
+          </span>
         </div>
       </div>
       
       <div className="mt-2 pt-2 border-t border-gray-200">
         <div className="flex items-center gap-1 text-xs text-gray-600">
           <Users size={12} />
-          <span>المجموع: {member.totalDecisions}</span>
+          <span>
+            {language === 'ar' ? `المجموع: ${member.totalDecisions}` : 
+             language === 'fr' ? `Total: ${member.totalDecisions}` : 
+             `Total: ${member.totalDecisions}`}
+          </span>
         </div>
       </div>
     </div>
@@ -239,7 +344,7 @@ export default function MembersVotingTable({ data, isLoading, t, theme, language
                     <TableCell className="font-medium max-w-xs">
                       <div className="flex flex-col">
                         <span className="font-semibold text-xs lg:text-sm" title={member.name}>
-                          {member.name}
+                          {translateMemberName(member.name)}
                         </span>
                       </div>
                     </TableCell>

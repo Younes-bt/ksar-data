@@ -161,6 +161,13 @@
   "types": {
     "credits": "اعتمادات",
     "recettes": "مداخيل"
+  },
+  "subjects": {
+    "demographie": "الديموغرافيا",
+    "activiteEconomique": "النشاط الاقتصادي", 
+    "education": "التعليم",
+    "languesMaternelles": "اللغات الأم",
+    "conditionsHabitat": "ظروف السكن"
   }
 
 

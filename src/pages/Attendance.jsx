@@ -605,7 +605,7 @@ export default function Attendance({ data, loading, t, language, theme }) {
               className="w-full sm:w-1/2"
               dir="auto"
             />
-
+{/*
             <Select onValueChange={(v) => setRoleFilter(v === "all" ? "" : v)} defaultValue="all">
               <SelectTrigger className={`w-full sm:w-1/4 ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
                 <SelectValue placeholder={t?.personsattendancepage?.filter_by_role || "تصفية حسب المنصب"} />
@@ -625,7 +625,7 @@ export default function Attendance({ data, loading, t, language, theme }) {
                 ))}
               </SelectContent>
             </Select>
-                {/* 
+                 
             <Select onValueChange={(v) => setAttendanceFilter(v === "all" ? "" : v)} defaultValue="all">
               <SelectTrigger className={`w-full sm:w-1/4 ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
                 <SelectValue placeholder={t?.personsattendancepage?.filter_by_attendance || "تصفية حسب نسبة الحضور"} />
@@ -710,7 +710,7 @@ export default function Attendance({ data, loading, t, language, theme }) {
           <div>
             <p className="font-medium">
               {t?.supportpage?.data_source || 'Data Source'} : {t?.supportpage?.municipal_records || 'Municipal Records of Al Ksar Al Kabir'}
-              {' - '} {t?.supportpage?.years_range || 'Years'}: 2020-2024
+              
             </p>
             
           </div>

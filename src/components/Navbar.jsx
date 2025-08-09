@@ -56,13 +56,13 @@ function Navbar({ language, setLanguage, theme, setTheme, t }) {
           <NavigationMenuList className="hidden md:flex gap-4">
             <NavigationMenuItem>
               <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                <Link to="/" className={`px-3 py-2 rounded-md transition-colors ${theme === 'dark' ? 'hover:bg-gray-200 hover:text-gray-950' : 'hover:bg-gray-950 hover:text-gray-200'}`}>
+                <Link to="/" className={`px-3 py-2 rounded-md transition-colors ${theme === 'dark' ? 'hover:bg-gray-200 hover:text-gray-950' : 'hover:bg-blue-600 hover:text-gray-200'}`}>
                   {t?.navbar?.home || "Home"}
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuTrigger className={`rounded-md transition-colors ${theme === 'dark' ? 'hover:bg-gray-200 hover:text-gray-950' : 'hover:bg-gray-950 hover:text-gray-200'}`}>
+              <NavigationMenuTrigger className={`rounded-md transition-colors ${theme === 'dark' ? 'hover:bg-gray-200 hover:text-gray-950' : 'hover:bg-blue-600 hover:text-gray-200'}`}>
                 {t?.navbar?.services || "Services"}
               </NavigationMenuTrigger>
               <NavigationMenuContent>
@@ -72,7 +72,7 @@ function Navbar({ language, setLanguage, theme, setTheme, t }) {
                       <NavigationMenuLink asChild>
                         <Link
                           to={item.path}
-                          className={`block rounded-md leading-none no-underline outline-none transition-colors  ${theme === 'dark' ? 'hover:bg-gray-200 hover:text-gray-950' : 'hover:bg-gray-950 hover:text-gray-200'}`}
+                          className={`block rounded-md leading-none no-underline outline-none transition-colors  ${theme === 'dark' ? 'hover:bg-gray-200 hover:text-gray-950' : 'hover:bg-blue-600 hover:text-gray-200'}`}
                         >
                           {item.label}
                         </Link>
@@ -85,7 +85,7 @@ function Navbar({ language, setLanguage, theme, setTheme, t }) {
             {navItems.slice(1).map(item => (
               <NavigationMenuItem key={item.path}>
                 <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                  <Link to={item.path} className={`px-3 py-2 rounded-md transition-colors ${theme === 'dark' ? 'hover:bg-gray-200 hover:text-gray-950' : 'hover:bg-gray-950 hover:text-gray-200'}`}>
+                  <Link to={item.path} className={`px-3 py-2 rounded-md transition-colors ${theme === 'dark' ? 'hover:bg-gray-200 hover:text-gray-950' : 'hover:bg-blue-600 hover:text-gray-200'}`}>
                     {item.label}
                   </Link>
                 </NavigationMenuLink>
@@ -98,7 +98,7 @@ function Navbar({ language, setLanguage, theme, setTheme, t }) {
           {/* Language Switcher */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm" className={`${theme === 'dark' ? 'hover:bg-gray-200 hover:text-gray-950' : 'hover:bg-gray-950 hover:text-gray-200'}`}>
+              <Button variant="outline" size="sm" className={`${theme === 'dark' ? 'hover:bg-gray-200 hover:text-gray-950' : 'hover:bg-blue-600 hover:text-gray-200'}`}>
                 🌐 <span className="hidden sm:inline">{languages.find(l => l.code === language)?.label}</span>
               </Button>
             </DropdownMenuTrigger>

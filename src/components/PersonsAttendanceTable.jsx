@@ -4,6 +4,195 @@ import { UserCheck, UserX, Users, TrendingUp, TrendingDown, ArrowRight, Info } f
 
 export default function PersonsAttendanceTable({ data, isLoading, t, theme, language }) {
   
+  // Translation function for member names
+  const translateMemberName = (arabicName) => {
+    if (language === 'ar') return arabicName;
+    
+    const nameTranslations = {
+      en: {
+        'محمد السيمو': 'Mohamed Essimo',
+        'عبد الله المنصوري': 'Abdellah El Mansouri',
+        'سعيد القزدار': 'Said El Qazdar',
+        'حسن صيكوك': 'Hassan Saykook',
+        'محمد المجدوب': 'Mohamed El Majdoub',
+        'صلاح الدين الحميدي': 'Salah Eddine El Hamidi',
+        'غزلان الشعيبي': 'Ghizlane Chaibi',
+        'سعيدة بوعشة': 'Saida Bouacha',
+        'يوسف الريسوني': 'Youssef Er-Rissani',
+        'فاطمة القرقري': 'Fatima El Qarqari',
+        'العزيز الغرباوي': 'El Aziz El Gharbaoui',
+        'محمد الشريع': 'Mohamed Ech-Charia',
+        'محمد العكال': 'Mohamed El Aakal',
+        'محمد الزهري': 'Mohamed Ezzahri',
+        'سليمان لخضر': 'Souleiman Lakhder',
+        'عبد السلام الزناكي': 'Abdessalam Ezzanaki',
+        'زينب السيمو': 'Zineb Essimo',
+        'فاطمة شعوان': 'Fatima Chaouane',
+        'مصطفى الحاجي': 'Mostafa El Hajji',
+        'فطيمة الزهراء حاثم': 'Fatima Zahra Hatim',
+        'رشيدة الزياني': 'Rachida Ezzayani',
+        'رضوان النادي': 'Redouane Ennadi',
+        'حنان التمتام': 'Hanan Ettamtam',
+        'امل طريبق': 'Amal Tribiq',
+        'أحمد بكور': 'Ahmed Bakkour',
+        'الهام ركع': 'Ilham Rekaa',
+        'حسن الحسناوي': 'Hassan El Hasnaoui',
+        'محمد توفيق الشاوش': 'Mohamed Toufiq Ech-Chaouch',
+        'فاطمة برهون': 'Fatima Barhoune',
+        'عبد السلام البياتي': 'Abdessalam El Bayati',
+        'أسماء البكوري': 'Asmaa El Bekkouri',
+        'عبد الرحمان علمي لعروسي ضباب': 'Abderrahmane Alami Laâroussi Dabbab',
+        'رشيد صبار': 'Rachid Sebbar',
+        'محمد ماجدي': 'Mohamed Majdi',
+        'خالد المودن': 'Khalid El Mouden'
+      },
+      fr: {
+        'محمد السيمو': 'Mohamed Essimo',
+        'عبد الله المنصوري': 'Abdellah El Mansouri',
+        'سعيد القزدار': 'Said El Qazdar',
+        'حسن صيكوك': 'Hassan Saykook',
+        'محمد المجدوب': 'Mohamed El Majdoub',
+        'صلاح الدين الحميدي': 'Salah Eddine El Hamidi',
+        'غزلان الشعيبي': 'Ghizlane Chaibi',
+        'سعيدة بوعشة': 'Saida Bouacha',
+        'يوسف الريسوني': 'Youssef Er-Rissani',
+        'فاطمة القرقري': 'Fatima El Qarqari',
+        'العزيز الغرباوي': 'El Aziz El Gharbaoui',
+        'محمد الشريع': 'Mohamed Ech-Charia',
+        'محمد العكال': 'Mohamed El Aakal',
+        'محمد الزهري': 'Mohamed Ezzahri',
+        'سليمان لخضر': 'Souleiman Lakhder',
+        'عبد السلام الزناكي': 'Abdessalam Ezzanaki',
+        'زينب السيمو': 'Zineb Essimo',
+        'فاطمة شعوان': 'Fatima Chaouane',
+        'مصطفى الحاجي': 'Mostafa El Hajji',
+        'فطيمة الزهراء حاثم': 'Fatima Zahra Hatim',
+        'رشيدة الزياني': 'Rachida Ezzayani',
+        'رضوان النادي': 'Redouane Ennadi',
+        'حنان التمتام': 'Hanan Ettamtam',
+        'امل طريبق': 'Amal Tribiq',
+        'أحمد بكور': 'Ahmed Bakkour',
+        'الهام ركع': 'Ilham Rekaa',
+        'حسن الحسناوي': 'Hassan El Hasnaoui',
+        'محمد توفيق الشاوش': 'Mohamed Toufiq Ech-Chaouch',
+        'فاطمة برهون': 'Fatima Barhoune',
+        'عبد السلام البياتي': 'Abdessalam El Bayati',
+        'أسماء البكوري': 'Asmaa El Bekkouri',
+        'عبد الرحمان علمي لعروسي ضباب': 'Abderrahmane Alami Laâroussi Dabbab',
+        'رشيد صبار': 'Rachid Sebbar',
+        'محمد ماجدي': 'Mohamed Majdi',
+        'خالد المودن': 'Khalid El Mouden'
+      }
+    };
+    
+    const targetLang = language === 'fr' ? 'fr' : 'en';
+    return nameTranslations[targetLang][arabicName] || arabicName;
+  };
+
+  // Translation function for roles
+  const translateRole = (arabicRole) => {
+    if (language === 'ar') return arabicRole;
+    
+    const roleTranslations = {
+      en: {
+        'رئيس المجلس الجماعي': 'Municipal Council President',
+        'رئيس المجلس': 'Council President',
+        'النائب الأول للرئيس': 'First Vice President',
+        'النائب الثاني للرئيس': 'Second Vice President',
+        'النائب الثالث للرئيس': 'Third Vice President',
+        'النائب الرابع للرئيس': 'Fourth Vice President',
+        'النائب الخامس للرئيس': 'Fifth Vice President',
+        'النائبة السادسة للرئيس': 'Sixth Vice President',
+        'النائبة السابعة للرئيس': 'Seventh Vice President',
+        'كاتب المجلس': 'Council Secretary',
+        'نائب كاتب المجلس': 'Deputy Secretary',
+        'نائبة كاتب المجلس': 'Deputy Secretary',
+        'عضو مستشار': 'Advisory Member',
+        'عضوة مستشارة': 'Advisory Member'
+      },
+      fr: {
+        'رئيس المجلس الجماعي': 'Président du Conseil Municipal',
+        'رئيس المجلس': 'Président du Conseil',
+        'النائب الأول للرئيس': 'Premier Vice-Président',
+        'النائب الثاني للرئيس': 'Deuxième Vice-Président',
+        'النائب الثالث للرئيس': 'Troisième Vice-Président',
+        'النائب الرابع للرئيس': 'Quatrième Vice-Président',
+        'النائب الخامس للرئيس': 'Cinquième Vice-Président',
+        'النائبة السادسة للرئيس': 'Sixième Vice-Présidente',
+        'النائبة السابعة للرئيس': 'Septième Vice-Présidente',
+        'كاتب المجلس': 'Secrétaire du Conseil',
+        'نائب كاتب المجلس': 'Secrétaire Adjoint',
+        'نائبة كاتب المجلس': 'Secrétaire Adjointe',
+        'عضو مستشار': 'Membre Conseiller',
+        'عضوة مستشارة': 'Membre Conseillère'
+      }
+    };
+    
+    const targetLang = language === 'fr' ? 'fr' : 'en';
+    return roleTranslations[targetLang][arabicRole] || arabicRole;
+  };
+
+  const getRoleDisplayName = (role) => {
+    if (language === 'ar') {
+      // Arabic short display names
+      const roleMap = {
+        'رئيس المجلس الجماعي': 'الرئيس',
+        'رئيس المجلس': 'الرئيس',
+        'النائب الأول للرئيس': 'النائب الأول',
+        'النائب الثاني للرئيس': 'النائب الثاني',
+        'النائب الثالث للرئيس': 'النائب الثالث',
+        'النائب الرابع للرئيس': 'النائب الرابع',
+        'النائب الخامس للرئيس': 'النائب الخامس',
+        'النائبة السادسة للرئيس': 'النائبة السادسة',
+        'النائبة السابعة للرئيس': 'النائبة السابعة',
+        'كاتب المجلس': 'كاتب المجلس',
+        'نائب كاتب المجلس': 'نائب كاتب',
+        'نائبة كاتب المجلس': 'نائبة كاتب',
+        'عضو مستشار': 'عضو',
+        'عضوة مستشارة': 'عضوة'
+      };
+      return roleMap[role] || role;
+    } else if (language === 'fr') {
+      // French short display names
+      const roleMap = {
+        'رئيس المجلس الجماعي': 'Président',
+        'رئيس المجلس': 'Président',
+        'النائب الأول للرئيس': '1er VP',
+        'النائب الثاني للرئيس': '2em VP',
+        'النائب الثالث للرئيس': '3em VP',
+        'النائب الرابع للرئيس': '4em VP',
+        'النائب الخامس للرئيس': '5em VP',
+        'النائبة السادسة للرئيس': '6em VP',
+        'النائبة السابعة للرئيس': '7em VP',
+        'كاتب المجلس': 'Secrétaire',
+        'نائب كاتب المجلس': 'Sec. Adj.',
+        'نائبة كاتب المجلس': 'Sec. Adj.',
+        'عضو مستشار': 'Membre',
+        'عضوة مستشارة': 'Membre'
+      };
+      return roleMap[role] || translateRole(role);
+    } else {
+      // English short display names
+      const roleMap = {
+        'رئيس المجلس الجماعي': 'President',
+        'رئيس المجلس': 'President',
+        'النائب الأول للرئيس': '1st VP',
+        'النائب الثاني للرئيس': '2nd VP',
+        'النائب الثالث للرئيس': '3rd VP',
+        'النائب الرابع للرئيس': '4th VP',
+        'النائب الخامس للرئيس': '5th VP',
+        'النائبة السادسة للرئيس': '6th VP',
+        'النائبة السابعة للرئيس': '7th VP',
+        'كاتب المجلس': 'Secretary',
+        'نائب كاتب المجلس': 'Dep. Secretary',
+        'نائبة كاتب المجلس': 'Dep. Secretary',
+        'عضو مستشار': 'Member',
+        'عضوة مستشارة': 'Member'
+      };
+      return roleMap[role] || translateRole(role);
+    }
+  };
+  
   const getAttendancePercentageBadge = (percentage) => {
     const pct = parseFloat(percentage);
     
@@ -40,28 +229,6 @@ export default function PersonsAttendanceTable({ data, isLoading, t, theme, lang
         </span>
       );
     }
-  };
-
-  const getRoleDisplayName = (role) => {
-    // Map common roles to shorter display names
-    const roleMap = {
-      'رئيس المجلس الجماعي': 'الرئيس',
-      'رئيس المجلس': 'الرئيس',
-      'النائب الأول للرئيس': 'النائب الأول',
-      'النائب الثاني للرئيس': 'النائب الثاني',
-      'النائب الثالث للرئيس': 'النائب الثالث',
-      'النائب الرابع للرئيس': 'النائب الرابع',
-      'النائب الخامس للرئيس': 'النائب الخامس',
-      'النائبة السادسة للرئيس': 'النائبة السادسة',
-      'النائبة السابعة للرئيس': 'النائبة السابعة',
-      'كاتب المجلس': 'كاتب المجلس',
-      'نائب كاتب المجلس': 'نائب كاتب',
-      'نائبة كاتب المجلس': 'نائبة كاتب',
-      'عضو مستشار': 'عضو',
-      'عضوة مستشارة': 'عضوة'
-    };
-    
-    return roleMap[role] || role;
   };
 
   const getPerformanceIcon = (percentage) => {
@@ -103,7 +270,9 @@ export default function PersonsAttendanceTable({ data, isLoading, t, theme, lang
     return (
       <div className="flex flex-col items-center gap-1">
         <div className="flex items-center gap-1 text-xs">
-          <span className='text-xs text-yellow-300 mr-1 hidden sm:inline'>(تغيير منصب)</span>
+          <span className='text-xs text-red-500 mr-1 hidden sm:inline'>
+            {language === 'ar' ? '(تغيير منصب)' : language === 'fr' ? '(Changement de poste)' : '(Role Change)'}
+          </span>
           <span className={`px-1.5 py-0.5 rounded-full text-xs ${
             firstRole.includes('رئيس') || firstRole.includes('نائب') 
               ? 'bg-purple-100 text-purple-700' 
@@ -142,7 +311,7 @@ export default function PersonsAttendanceTable({ data, isLoading, t, theme, lang
       </div>
       
       <h3 className="font-semibold text-sm mb-2" title={person.name}>
-        {person.name}
+        {translateMemberName(person.name)}
       </h3>
       
       <div className="mb-2">
@@ -152,19 +321,35 @@ export default function PersonsAttendanceTable({ data, isLoading, t, theme, lang
       <div className="grid grid-cols-2 gap-2 text-xs">
         <div className="flex items-center gap-1">
           <UserCheck size={12} className="text-green-600" />
-          <span>حضر: {person.totalPresent}</span>
+          <span>
+            {language === 'ar' ? `حضر: ${person.totalPresent}` : 
+             language === 'fr' ? `Présent: ${person.totalPresent}` : 
+             `Present: ${person.totalPresent}`}
+          </span>
         </div>
         <div className="flex items-center gap-1">
           <UserX size={12} className="text-yellow-600" />
-          <span>بعذر: {person.totalAbsentWithReason}</span>
+          <span>
+            {language === 'ar' ? `بعذر: ${person.totalAbsentWithReason}` : 
+             language === 'fr' ? `Avec justif.: ${person.totalAbsentWithReason}` : 
+             `Excused: ${person.totalAbsentWithReason}`}
+          </span>
         </div>
         <div className="flex items-center gap-1">
           <UserX size={12} className="text-red-600" />
-          <span>بدون عذر: {person.totalAbsentWithoutReason}</span>
+          <span>
+            {language === 'ar' ? `بدون عذر: ${person.totalAbsentWithoutReason}` : 
+             language === 'fr' ? `Sans justif.: ${person.totalAbsentWithoutReason}` : 
+             `Unexcused: ${person.totalAbsentWithoutReason}`}
+          </span>
         </div>
         <div className="flex items-center gap-1">
           <Users size={12} className="text-blue-600" />
-          <span>المجموع: {person.totalSessions}</span>
+          <span>
+            {language === 'ar' ? `المجموع: ${person.totalSessions}` : 
+             language === 'fr' ? `Total: ${person.totalSessions}` : 
+             `Total: ${person.totalSessions}`}
+          </span>
         </div>
       </div>
     </div>
@@ -280,7 +465,7 @@ export default function PersonsAttendanceTable({ data, isLoading, t, theme, lang
                     <TableCell className="font-medium max-w-xs">
                       <div className="flex flex-col">
                         <span className="font-semibold text-xs lg:text-sm" title={person.name}>
-                          {person.name}
+                          {translateMemberName(person.name)}
                         </span>
                       </div>
                     </TableCell>

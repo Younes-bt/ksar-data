@@ -41,9 +41,9 @@ export default function BudgetTable({ data, isLoading, t, theme, language }) {
         <TableHeader>
           <TableRow>
             <TableHead>{t.table.year}</TableHead>
-            <TableHead > {t.table.label} </TableHead> {/* Changed to generic "Label" */}
+            <TableHead className='text-center' > {t.table.label} </TableHead> {/* Changed to generic "Label" */}
             <TableHead className="text-right"> {t.table.approved} </TableHead>
-            <TableHead>{t.table.section} </TableHead>
+            <TableHead >{t.table.section} </TableHead>
             <TableHead>{t.table.type}</TableHead>
             <TableHead>{t.table.code}</TableHead>
           </TableRow>
@@ -91,9 +91,9 @@ export default function BudgetTable({ data, isLoading, t, theme, language }) {
                 <TableCell className="max-w-45 truncate">
                   <Popover>
                     <PopoverTrigger asChild>
-                      <div className="cursor-pointer tap-highlight-transparent">
+                      <div style={language === 'ar' ? { direction: 'rtl' } : { direction: 'ltr' }}  className="cursor-pointer tap-highlight-transparent">
                         {language === 'ar' ? (
-                          <span dir="rtl">{row.ar_label}</span>
+                          <span  dir="rtl">{row.ar_label}</span>
                         ) : (
                           row.fr_label
                         )}
@@ -101,7 +101,7 @@ export default function BudgetTable({ data, isLoading, t, theme, language }) {
                     </PopoverTrigger>
                     <PopoverContent className="w-auto max-w-xs break-words p-3 bg-gray-200">
                       {language === 'ar' ? (
-                        <span dir="rtl">{row.ar_label}</span>
+                        <span style={language === 'ar' ? { direction: 'rtl' } : { direction: 'ltr' }} >{row.ar_label}</span>
                       ) : (
                         row.fr_label
                       )}

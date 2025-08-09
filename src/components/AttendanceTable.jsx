@@ -197,7 +197,7 @@ export default function AttendanceTable({ data, isLoading, t, theme, language })
                       </TableCell>
                       <TableCell>{getSessionTypeBadge(session.session_type)}</TableCell>
                       <TableCell className="font-medium text-xs">{session.session_number}</TableCell>
-                      <TableCell className="text-xs">{formatDate(session.date)}</TableCell>
+                      <TableCell className="text-xs">{session.date}</TableCell>
                       <TableCell className="text-xs">{session.time}</TableCell>
                       <TableCell>{getAttendanceStats(session.attendance)}</TableCell>
                       <TableCell className="text-center font-bold">
@@ -225,10 +225,12 @@ export default function AttendanceTable({ data, isLoading, t, theme, language })
                                 <div className="text-2xl font-bold text-red-600">{session.attendance.absent_without_reason}</div>
                                 <div className="text-sm text-red-700">{t?.attendancepage?.absent_without_reason || 'غائب بدون عذر'}</div>
                               </div>
+                              {/* 
                               <div className={`text-center p-3 ${theme === 'dark' ? 'bg-gray-700 border border-gray-100' : 'bg-gray-100 border border-gray-950'} rounded-lg`}>
                                 <div className="text-2xl font-bold text-gray-600">{session.attendance.vacant_positions}</div>
                                 <div className="text-sm text-gray-700">{t?.attendancepage?.vacant_positions || 'مناصب شاغرة'}</div>
                               </div>
+                              */}
                             </div>
 
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

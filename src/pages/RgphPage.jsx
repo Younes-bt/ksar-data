@@ -24,6 +24,28 @@ export default function RgphPage({ data, loading, t, language, theme }) {
   const [currentPage2, setCurrentPage2] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(15);
 
+  // Helper function to translate theme/subject values
+  const translateTheme = (themeValue) => {
+    if (!t.subjects) return themeValue; // fallback if translations not available
+    
+    switch(themeValue) {
+      case 'DEMOGRAPHIE':
+        return t.subjects.demographie || themeValue;
+      case 'ACTIVITE ECONOMIQUE':
+        return t.subjects.activiteEconomique || themeValue;
+      case 'EDUCATION':
+        return t.subjects.education || themeValue;
+      case 'EDUCATION ':
+        return t.subjects.education || themeValue; // Handle the space variant
+      case 'LANGUES MATERNELLES':
+        return t.subjects.languesMaternelles || themeValue;
+      case 'CONDITIONS D\'HABITAT':
+        return t.subjects.conditionsHabitat || themeValue;
+      default:
+        return themeValue;
+    }
+  };
+
   // Separate data into part1 (with gender columns) and part2 (without gender columns)
   const part1Data = data.filter(row => row.Masculin !== undefined || row.Féminin !== undefined);
   const part2Data = data.filter(row => row.Masculin === undefined && row.Féminin === undefined);
@@ -259,7 +281,7 @@ export default function RgphPage({ data, loading, t, language, theme }) {
                 value={themeItem} 
                 className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}
               >
-                {themeItem}
+                {translateTheme(themeItem)}
               </SelectItem>
             ))}
           </SelectContent>

@@ -12,7 +12,7 @@ function ThemeToggle({ theme, setTheme }) {
       size="icon"
       onClick={toggleTheme}
       title="Toggle Theme"
-      className={`${theme === 'dark' ? 'hover:bg-gray-200 hover:text-gray-950' : 'hover:bg-gray-950 hover:text-gray-200'}`}
+      className={`${theme === 'dark' ? 'hover:bg-gray-200 hover:text-gray-950' : 'hover:bg-blue-600 hover:text-gray-200'}`}
     >
       {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
       <span className="sr-only">Toggle theme</span>
