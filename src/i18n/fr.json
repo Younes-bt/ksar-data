@@ -293,5 +293,23 @@
   "types": {
     "credits": "Crédits",
     "recettes": "Recettes"
+  },
+  "searchpage": {
+    "title": "Explorer le budget d'Al Ksar Al Kabir",
+    "subtitle": "Recherchez dans les données budgétaires par année, type et montant.",
+    "allyear": "Toutes les années",
+    "alltype": "Tous les types",
+    "searchPlaceholder": "Rechercher dans le budget...",
+    "yearFilter": "Filtrer par année",
+    "credits": "Filtrer par dépenses",
+    "recettes": "Filtrer par recettes",
+    "Search_Budget_Data": "Recherche dans les données budgétaires",
+    "loading": "Chargement en cours...",
+    "Search_input_placeholder": "Rechercher dans les données budgétaires...",
+    "filtering": "Filtrage en cours...",
+    "showing": "Affichage",
+    "of": "de",
+    "results": "résultats",
+    "total": "total"
   }
 }

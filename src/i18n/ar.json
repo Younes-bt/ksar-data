@@ -78,7 +78,12 @@
     "recettes": "تصفية حسب المداخيل",
     "Search_Budget_Data": "بحث في بيانات الميزانية",
     "loading": "جارٍ التحميل...",
-    "Search_input_placeholder":"ابحث في بيانات الميزانية..."
+    "Search_input_placeholder":"ابحث في بيانات الميزانية...",
+    "filtering": "جاري التصفية...",
+    "showing": "عرض",
+    "of": "من",
+    "results": "نتيجة",
+    "total": "إجمالي"
   }, 
   "medicinepage": {
       "search_medicine_data": "البحث في أسعار الأدوية",

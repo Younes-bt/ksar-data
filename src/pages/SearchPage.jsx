@@ -178,17 +178,17 @@ export default function SearchPage({ data, loading, t, language, theme }) {
       {/* Results info */}
       
       <div className="flex items-center justify-between">
-        <p className="text-sm text-gray-600">
-          {isFiltering ? (
-            <span className="flex items-center gap-2">
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
-              Filtering...
-            </span>
-          ) : (
-            `Showing ${paginatedData.length} of ${totalRows} results${data.length > 0 ? ` of ${data.length} total` : ''}`
-          )}
-        </p>
-      </div>
+  <p className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+    {isFiltering ? (
+      <span className="flex items-center gap-2">
+        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+        {t?.searchpage?.filtering || 'Filtering...'}
+      </span>
+    ) : (
+      `${t?.searchpage?.showing || 'Showing'} ${paginatedData.length} ${t?.searchpage?.of || 'of'} ${totalRows} ${t?.searchpage?.results || 'results'}${data.length > 0 ? ` ${t?.searchpage?.of || 'of'} ${data.length} ${t?.searchpage?.total || 'total'}` : ''}`
+    )}
+  </p>
+</div>
 
       {/* The data table */}
       <BudgetTable t={t} data={paginatedData} isLoading={isFiltering} theme={theme} language={language}/>

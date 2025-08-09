@@ -265,5 +265,12 @@
   "types": {
     "credits": "Credits",
     "recettes": "Revenues"
+  },
+  "searchpage": {
+    "filtering": "Filtering...",
+    "showing": "Showing",
+    "of": "of",
+    "results": "results",
+    "total": "total"
   }
 }
