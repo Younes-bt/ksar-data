@@ -40,7 +40,7 @@ function App() {
     setLoading(true);
     
     // Load budget, RGPH, medicine, support, attendance, and votings data concurrently
-    const loadBudgetData = fetch("full_data_v6.json")
+    const loadBudgetData = fetch("https://res.cloudinary.com/daeuundyc/raw/upload/v1754749965/full_data_v6_wwx7th.json")
       .then(res => {
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
