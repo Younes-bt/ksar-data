@@ -24,6 +24,8 @@ const AboutUsPage = ({
   theme = 'dark' 
 }) => {
   
+
+  
   // Translations
   const getTranslations = () => {
     switch (language) {
@@ -43,7 +45,7 @@ const AboutUsPage = ({
               content: {
                 description: 'البيانات العمومية لمدينتنا متوفرة…لكن الوصول إليها صعب، وتصفحها ممل، وغالبًا ما تُعرض في ملفات PDF إدارية معقدة، بدون أي أدوات للفهم أو المقارنة. Ksar-Data وُلد من الحاجة لفهم ميزانية المدينة، ثم تحول لمبادرة مفتوحة: نحو مجتمع أكثر وعيًا، وأكثر اطلاعًا.',
                 points: [
-                  ' لا علاقة لنا بأي جهة سياسية',
+                  ' لا علاقة للموقع بأي جهة سياسية أو مؤسسة',
                   'المشروع غير ربحي، وتم تطويره بالكامل بدون أي تمويل خارجي',
                   ' الهدف الوحيد هو التوعية وخدمة المجتمع'
                 ]
@@ -508,16 +510,16 @@ Cette phase a couvert les aspects techniques du développement de la plateforme 
         </div>
       </section>
 
-      {/* Footer CTA */}
-      <section className="py-16">
+      {/* FOOTER CTA */}
+      <section className={`py-16 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'}`}>
         <div className="container mx-auto px-6 lg:px-12">
           <div className="text-center">
-            <div className={`inline-flex items-center px-6 py-3 rounded-full ${themeClasses.iconBg} ${themeClasses.borderColor} border`}>
-              <Eye className={`w-5 h-5 ${themeClasses.textAccent} ${language === 'ar' ? 'ml-2' : 'mr-2'}`} />
-              <span className={`${themeClasses.textSecondary}`}>
-                {language === 'ar' ? 'الشفافية من خلال البيانات' : 
-                 language === 'en' ? 'Transparency through data' : 
-                 'Transparence par les données'}
+            <div className={`inline-flex items-center px-6 py-3 rounded-full border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-3"></div>
+              <span className={themeClasses.textSecondary}>
+                {language === 'ar' ? 'نسخة تجريبية – الإصدار 1.1.7 | جميع الحقوق محفوظة © 2025' : 
+                 language === 'en' ? 'Beta Version – v1.1.7 | All Rights Reserved © 2025' : 
+                 'Version d’essai – v1.1.7 | Tous droits réservés © 2025'}
               </span>
             </div>
           </div>

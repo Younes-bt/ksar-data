@@ -558,9 +558,9 @@ const Home = ({ t, language, theme }) => {
             <div className={`inline-flex items-center px-6 py-3 rounded-full border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-3"></div>
               <span className={themeClasses.textSecondary}>
-                {language === 'ar' ? 'الشفافية من خلال البيانات' : 
-                 language === 'en' ? 'Transparency through data' : 
-                 'Transparence par les données'}
+                {language === 'ar' ? 'نسخة تجريبية – الإصدار 1.1.7 | جميع الحقوق محفوظة © 2025' : 
+                 language === 'en' ? 'Beta Version – v1.1.7 | All Rights Reserved © 2025' : 
+                 'Version d’essai – v1.1.7 | Tous droits réservés © 2025'}
               </span>
             </div>
           </div>

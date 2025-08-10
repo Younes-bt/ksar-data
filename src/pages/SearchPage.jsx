@@ -14,6 +14,8 @@ const normalizeText = (text) => {
     .trim();
 };
 
+
+
 export default function SearchPage({ data, loading, t, language, theme }) {
   const [search, setSearch] = useState("");
   const [yearFilter, setYearFilter] = useState("");
@@ -23,6 +25,17 @@ export default function SearchPage({ data, loading, t, language, theme }) {
   const [isFiltering, setIsFiltering] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(15);
+
+  const themeClasses = {
+    bg: theme === 'dark' ? 'bg-gray-950' : 'bg-gray-50',
+    cardBg: theme === 'dark' ? 'bg-gray-900' : 'bg-white',
+    borderColor: theme === 'dark' ? 'border-gray-800' : 'border-gray-200',
+    textPrimary: theme === 'dark' ? 'text-white' : 'text-gray-900',
+    textSecondary: theme === 'dark' ? 'text-gray-400' : 'text-gray-600',
+    textAccent: theme === 'dark' ? 'text-blue-400' : 'text-blue-600',
+    gradientFrom: theme === 'dark' ? 'from-blue-600' : 'from-blue-500',
+    gradientTo: theme === 'dark' ? 'to-purple-600' : 'to-purple-500'
+  };
 
   useEffect(() => {
     setIsFiltering(true);
@@ -271,6 +284,21 @@ export default function SearchPage({ data, loading, t, language, theme }) {
 
         
       </div>
+      {/* FOOTER CTA */}
+      <section className={`py-16 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'}`}>
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className="text-center">
+            <div className={`inline-flex items-center px-6 py-3 rounded-full border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+              
+              <span className={themeClasses.textSecondary}>
+                {language === 'ar' ? 'نسخة تجريبية – الإصدار 1.1.7 | جميع الحقوق محفوظة © 2025' : 
+                 language === 'en' ? 'Beta Version – v1.1.7 | All Rights Reserved © 2025' : 
+                 'Version d’essai – v1.1.7 | Tous droits réservés © 2025'}
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

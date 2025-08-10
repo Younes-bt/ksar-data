@@ -12,6 +12,9 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 
+
+
+
 const NewInsightsPage = ({ 
   data, 
   t, 
@@ -399,6 +402,18 @@ Sorry, image export failed. Please try again or use your browser's screenshot to
     );
   }
 
+  const themeClasses = {
+    bg: theme === 'dark' ? 'bg-gray-950' : 'bg-gray-50',
+    cardBg: theme === 'dark' ? 'bg-gray-900' : 'bg-white',
+    borderColor: theme === 'dark' ? 'border-gray-800' : 'border-gray-200',
+    textPrimary: theme === 'dark' ? 'text-white' : 'text-gray-900',
+    textSecondary: theme === 'dark' ? 'text-gray-400' : 'text-gray-600',
+    textAccent: theme === 'dark' ? 'text-blue-400' : 'text-blue-600',
+    gradientFrom: theme === 'dark' ? 'from-blue-600' : 'from-blue-500',
+    gradientTo: theme === 'dark' ? 'to-purple-600' : 'to-purple-500'
+  };
+
+
   return (
     <div style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif', direction:'rtl', fontSize:'1.50rem' } : undefined} className={`min-h-screen ${theme === 'dark' ? 'bg-gray-950' : 'bg-gray-50'} pt-5`} dir={language === 'ar' ? 'rtl' : 'ltr'}>
       <div className="container mx-auto px-4 lg:px-12 pb-20">
@@ -681,6 +696,7 @@ Sorry, image export failed. Please try again or use your browser's screenshot to
           </Accordion>
         </div>
       </div>
+      
 
       {/* Custom scrollbar styles */}
       <style jsx>{`
@@ -695,6 +711,8 @@ Sorry, image export failed. Please try again or use your browser's screenshot to
           scroll-behavior: smooth;
         }
       `}</style>
+
+     
     </div>
   );
 };
