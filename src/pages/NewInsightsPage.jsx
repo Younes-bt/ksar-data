@@ -401,7 +401,7 @@ Sorry, image export failed. Please try again or use your browser's screenshot to
 
   return (
     <div style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif', direction:'rtl', fontSize:'1.50rem' } : undefined} className={`min-h-screen ${theme === 'dark' ? 'bg-gray-950' : 'bg-gray-50'} pt-5`} dir={language === 'ar' ? 'rtl' : 'ltr'}>
-      <div className="container mx-auto px-4 lg:px-12">
+      <div className="container mx-auto px-4 lg:px-12 pb-20">
         
         {/* Header */}
         <div className={`mb-8 text-center`}>
