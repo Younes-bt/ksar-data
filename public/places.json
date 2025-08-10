@@ -1,0 +1,900 @@
+[
+  {
+    "type": "Hotel",
+    "name": {
+      "ar": "فندق السلطان",
+      "en": "The Sultan's Hotel",
+      "fr": "Hôtel du Sultan"
+    },
+    "location": {
+      "ar": "بالمدينة، جزء من القيسارية",
+      "en": "In the city (Medina), part of the Qaysariyya (commercial complex).",
+      "fr": "Dans la ville (Médina), partie de la Qaysariyya (complexe commercial)."
+    },
+    "ownership": {
+      "ar": "ملك للمخزن، بني بأمر السلطان سيدي محمد بن عبد الله",
+      "en": "Makhzen (State property), built under the order of Sultan Sidi Mohammed bin Abdullah.",
+      "fr": "Propriété du Makhzen (État), construit sur ordre du Sultan Sidi Mohammed ben Abdallah."
+    },
+    "description": {
+      "ar": "من أهم فنادق المدينة، كان يأوي كبار التجار. ويضم مخازن للسلع القادمة من طنجة والتجار الأوروبيين. يتألف الفندق من 50 غرفة يملكها يهود.",
+      "en": "One of the most important hotels in the city, it accommodated major merchants. It included warehouses for goods from Tangier and for European merchants. The hotel was composed of 50 rooms owned by Jews.",
+      "fr": "L'un des hôtels les plus importants de la ville, il hébergeait les grands commerçants. Il comprenait des entrepôts pour les marchandises de Tanger et pour les marchands européens. L'hôtel était composé de 50 chambres appartenant à des Juifs."
+    },
+    "price": {
+      "ar": "إيجار شهري يتراوح بين 30 و 50 سنتيما للغرفة",
+      "en": "A monthly rent ranging between 30 and 50 centimes per room.",
+      "fr": "Un loyer mensuel variant entre 30 et 50 centimes par chambre."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 225",
+    "coordinates": [35.0025, -5.9070],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Hotel",
+    "name": {
+      "ar": "فندق الخضرة",
+      "en": "The Greenery Hotel",
+      "fr": "Hôtel de la Verdure"
+    },
+    "location": {
+      "ar": "في حي الدباغين، بجوار السوق الكبير",
+      "en": "In the Dabbaghine (Tanners') quarter, next to the main market (Souk El Kebir).",
+      "fr": "Dans le quartier des Dabbaghine (Tanneurs), à côté du marché principal (Souk El Kebir)."
+    },
+    "ownership": {
+      "ar": "ملك للمخزن",
+      "en": "Makhzen (State property).",
+      "fr": "Propriété du Makhzen (État)."
+    },
+    "description": {
+      "ar": "كان هذا الفندق مخصصًا لبائعي الخضار (قطان الخضر) الذين يأتون إلى السوق الكبير يوميًا.",
+      "en": "This hotel was specifically designated for vegetable sellers who came to the city's main market daily.",
+      "fr": "Cet hôtel était spécifiquement destiné aux vendeurs de légumes qui venaient quotidiennement au marché principal de la ville."
+    },
+    "price": {
+      "ar": "إيجار سنوي يبلغ حوالي 96 دورو",
+      "en": "Annual rent of approximately 96 doro.",
+      "fr": "Loyer annuel d'environ 96 doro."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 225",
+"coordinates": [35.0030, -5.9060],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Hotel",
+    "name": {
+      "ar": "فندق العواد",
+      "en": "The Wood Hotel",
+      "fr": "Hôtel du Bois"
+    },
+    "location": {
+      "ar": "مرتبط بتجارة البغال",
+      "en": "Associated with the mule rental business.",
+      "fr": "Associé au commerce de location de mulets."
+    },
+    "ownership": {
+      "ar": "ملك للأحباس",
+      "en": "Habous (Religious endowment) property.",
+      "fr": "Propriété des Habous (fondation pieuse)."
+    },
+    "description": {
+      "ar": "يستخدم لتجارة الأخشاب ويضم 10 اسطبلات للبغال. كما كان يضم ورشات لصناعة الأحذية يشرف عليها القصر.",
+      "en": "Used for the wood trade and featured 10 stables for mules. It also housed shoemaking workshops supervised by the palace.",
+      "fr": "Utilisé pour le commerce du bois, il comprenait 10 écuries pour les mulets. Il abritait également des ateliers de cordonnerie supervisés par le palais."
+    },
+    "price": {
+      "ar": "إيجار سنوي يبلغ 385 دورو",
+      "en": "Annual rent of 385 doro.",
+      "fr": "Loyer annuel de 385 doro."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 225",
+"coordinates": [35.0025, -5.9070],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Hotel",
+    "name": {
+      "ar": "فندق الموت (السمك)",
+      "en": "The Death (The Fish) Hotel",
+      "fr": "Hôtel de la Mort (du Poisson)"
+    },
+    "location": {
+      "ar": "في السوق الصغير",
+      "en": "In the Souk Sghir (Small Market).",
+      "fr": "Dans le Souk Sghir (Petit Marché)."
+    },
+    "ownership": {
+      "ar": "تعود ملكيته للأحباس",
+      "en": "Belongs to the Habous.",
+      "fr": "Appartient aux Habous."
+    },
+    "description": {
+      "ar": "به حوالي 50 غرفة. الطابق الأول كان مؤجراً للخياطين اليهود ('الشواري'). الطابق الأرضي كان مخصصاً لبيع السمك بإشراف أمين المستاد.",
+      "en": "It had about 50 rooms. The first floor was rented to Jewish tailors ('Shouari'). The ground floor was where fish was sold, under the supervision of the Amin al-Mustad.",
+      "fr": "Il comptait environ 50 chambres. Le premier étage était loué à des tailleurs juifs ('Shouari'). Le rez-de-chaussée était l'endroit où le poisson était vendu, sous la supervision de l'Amin al-Mustad."
+    },
+    "price": {
+      "ar": "إيجار سنوي يبلغ 357 دورو",
+      "en": "Annual rent of 357 doro.",
+      "fr": "Loyer annuel de 357 doro."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 226",
+"coordinates": [35.0025, -5.9070],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Hotel",
+    "name": {
+      "ar": "فندق المليح",
+      "en": "The Salt Hotel",
+      "fr": "Hôtel du Sel"
+    },
+    "location": {
+      "ar": "في السوق الصغير",
+      "en": "In the Souk Sghir (Small Market).",
+      "fr": "Dans le Souk Sghir (Petit Marché)."
+    },
+    "ownership": {
+      "ar": "تعود ملكيته للأحباس",
+      "en": "Belongs to the Habous.",
+      "fr": "Appartient aux Habous."
+    },
+    "description": {
+      "ar": "به حوالي 40 غرفة. كان مخصصًا للتجار القادمين من 'الجبل' بالملح. الساحة الأمامية كانت تستغل لربط الدواب وللبيع.",
+      "en": "Had around 40 rooms. It was designated for merchants from the 'Jbel' (mountain) regions who brought salt. The open area in front was used for tying up animals and for selling goods.",
+      "fr": "Comptait environ 40 chambres. Il était destiné aux marchands des régions du 'Jbel' (montagne) qui apportaient du sel. L'espace ouvert à l'avant était utilisé pour attacher les bêtes et pour la vente."
+    },
+    "price": {
+      "ar": "إيجار سنوي يبلغ 285 دورو",
+      "en": "Annual rent of 285 doro.",
+      "fr": "Loyer annuel de 285 doro."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 226",
+"coordinates": [35.0025, -5.9070],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Hotel",
+    "name": {
+      "ar": "فندق مولاي علي بوغالب",
+      "en": "Mawlay Ali Bu Ghalib's Hotel",
+      "fr": "Hôtel de Mawlay Ali Bu Ghalib"
+    },
+    "location": {
+      "ar": "مدينة القصر الكبير",
+      "en": "City of Ksar El Kebir.",
+      "fr": "Ville de Ksar El Kebir."
+    },
+    "ownership": {
+      "ar": "كانت ملكيته مناصفة للتاجر الواديني والأبيض، وهبته امرأة من سلا للأحباس",
+      "en": "Ownership was shared between the Oudiyine and Abyad merchants; it was gifted to the Habous by a woman from Salé.",
+      "fr": "La propriété était partagée entre les marchands Oudiyine et Abyad ; il a été donné aux Habous par une femme de Salé."
+    },
+    "description": {
+      "ar": "يعتبر أقدم فندق في المدينة، أرضيته مزينة بالفسيفساء من فاس. كان مفتوحًا للمسلمين والمسيحيين واليهود. الطابق الأرضي لخزن القش، والطابق الأول لصانعي الأحذية.",
+      "en": "Considered the oldest hotel in the city, with floors decorated in zellij from Fez. It was open to Muslims, Christians, and Jews. The ground floor was for grain storage, and the first floor for shoemakers.",
+      "fr": "Considéré comme le plus ancien hôtel de la ville, avec des sols décorés de zellige de Fès. Il était ouvert aux musulmans, chrétiens et juifs. Le rez-de-chaussée servait au stockage du grain et le premier étage aux cordonniers."
+    },
+    "price": {
+      "ar": "إيجار سنوي يبلغ حوالي 50 دورو",
+      "en": "Annual rent of approximately 50 doro.",
+      "fr": "Loyer annuel d'environ 50 doro."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 226",
+    "coordinates": [35.0025, -5.9080],
+    "image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Hotel",
+    "name": {
+      "ar": "فندق الجزارين",
+      "en": "The Butchers' Hotel",
+      "fr": "Hôtel des Bouchers"
+    },
+    "location": {
+      "ar": "مدينة القصر الكبير",
+      "en": "City of Ksar El Kebir.",
+      "fr": "Ville de Ksar El Kebir."
+    },
+    "ownership": {
+      "ar": "ملكية مقسمة بين الأحباس (1/8) والمخزن (7/8)",
+      "en": "Shared property: 1/8 belonged to the Habous and 7/8 to the Makhzen.",
+      "fr": "Propriété partagée : 1/8 appartenait aux Habous et 7/8 au Makhzen."
+    },
+    "description": {
+      "ar": "كان مستودعاً لقوافل البغال التي يفد بها التجار للمدينة.",
+      "en": "Served as a depot for the mule caravans that brought merchants to the city.",
+      "fr": "Servait de dépôt pour les caravanes de mulets qui amenaient les marchands à la ville."
+    },
+    "price": {
+      "ar": "إيجار سنوي يبلغ 63 دورو",
+      "en": "Annual rent of 63 doro.",
+      "fr": "Loyer annuel de 63 doro."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 227",
+"coordinates": [35.0025, -5.9070],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Hotel",
+    "name": {
+      "ar": "فندق الطرافين (الإسكافيين)",
+      "en": "The Slipper Makers' (Shoemakers') Hotel",
+      "fr": "Hôtel des Babouchiers (Cordonniers)"
+    },
+    "location": {
+      "ar": "مدينة القصر الكبير",
+      "en": "City of Ksar El Kebir.",
+      "fr": "Ville de Ksar El Kebir."
+    },
+    "ownership": {
+      "ar": "نصفه لأحباس المسجد الكبير والنصف الآخر لأحباس مدينة أخرى",
+      "en": "Half belonged to the Great Mosque's Habous and the other half to another city's Habous.",
+      "fr": "La moitié appartenait aux Habous de la Grande Mosquée et l'autre moitié aux Habous d'une autre ville."
+    },
+    "description": {
+      "ar": "لا يتوفر على غرف بل على غرفتين تستغلان لإقامة المزارعين. الإقامة لليلة تكلف حوالي 6 سنتيمات، وفي حالة عدم المبيت 12 سنتيما.",
+      "en": "It did not have rooms but two large storerooms for farmers. An overnight stay cost about 6 centimes, or 12 centimes otherwise.",
+      "fr": "Il n'avait pas de chambres mais deux grands entrepôts pour les agriculteurs. Une nuitée coûtait environ 6 centimes, ou 12 centimes autrement."
+    },
+    "price": {
+      "ar": "إيجار سنوي يبلغ 200 دورو",
+      "en": "Annual rent of 200 doro.",
+      "fr": "Loyer annuel de 200 doro."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 227",
+"coordinates": [35.0025, -5.9070],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Hotel",
+    "name": {
+      "ar": "فندق الوراد (الوافدين الجدد)",
+      "en": "The Newcomers' Hotel",
+      "fr": "Hôtel des Nouveaux Arrivants"
+    },
+    "location": {
+      "ar": "مدينة القصر الكبير",
+      "en": "City of Ksar El Kebir.",
+      "fr": "Ville de Ksar El Kebir."
+    },
+    "ownership": {
+      "ar": "ملك للأحباس",
+      "en": "Habous property.",
+      "fr": "Propriété des Habous."
+    },
+    "description": {
+      "ar": "به حوالي 50 غرفة تستأجر من طرف تجار الرباط الذين يأتون لبيع الخضار في القصر، وكذلك تجار الأخشاب من شفشاون. الطابق الأول كان مخصصًا لصانعي الأحذية.",
+      "en": "It had about 50 rooms rented to merchants from Rabat who sold vegetables at the palace, as well as wood merchants from Chefchaouen. The first floor was reserved for shoemakers.",
+      "fr": "Il comptait environ 50 chambres louées à des marchands de Rabat qui vendaient des légumes au palais, ainsi qu'à des marchands de bois de Chefchaouen. Le premier étage était réservé aux cordonniers."
+    },
+    "price": {
+      "ar": "إيجار سنوي يبلغ 300 دورو",
+      "en": "Annual rent of 300 doro.",
+      "fr": "Loyer annuel de 300 doro."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 227",
+"coordinates": [35.0025, -5.9070],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Hotel",
+    "name": {
+      "ar": "فندق اجليد",
+      "en": "Jlid's Hotel",
+      "fr": "Hôtel de Jlid"
+    },
+    "location": {
+      "ar": "يقع وسط المدينة",
+      "en": "Located in the city center.",
+      "fr": "Situé dans le centre-ville."
+    },
+    "ownership": {
+      "ar": "تعود ملكيته للأحباس",
+      "en": "Belongs to the Habous.",
+      "fr": "Appartient aux Habous."
+    },
+    "description": {
+      "ar": "الطابق الأرضي مخصص لبيع المنتوجات الجلدية، أما الطابق الأول فقد كان مخصصًا لليهود الذين كانوا يقطنون به طوال السنة.",
+      "en": "The ground floor was for selling leather products, while the first floor was reserved for Jewish residents who lived there year-round.",
+      "fr": "Le rez-de-chaussée était destiné à la vente de produits en cuir, tandis que le premier étage était réservé aux résidents juifs qui y vivaient toute l'année."
+    },
+    "price": {
+      "ar": "إيجار سنوي يبلغ 200 دورو",
+      "en": "Annual rent of 200 doro.",
+      "fr": "Loyer annuel de 200 doro."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 227",
+"coordinates": [35.0025, -5.9070],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Hotel",
+    "name": {
+      "ar": "فندق رحبة الزرع (سوق الحبوب)",
+      "en": "The Grain Square (Grain Market) Hotel",
+      "fr": "Hôtel de la Place du Grain (Marché aux Grains)"
+    },
+    "location": {
+      "ar": "يوجد خلف سوق الحبوب",
+      "en": "Located behind the grain market (Souk al-Hubub).",
+      "fr": "Situé derrière le marché aux grains (Souk al-Hubub)."
+    },
+    "ownership": {
+      "ar": "ملك للأحباس",
+      "en": "Habous property.",
+      "fr": "Propriété des Habous."
+    },
+    "description": {
+      "ar": "يخدم تجار الحبوب. كانوا يودعون فيه دوابهم المحملة بالحبوب مقابل نصف ريال لكل دابة.",
+      "en": "It served grain merchants. They would deposit their loaded animals there for a fee of half a rial per animal.",
+      "fr": "Il servait les marchands de grains. Ils y déposaient leurs bêtes chargées moyennant une redevance d'un demi-rial par bête."
+    },
+    "price": {
+      "ar": "إيجار سنوي يصل إلى 145 دورو",
+      "en": "Annual rent reaches 145 doro.",
+      "fr": "Le loyer annuel atteint 145 doro."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 227",
+"coordinates": [35.0025, -5.9070],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Hotel",
+    "name": {
+      "ar": "فندق القاعة (القرمود)",
+      "en": "The Hall (The Tile) Hotel",
+      "fr": "Hôtel de la Salle (du Carreau)"
+    },
+    "location": {
+      "ar": "مدينة القصر الكبير",
+      "en": "City of Ksar El Kebir.",
+      "fr": "Ville de Ksar El Kebir."
+    },
+    "ownership": {
+      "ar": "ملك للأحباس",
+      "en": "Habous property.",
+      "fr": "Propriété des Habous."
+    },
+    "description": {
+      "ar": "تم تفويته إلى التاجرين البقالي والقلة. كان يباع فيه زيت الزيتون الذي يأتي به الجبليون من أهل سريف ورهونة ومصمودة وصرصر، إضافة إلى الفواكه الجافة والسمن الذي كان يستقدم من سلا.",
+      "en": "It was leased to the merchants Baqqali and Qulla. Olive oil from the mountain tribes of Srif, Rahouna, Masmouda, and Sarsar was sold there, in addition to dried fruits and ghee from Salé.",
+      "fr": "Il était loué aux marchands Baqqali et Qulla. On y vendait l'huile d'olive des tribus montagnardes de Srif, Rahouna, Masmouda et Sarsar, ainsi que des fruits secs et du ghee de Salé."
+    },
+    "price": {
+      "ar": "إيجار سنوي يبلغ 300 دورو",
+      "en": "Annual rent of 300 doro.",
+      "fr": "Loyer annuel de 300 doro."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 227",
+"coordinates": [35.0025, -5.9070],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Hotel",
+    "name": {
+      "ar": "فندق الطود",
+      "en": "Al-Toud's Hotel",
+      "fr": "Hôtel Al-Toud"
+    },
+    "location": {
+      "ar": "يوجد في شارع الديوان",
+      "en": "Located on Diwan Street.",
+      "fr": "Situé dans la rue Diwan."
+    },
+    "ownership": {
+      "ar": "تعود ملكيته لعائلة الطود",
+      "en": "Belonged to the Al-Toud family.",
+      "fr": "Appartenait à la famille Al-Toud."
+    },
+    "description": {
+      "ar": "الطابق الأرضي لخزن السلع، فيما كان الطابق الأول يستغل كسكن من طرف بعض العائلات اليهودية.",
+      "en": "The ground floor was for storing goods, while the first floor was rented out to some Jewish families.",
+      "fr": "Le rez-de-chaussée servait à entreposer des marchandises, tandis que le premier étage était loué à des familles juives."
+    },
+    "price": {
+      "ar": "غير محدد",
+      "en": "Not specified.",
+      "fr": "Non spécifié."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 228",
+"coordinates": [35.0025, -5.9070],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Hotel",
+    "name": {
+      "ar": "فندق الطودة",
+      "en": "Al-Touda's Hotel",
+      "fr": "Hôtel Al-Touda"
+    },
+    "location": {
+      "ar": "يوجد قبالة فندق السلطان بالقيسرية",
+      "en": "Located opposite the Sultan Hotel in the Qaysariyya.",
+      "fr": "Situé en face de l'Hôtel du Sultan dans la Qaysariyya."
+    },
+    "ownership": {
+      "ar": "في ملك عائلة الطود",
+      "en": "Property of the Touda family.",
+      "fr": "Propriété de la famille Touda."
+    },
+    "description": {
+      "ar": "حوانيته كانت تواجد مجموعة من حوانيت النقارية اليهود، وهم حوانيت صغيرة جدا أبوابها حانية، حيث كان اليهود بارعين في صناعة الحلي الفضية.",
+      "en": "Its shops were located near a group of shops belonging to Jewish silversmiths, who were skilled in making high-quality silver jewelry.",
+      "fr": "Ses boutiques étaient situées près d'un groupe de boutiques appartenant à des orfèvres juifs, qui étaient habiles dans la fabrication de bijoux en argent de haute qualité."
+    },
+    "price": {
+      "ar": "غير محدد",
+      "en": "Not specified.",
+      "fr": "Non spécifié."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 228",
+"coordinates": [35.0025, -5.9070],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Hotel",
+    "name": {
+      "ar": "فندق الشاوش",
+      "en": "The Shawish's Hotel",
+      "fr": "Hôtel du Chaouch"
+    },
+    "location": {
+      "ar": "يوجد في شارع القطانين المؤدي إلى شارع الديوان",
+      "en": "Located on Qattanin Street, leading to Diwan Street.",
+      "fr": "Situé dans la rue Qattanin, menant à la rue Diwan."
+    },
+    "ownership": {
+      "ar": "تعود ملكيته إلى العائلة الجزائرية (الشاوش)",
+      "en": "Belonged to the Algerian family (the Shawish).",
+      "fr": "Appartenait à la famille algérienne (le Chaouch)."
+    },
+    "description": {
+      "ar": "الطابق الأرضي كان مخصصًا لصانعي الأحذية، أما طابقه الأول فقد كان تقطن به بعض العائلات اليهودية، والطابق الثاني للمسلمين العزاب الذين كانوا يفدون من فاس وتطوان لأغراض مختلفة.",
+      "en": "The ground floor was for shoemakers, the first floor was inhabited by some Jewish families, and the second floor was occupied by single Muslim men from Fez and Tetouan.",
+      "fr": "Le rez-de-chaussée était pour les cordonniers, le premier étage était habité par des familles juives, et le deuxième étage était occupé par des hommes musulmans célibataires de Fès et Tétouan."
+    },
+    "price": {
+      "ar": "غير محدد",
+      "en": "Not specified.",
+      "fr": "Non spécifié."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 228",
+"coordinates": [35.0025, -5.9070],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Hotel",
+    "name": {
+      "ar": "فندق سيدي بواحد",
+      "en": "Sidi Buwahed's Hotel",
+      "fr": "Hôtel de Sidi Buwahed"
+    },
+    "location": {
+      "ar": "مدينة القصر الكبير",
+      "en": "City of Ksar El Kebir.",
+      "fr": "Ville de Ksar El Kebir."
+    },
+    "ownership": {
+      "ar": "كان في ملكية المخزن، لكن السلطان سيدي محمد بن عبد الله فوته للشريف محمد البقالي والد الشريف سيدي احيدو",
+      "en": "It was Makhzen (State) property, but Sultan Sidi Mohammed bin Abdullah transferred it to Sharif Mohammed al-Baqqali.",
+      "fr": "C'était une propriété du Makhzen (État), mais le sultan Sidi Mohammed ben Abdallah l'a transférée au Chérif Mohammed al-Baqqali."
+    },
+    "description": {
+      "ar": "كانت تكرى لأصحاب الجمال الذين يودعون فيه إبلهم.",
+      "en": "Its revenue was designated for distribution to the poor. It was rented to camel owners who would stable their animals there.",
+      "fr": "Ses revenus étaient destinés à être distribués aux pauvres. Il était loué à des propriétaires de chameaux qui y logeaient leurs animaux."
+    },
+    "price": {
+      "ar": "غير محدد",
+      "en": "Not specified.",
+      "fr": "Non spécifié."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 228",
+"coordinates": [35.0025, -5.9070],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Zawya",
+    "name": {
+      "ar": "الزاوية القادرية",
+      "en": "The Qadiriyya Zawya",
+      "fr": "La Zawiya Qadiriyya"
+    },
+    "location": {
+      "ar": "واحدة في عدوة \"الشريعة\" والأخرى في عدوة \"باب الواد\"",
+      "en": "One located in the 'Sharia' district and another in the 'Bab al-Wad' district.",
+      "fr": "Une située dans le quartier 'Sharia' et une autre dans le quartier 'Bab al-Wad'."
+    },
+    "association": {
+      "ar": "الطريقة القادرية",
+      "en": "The Qadiriyya order.",
+      "fr": "La confrérie Qadiriyya."
+    },
+    "description": {
+      "ar": "كان أتباعها يعرفون بجلالة وعرفوا بممارسة طقوسهم موسميا بإحياء الليالي وتقديم الطعام للمريدين القادمين من مناطق مختلفة.",
+      "en": "Its followers were known for their prestige and for practicing their rituals seasonally by reviving nights and offering food to disciples coming from different regions.",
+      "fr": "Ses adeptes étaient connus pour leur prestige et pour la pratique saisonnière de leurs rituels en ravivant les nuits et en offrant de la nourriture aux disciples venant de différentes régions."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 263",
+"coordinates": [35.0025, -5.9070],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Zawya",
+    "name": {
+      "ar": "الزاوية الحمدوشية",
+      "en": "The Hamdushiyya Zawya",
+      "fr": "La Zawiya Hamdushiyya"
+    },
+    "location": {
+      "ar": "مكانها في طريق الحدادين قرب مسجد بوحديد",
+      "en": "Located on the blacksmiths' road, near the Bouhdid mosque.",
+      "fr": "Située sur la route des forgerons, près de la mosquée Bouhdid."
+    },
+    "association": {
+      "ar": "الطريقة الحمدوشية",
+      "en": "The Hamdushiyya order.",
+      "fr": "La confrérie Hamdushiyya."
+    },
+    "description": {
+      "ar": "أغلب مريدي هذه الزاوية كانوا من الحرفيين. اشتهروا بطقوسهم العنيفة التي تشمل ضرب رؤوسهم بكرات حديدية، وكانوا يقومون بمسيرة موسمية نحو ضريح مولاي علي أبي غالب.",
+      "en": "Most followers of this Zawya were artisans. They were known for their intense rituals, including striking their heads with iron balls, and for their seasonal procession towards the mausoleum of Moulay Ali Abu Ghalib.",
+      "fr": "La plupart des adeptes de cette Zawiya étaient des artisans. Ils étaient connus pour leurs rituels intenses, y compris se frapper la tête avec des boules de fer, et pour leur procession saisonnière vers le mausolée de Moulay Ali Abu Ghalib."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 263",
+"coordinates": [35.0025, -5.9070],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Zawya",
+    "name": {
+      "ar": "الزاوية العيساوية",
+      "en": "The Aissawiyya Zawya",
+      "fr": "La Zawiya Aissawiyya"
+    },
+    "location": {
+      "ar": "مكانها قرب سباط العدول الصغير",
+      "en": "Located near the Small Adoul's Sabat (covered passageway).",
+      "fr": "Située près du Sabat (passage couvert) du Petit Adoul."
+    },
+    "association": {
+      "ar": "الطريقة العيساوية",
+      "en": "The Aissawiyya order.",
+      "fr": "La confrérie Aissawiyya."
+    },
+    "description": {
+      "ar": "كانت تُتلى فيها أوراد الشيخ اليومية، وفي المناسبات الاحتفالية، كانت حلقات الذكر تتحول إلى عمارة الرقص الصوفي.",
+      "en": "The sheikh's daily litanies were recited here. On festive occasions, the dhikr (remembrance) circles would transform into a form of Sufi dance.",
+      "fr": "Les litanies quotidiennes du cheikh y étaient récitées. Lors des occasions festives, les cercles de dhikr (souvenir) se transformaient en une forme de danse soufie."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 263",
+"coordinates": [35.0025, -5.9070],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Zawya",
+    "name": {
+      "ar": "الزاوية الكتانية",
+      "en": "The Kittaniyya Zawya",
+      "fr": "La Zawiya Kittaniyya"
+    },
+    "location": {
+      "ar": "كانت توجد بحي 'الطيقار'",
+      "en": "It was located in the 'Tayqar' neighborhood.",
+      "fr": "Elle était située dans le quartier 'Tayqar'."
+    },
+    "founder": {
+      "ar": "أسسها محمد بن عبد الكبير الكتاني بفاس سنة 1850",
+      "en": "Founded by Muhammad ibn Abd al-Kabir al-Kattani in Fez in 1850.",
+      "fr": "Fondée par Muhammad ibn Abd al-Kabir al-Kattani à Fès en 1850."
+    },
+    "description": {
+      "ar": "كانت فرعًا لزاوية في سلا. اشتهر مريدوها، من الفقهاء والتجار والحرفيين، بوضع سبحات على صدورهم وعمائم صفراء على رؤوسهم، وكانوا يحتفلون بعيد المولد النبوي ليلاً.",
+      "en": "It was a branch of a zawiya in Salé. Its followers, including jurists, merchants, and artisans, were known for wearing prayer beads on their chests and yellow turbans. They celebrated the Prophet's birthday (Mawlid) at night.",
+      "fr": "C'était une branche d'une zawiya à Salé. Ses adeptes, y compris des juristes, des marchands et des artisans, étaient connus pour porter des chapelets sur leur poitrine et des turbans jaunes. Ils célébraient l'anniversaire du Prophète (Mawlid) la nuit."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 264",
+"coordinates": [35.0025, -5.9070],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Zawya",
+    "name": {
+      "ar": "الزاوية التيجانية",
+      "en": "The Tijaniyya Zawya",
+      "fr": "La Zawiya Tijaniyya"
+    },
+    "location": {
+      "ar": "كانت توجد بحي 'النيارين'",
+      "en": "It was located in the 'Niyarin' neighborhood.",
+      "fr": "Elle était située dans le quartier 'Niyarin'."
+    },
+    "founder": {
+      "ar": "مؤسسها هو سيدي احمد بن محمد بن مختار بن سلام التيجاني",
+      "en": "Its founder is Sidi Ahmed ibn Muhammad ibn Mukhtar ibn Salam al-Tijani.",
+      "fr": "Son fondateur est Sidi Ahmed ibn Muhammad ibn Mukhtar ibn Salam al-Tijani."
+    },
+    "description": {
+      "ar": "تم تجديد بنايتها في العشرينات. أغلب مريديها من التجار الفاسيين وفقهاء قصريين ورجال السلطة. كانوا يولون عناية خاصة بالهندام ويحرصون على أداء الصلوات وتلاوة البردة والهمزية.",
+      "en": "Its building was renovated in the 1920s. Most of its followers were merchants from Fez, jurists from Ksar el-Kebir, and government officials. They paid special attention to their appearance and were keen on performing prayers and reciting the Burda and Hamziyya poems.",
+      "fr": "Son bâtiment a été rénové dans les années 1920. La plupart de ses adeptes étaient des marchands de Fès, des juristes de Ksar el-Kebir et des fonctionnaires. Ils accordaient une attention particulière à leur apparence et tenaient à accomplir les prières et à réciter les poèmes de la Burda et de la Hamziyya."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 264",
+"coordinates": [35.0025, -5.9070],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Zawya",
+    "name": {
+      "ar": "الزاوية الدرقاوية",
+      "en": "The Darqawiyya Zawya",
+      "fr": "La Zawiya Darqawiyya"
+    },
+    "location": {
+      "ar": "مكانها في أعلى عدوة 'الشريعة'",
+      "en": "Located at the top of the 'Sharia' district.",
+      "fr": "Située en haut du quartier 'Sharia'."
+    },
+    "association": {
+      "ar": "تعرف بالزاوية الخمسية نسبة إلى أحد شيوخها سيدي احمد الخمسي",
+      "en": "Known as the Khamssiyya Zawya, named after one of its sheikhs, Sidi Ahmed al-Khamssi.",
+      "fr": "Connue sous le nom de Zawiya Khamssiyya, du nom d'un de ses cheikhs, Sidi Ahmed al-Khamssi."
+    },
+    "description": {
+      "ar": "تميز مريدوها بجلاليبهم الصوفية القصيرة، إطلاق اللحى، ووضع السبحات الضخمة. كانوا يستعملون الطبل في حلقات الذكر. كانت هناك أيضاً الزاوية الروسية الدرقاوية التي استخدم مريدوها آلات الطرب.",
+      "en": "Its followers were distinguished by their short Sufi robes, long beards, and large prayer beads. They used drums in their dhikr circles. There was also the 'Russiya' Darqawi Zawya, whose followers used musical instruments.",
+      "fr": "Ses adeptes se distinguaient par leurs courtes robes soufies, leurs longues barbes et leurs grands chapelets. Ils utilisaient des tambours dans leurs cercles de dhikr. Il y avait aussi la Zawiya Darqawi 'Russiya', dont les adeptes utilisaient des instruments de musique."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 264",
+"coordinates": [35.0025, -5.9070],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Zawya",
+    "name": {
+      "ar": "الزاوية العلوية",
+      "en": "The Alawiyya Zawya",
+      "fr": "La Zawiya Alawiyya"
+    },
+    "location": {
+      "ar": "توجد في طريق المجبولين بالشريعة",
+      "en": "Located on the Majboulin road in the Sharia district.",
+      "fr": "Située sur la route Majboulin dans le quartier Sharia."
+    },
+    "association": {
+      "ar": "لها فرع للطريقة الدرقاوية في مستغانم، الجزائر",
+      "en": "It has a branch of the Darqawi order in Mostaganem, Algeria.",
+      "fr": "Elle a une branche de la confrérie Darqawi à Mostaganem, en Algérie."
+    },
+    "description": {
+      "ar": "أغلب مريديها من خارج المدينة. يتميزون بقراءة أورادهم بأصوات هامسة. وينتمي معظمهم إلى الغرفيين وصغار التجار.",
+      "en": "Most of its followers are from outside the city. They are characterized by reciting their litanies in soft voices. Most belong to the Ghorfiyin group and are small merchants.",
+      "fr": "La plupart de ses adeptes viennent de l'extérieur de la ville. Ils se caractérisent par la récitation de leurs litanies à voix basse. La plupart appartiennent au groupe des Ghorfiyin et sont de petits commerçants."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 265",
+"coordinates": [35.0025, -5.9070],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Zawya",
+    "name": {
+      "ar": "الزاوية الناصرية",
+      "en": "The Nasiriyya Zawya",
+      "fr": "La Zawiya Nasiriyya"
+    },
+    "location": {
+      "ar": "كانت تعرف بزاوية سيدي بوذراع ومقرها في حومة 'المزيلة' في عدوة باب الواد",
+      "en": "It was known as the Zawiya of Sidi Boudra, located in the 'Mzila' neighborhood in the Bab al-Wad district.",
+      "fr": "Elle était connue sous le nom de Zawiya de Sidi Boudra, située dans le quartier 'Mzila' dans le district de Bab al-Wad."
+    },
+    "association": {
+      "ar": "منشؤها وادي درعة ومركزها تامكروت",
+      "en": "Its origin is the Draa Valley, and its center is Tamegroute.",
+      "fr": "Son origine est la vallée du Drâa, et son centre est Tamegroute."
+    },
+    "description": {
+      "ar": "بقيت أذكارها محفوظة لدى العامة لمدة طويلة، وخصوصاً الدعاء الناصري الذي لا يزال يتلى في مجموعة من المساجد.",
+      "en": "Its invocations were preserved among the general populace for a long time, especially the Nasiri supplication which is still recited in a number of mosques.",
+      "fr": "Ses invocations ont été préservées parmi la population générale pendant longtemps, en particulier la supplication Nasiri qui est encore récitée dans un certain nombre de mosquées."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 265",
+"coordinates": [35.0025, -5.9070],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Zawya",
+    "name": {
+      "ar": "الزاوية الرحالية",
+      "en": "The Rahaliyya Zawya",
+      "fr": "La Zawiya Rahaliyya"
+    },
+    "location": {
+      "ar": "يوجد بحي 'الطيقار' بعدوة الشريعة",
+      "en": "Located in the 'Tayqar' neighborhood in the Sharia district.",
+      "fr": "Située dans le quartier 'Tayqar' dans le district de Sharia."
+    },
+    "founder": {
+      "ar": "يعود تأسيسها إلى بداية القرن العشرين من طرف أحد الرحاليين",
+      "en": "Its foundation dates back to the beginning of the 20th century by one of the Rahaliyin.",
+      "fr": "Sa fondation remonte au début du XXe siècle par l'un des Rahaliyin."
+    },
+    "description": {
+      "ar": "كان جل مريديها من قبائل أجوار مراكش، وكانوا لا يسمحون لغير المريدين بالاطلاع على طقوسهم الخاصة.",
+      "en": "Most of its followers were from the tribes surrounding Marrakesh, and they did not allow non-followers to observe their private rituals.",
+      "fr": "La plupart de ses adeptes venaient des tribus environnantes de Marrakech, et ils n'autorisaient pas les non-adeptes à observer leurs rituels privés."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 265",
+"coordinates": [35.0025, -5.9070],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Zawya",
+    "name": {
+      "ar": "الزاوية الفاسية",
+      "en": "The Fasiyya Zawya",
+      "fr": "La Zawiya Fasiyya"
+    },
+    "location": {
+      "ar": "تعرف بزاوية سيدي بوعسرية الفاسي، مقرها في سوق الصغير بباب الواد",
+      "en": "Known as the Zawiya of Sidi Bu'asriyya al-Fasi, located in the Souk Sghir at Bab al-Wad.",
+      "fr": "Connue sous le nom de Zawiya de Sidi Bu'asriyya al-Fasi, située dans le Souk Sghir à Bab al-Wad."
+    },
+    "association": {
+      "ar": "تشرف عليها أسرة آل الفاسي الفهري المستقرة بتطوان",
+      "en": "Supervised by the Al-Fassi Al-Fihri family based in Tetouan.",
+      "fr": "Supervisée par la famille Al-Fassi Al-Fihri basée à Tétouan."
+    },
+    "description": {
+      "ar": "هي موجودة في القصر منذ القرنين السابع عشر والثامن عشر ميلادي.",
+      "en": "It has existed in Ksar el-Kebir since the 17th and 18th centuries AD.",
+      "fr": "Elle existe à Ksar el-Kebir depuis les XVIIe et XVIIIe siècles de notre ère."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 265",
+"coordinates": [35.0025, -5.9070],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Zawya",
+    "name": {
+      "ar": "الزاوية البدوية",
+      "en": "The Badawiyya Zawya",
+      "fr": "La Zawiya Badawiyya"
+    },
+    "location": {
+      "ar": "القصر الكبير",
+      "en": "Ksar el-Kebir",
+      "fr": "Ksar el-Kebir"
+    },
+    "founder": {
+      "ar": "تنسب إلى سيدي أحمد البدوي، أحد متصوفة القرن التاسع عشر ميلادي، وتم تأسيسها في الثلاثينيات",
+      "en": "Attributed to Sidi Ahmed al-Badawi, a 19th-century Sufi, it was founded in the 1930s.",
+      "fr": "Attribuée à Sidi Ahmed al-Badawi, un soufi du XIXe siècle, elle a été fondée dans les années 1930."
+    },
+    "description": {
+      "ar": "كانت تجمع بين تعاليم الزاويتين القادرية والناصرية، وتميزت باهتمامها بالأمداح النبوية. انهارت بنايتها سنة 1947.",
+      "en": "It combined the teachings of the Qadiriyya and Nasiriyya Zawyas and was distinguished by its focus on prophetic praises. Its building collapsed in 1947.",
+      "fr": "Elle combinait les enseignements des Zawiyas Qadiriyya et Nasiriyya et se distinguait par son accent sur les louanges prophétiques. Son bâtiment s'est effondré en 1947."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 265",
+"coordinates": [35.0025, -5.9070],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Zawya",
+    "name": {
+      "ar": "الزاوية القنطرية",
+      "en": "The Qantariyya Zawya",
+      "fr": "La Zawiya Qantariyya"
+    },
+    "location": {
+      "ar": "توجد بحي 'المرس' في عدوة الشريعة",
+      "en": "Located in the 'Mers' neighborhood in the Sharia district.",
+      "fr": "Située dans le quartier 'Mers' dans le district de Sharia."
+    },
+    "association": {
+      "ar": "تعرف أيضا بزاوية سيدي عبد الرحمن المجدوب",
+      "en": "Also known as the Zawya of Sidi Abd al-Rahman al-Majdoub.",
+      "fr": "Également connue sous le nom de Zawiya de Sidi Abd al-Rahman al-Majdoub."
+    },
+    "description": {
+      "ar": "يعود تأسيسها في القصر الكبير إلى العهد الوطاسي، وكانت تلقى فيها دروس في الحديث والتفسير.",
+      "en": "Its foundation in Ksar el-Kebir dates back to the Wattasid era, and lessons in Hadith and Quranic exegesis (Tafsir) were given there.",
+      "fr": "Sa fondation à Ksar el-Kebir remonte à l'époque Wattasside, et des leçons de Hadith et d'exégèse coranique (Tafsir) y étaient dispensées."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 266",
+"coordinates": [35.0025, -5.9070],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Zawya",
+    "name": {
+      "ar": "زاوية المجبولين",
+      "en": "The Majboulin Zawya",
+      "fr": "La Zawiya Majboulin"
+    },
+    "location": {
+      "ar": "القصر الكبير",
+      "en": "Ksar el-Kebir",
+      "fr": "Ksar el-Kebir"
+    },
+    "founder": {
+      "ar": "تنسب إلى مؤسسها أبي عبد الله محمد المجول، أحد متصوفة القرن الحادي عشر الهجري",
+      "en": "Attributed to its founder, Abu Abdullah Muhammad al-Majoul, a Sufi of the 11th Hijri century.",
+      "fr": "Attribuée à son fondateur, Abu Abdullah Muhammad al-Majoul, un soufi du XIe siècle de l'Hégire."
+    },
+    "description": {
+      "ar": "كان من أتباع الجزولي. كانت تقام فيها احتفالات عبد المولد النبوي الشريف، خصوصاً في سنوات الأربعينات.",
+      "en": "He was a follower of al-Jazuli. Celebrations for the Prophet's birthday (Mawlid) were held there, especially in the 1940s.",
+      "fr": "Il était un disciple d'al-Jazuli. Des célébrations pour l'anniversaire du Prophète (Mawlid) s'y tenaient, en particulier dans les années 1940."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 266",
+"coordinates": [35.0025, -5.9070],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Zawya",
+    "name": {
+      "ar": "الزاوية القجيرية",
+      "en": "The Qajiriyya Zawya",
+      "fr": "La Zawiya Qajiriyya"
+    },
+    "location": {
+      "ar": "توجد بتدرب للا عائشة القجيرية المتفرع عن حي 'المرس'",
+      "en": "Located in Tadrib Lalla Aicha al-Qajiriyya, an offshoot of the 'Mers' neighborhood.",
+      "fr": "Située à Tadrib Lalla Aicha al-Qajiriyya, une ramification du quartier 'Mers'."
+    },
+    "founder": {
+      "ar": "مؤسسها هو أبو عبد الله محمد القجيري، أحد الآخذين عن الشيخ أبي حسون وأبي عبد الله الغزواني أواخر العصر السعدي",
+      "en": "Its founder is Abu Abdullah Muhammad al-Qajiri, a disciple of Sheikh Abu Hassoun and Abu Abdullah al-Ghazwani in the late Saadian era.",
+      "fr": "Son fondateur est Abu Abdullah Muhammad al-Qajiri, un disciple du Cheikh Abu Hassoun et d'Abu Abdullah al-Ghazwani à la fin de l'ère saadienne."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 266",
+"coordinates": [35.0025, -5.9070],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Zawya",
+    "name": {
+      "ar": "الزاوية الوزانية التهامية",
+      "en": "The Wazzaniyya-Tuhamiyya Zawya",
+      "fr": "La Zawiya Wazzaniyya-Tuhamiyya"
+    },
+    "location": {
+      "ar": "كانت توجد في زقاق يصل بين الجامع السعيد وحي المجبولين بالشريعة",
+      "en": "Located in an alley connecting the al-Sa'id Mosque and the Majboulin neighborhood in the Sharia district.",
+      "fr": "Située dans une ruelle reliant la mosquée al-Sa'id et le quartier Majboulin dans le district de Sharia."
+    },
+    "description": {
+      "ar": "تعود إلى بداية القرن التاسع عشر. كان الشرفاء الوزانيون يسيرونها في الأربعينات، وتميزوا بالضرب على براميل نحاسية كبيرة أثناء جلسات الذكر.",
+      "en": "It dates back to the beginning of the 19th century. The Wazzani Sharifs managed it in the 1940s and were known for beating large copper drums during their dhikr sessions.",
+      "fr": "Elle remonte au début du XIXe siècle. Les Chérifs de Ouezzane la géraient dans les années 1940 et étaient connus pour battre de grands tambours en cuivre lors de leurs sessions de dhikr."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 266",
+"coordinates": [35.0025, -5.9070],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  },
+  {
+    "type": "Zawya",
+    "name": {
+      "ar": "زاوية سيدي يعقوب الدادسي",
+      "en": "The Zawya of Sidi Yacoub al-Dadesi",
+      "fr": "La Zawiya de Sidi Yacoub al-Dadesi"
+    },
+    "location": {
+      "ar": "كان يقصدها أهل سوس وأهل واد دادس ودرعة ويوجد بها ضريح صاحبها",
+      "en": "Visited by people from Souss, Dades Valley, and Draa Valley; it contains the mausoleum of its namesake.",
+      "fr": "Visitée par les gens du Souss, de la vallée du Dadès et de la vallée du Drâa; elle abrite le mausolée de son homonyme."
+    },
+    "description": {
+      "ar": "تميزت بوجود أشجار النخيل، مما يشير إلى أن صاحبها ينحدر من واحات الجنوب.",
+      "en": "It was distinguished by the presence of palm trees, indicating that its founder came from the oases of the south.",
+      "fr": "Elle se distinguait par la présence de palmiers, indiquant que son fondateur venait des oasis du sud."
+    },
+    "source_page": "كتاب القصر الكبير خلال فترة الحماية (1912-1956) - د.سعيد حجي : ص 266",
+"coordinates": [35.0025, -5.9010],
+"image_url" : "https://cdn.ksarelkebir.ma/uploads/node/images/2017/06/darih_moulay_ali_boughaleb.jpg"
+  }
+]
+

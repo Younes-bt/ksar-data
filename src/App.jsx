@@ -15,6 +15,7 @@ import PersonsAttendance from "./pages/PersonsAttendance";
 import Decisions from "./pages/Decisions"; // Add Decisions import
 import ContactUs from "./pages/ContactUs";
 import Download from "./pages/Download";
+import HistoricalMap from './pages/HistoricalMap';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
   const [supportData, setSupportData] = useState([]);
   const [attendanceData, setAttendanceData] = useState([]);
   const [votingsData, setVotingsData] = useState([]); // Add votings data state
+  const [placesData, setPlacesData] = useState([]); // Add places data state
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [language, setLanguage] = useState("ar");
@@ -39,7 +41,7 @@ function App() {
   useEffect(() => {
     setLoading(true);
     
-    // Load budget, RGPH, medicine, support, attendance, and votings data concurrently
+    // Load budget, RGPH, medicine, support, attendance, votings, and places data concurrently
     const loadBudgetData = fetch("full_data_v6.json")
       .then(res => {
         if (!res.ok) {
@@ -135,30 +137,50 @@ function App() {
         throw err;
       });
 
+    // Add places data loading
+    const loadPlacesData = fetch("/places.json")
+      .then(res => {
+        console.log("Places data fetch response:", res.status, res.statusText);
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then(data => {
+        console.log("Places data loaded successfully:", data?.length, "places");
+        return data;
+      })
+      .catch(err => {
+        console.error("Places data fetch error:", err);
+        throw err;
+      });
+
     // Execute all promises
-    Promise.all([loadBudgetData, loadRGPHData, loadMedicineData, loadSupportData, loadAttendanceData, loadVotingsData])
-      .then(([budgetData, rgphData, medicineData, supportData, attendanceData, votingsData]) => {
+    Promise.all([loadBudgetData, loadRGPHData, loadMedicineData, loadSupportData, loadAttendanceData, loadVotingsData, loadPlacesData])
+      .then(([budgetData, rgphData, medicineData, supportData, attendanceData, votingsData, placesData]) => {
         setBudgetData(budgetData);
         setRGPHData(rgphData);
         setMedicineData(medicineData || []);
         setSupportData(supportData || []);
         setAttendanceData(attendanceData || []);
         setVotingsData(votingsData || []); // Set votings data
+        setPlacesData(placesData || []); // Set places data
         console.log("Loaded budget data:", budgetData.length, "records");
         console.log("Loaded RGPH data:", rgphData.length, "records");
         console.log("Loaded medicine data:", medicineData?.length || 0, "records");
         console.log("Loaded support data:", supportData?.length || 0, "records");
         console.log("Loaded attendance data:", attendanceData?.length || 0, "files");
         console.log("Loaded votings data:", votingsData?.length || 0, "records");
+        console.log("Loaded places data:", placesData?.length || 0, "places");
         setError(null);
       })
       .catch((err) => {
         console.error("Data fetch error:", err);
         
         // Try to load individual datasets that might have succeeded
-        Promise.allSettled([loadBudgetData, loadRGPHData, loadMedicineData, loadSupportData, loadAttendanceData, loadVotingsData])
+        Promise.allSettled([loadBudgetData, loadRGPHData, loadMedicineData, loadSupportData, loadAttendanceData, loadVotingsData, loadPlacesData])
           .then(results => {
-            const [budgetResult, rgphResult, medicineResult, supportResult, attendanceResult, votingsResult] = results;
+            const [budgetResult, rgphResult, medicineResult, supportResult, attendanceResult, votingsResult, placesResult] = results;
             
             if (budgetResult.status === 'fulfilled') {
               setBudgetData(budgetResult.value);
@@ -195,6 +217,13 @@ function App() {
             } else {
               console.warn("Votings data failed to load:", votingsResult.reason);
               setVotingsData([]);
+            }
+            if (placesResult.status === 'fulfilled') {
+              setPlacesData(placesResult.value);
+              console.log("Places data loaded successfully as fallback");
+            } else {
+              console.warn("Places data failed to load:", placesResult.reason);
+              setPlacesData([]);
             }
             
             // Only show error if all datasets failed
@@ -395,15 +424,27 @@ function App() {
           } 
         />
         <Route 
-  path="/download" 
-  element={
-    <Download 
-      t={t} 
-      language={language} 
-      theme={theme} 
-    />
-  } 
-/>
+          path="/download" 
+          element={
+            <Download 
+              t={t} 
+              language={language} 
+              theme={theme} 
+            />
+          } 
+        />
+        <Route 
+          path="/map" 
+          element={
+            <HistoricalMap 
+              data={placesData}
+              loading={loading}
+              t={t} 
+              language={language} 
+              theme={theme} 
+            />
+          } 
+        />
       </Routes>
     </Router>
   );
