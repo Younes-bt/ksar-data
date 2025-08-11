@@ -16,9 +16,12 @@ import Decisions from "./pages/Decisions"; // Add Decisions import
 import ContactUs from "./pages/ContactUs";
 import Download from "./pages/Download";
 import HistoricalMap from './pages/HistoricalMap';
+import ScoresPage from "./pages/ScoresPage";
+
 
 
 function App() {
+  const [scoresData, setScoresData] = useState([]);
   const [budgetData, setBudgetData] = useState([]);
   const [rgphData, setRGPHData] = useState([]);
   const [medicineData, setMedicineData] = useState([]);
@@ -67,6 +70,23 @@ function App() {
       // Combine both parts of RGPH data
       return [...part1, ...part2];
     });
+
+    const loadScoresData = fetch("/scores.json")
+  .then(res => {
+    console.log("Scores data fetch response:", res.status, res.statusText);
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+    return res.json();
+  })
+  .then(data => {
+    console.log("Scores data loaded successfully:", data?.length, "matches");
+    return data;
+  })
+  .catch(err => {
+    console.error("Scores data fetch error:", err);
+    throw err;
+  });
 
     const loadMedicineData = fetch("/medicament_prices.json")
       .then(res => {
@@ -156,31 +176,33 @@ function App() {
       });
 
     // Execute all promises
-    Promise.all([loadBudgetData, loadRGPHData, loadMedicineData, loadSupportData, loadAttendanceData, loadVotingsData, loadPlacesData])
-      .then(([budgetData, rgphData, medicineData, supportData, attendanceData, votingsData, placesData]) => {
-        setBudgetData(budgetData);
-        setRGPHData(rgphData);
-        setMedicineData(medicineData || []);
-        setSupportData(supportData || []);
-        setAttendanceData(attendanceData || []);
-        setVotingsData(votingsData || []); // Set votings data
-        setPlacesData(placesData || []); // Set places data
-        console.log("Loaded budget data:", budgetData.length, "records");
-        console.log("Loaded RGPH data:", rgphData.length, "records");
-        console.log("Loaded medicine data:", medicineData?.length || 0, "records");
-        console.log("Loaded support data:", supportData?.length || 0, "records");
-        console.log("Loaded attendance data:", attendanceData?.length || 0, "files");
-        console.log("Loaded votings data:", votingsData?.length || 0, "records");
-        console.log("Loaded places data:", placesData?.length || 0, "places");
-        setError(null);
-      })
+    Promise.all([loadBudgetData, loadRGPHData, loadMedicineData, loadSupportData, loadAttendanceData, loadVotingsData, loadPlacesData, loadScoresData])
+  .then(([budgetData, rgphData, medicineData, supportData, attendanceData, votingsData, placesData, scoresData]) => {
+    setBudgetData(budgetData);
+    setRGPHData(rgphData);
+    setMedicineData(medicineData || []);
+    setSupportData(supportData || []);
+    setAttendanceData(attendanceData || []);
+    setVotingsData(votingsData || []); 
+    setPlacesData(placesData || []); 
+    setScoresData(scoresData || []); // Add this line
+    console.log("Loaded budget data:", budgetData.length, "records");
+    console.log("Loaded RGPH data:", rgphData.length, "records");
+    console.log("Loaded medicine data:", medicineData?.length || 0, "records");
+    console.log("Loaded support data:", supportData?.length || 0, "records");
+    console.log("Loaded attendance data:", attendanceData?.length || 0, "files");
+    console.log("Loaded votings data:", votingsData?.length || 0, "records");
+    console.log("Loaded places data:", placesData?.length || 0, "places");
+    console.log("Loaded scores data:", scoresData?.length || 0, "matches"); // Add this line
+    setError(null);
+  })
       .catch((err) => {
         console.error("Data fetch error:", err);
         
         // Try to load individual datasets that might have succeeded
-        Promise.allSettled([loadBudgetData, loadRGPHData, loadMedicineData, loadSupportData, loadAttendanceData, loadVotingsData, loadPlacesData])
-          .then(results => {
-            const [budgetResult, rgphResult, medicineResult, supportResult, attendanceResult, votingsResult, placesResult] = results;
+        Promise.allSettled([loadBudgetData, loadRGPHData, loadMedicineData, loadSupportData, loadAttendanceData, loadVotingsData, loadPlacesData, loadScoresData])
+  .then(results => {
+    const [budgetResult, rgphResult, medicineResult, supportResult, attendanceResult, votingsResult, placesResult, scoresResult] = results;
             
             if (budgetResult.status === 'fulfilled') {
               setBudgetData(budgetResult.value);
@@ -221,10 +243,14 @@ function App() {
             if (placesResult.status === 'fulfilled') {
               setPlacesData(placesResult.value);
               console.log("Places data loaded successfully as fallback");
-            } else {
-              console.warn("Places data failed to load:", placesResult.reason);
-              setPlacesData([]);
             }
+              if (scoresResult.status === 'fulfilled') {
+      setScoresData(scoresResult.value);
+      console.log("Scores data loaded successfully as fallback");
+    } else {
+      console.warn("Scores data failed to load:", scoresResult.reason);
+      setScoresData([]);
+    }
             
             // Only show error if all datasets failed
             const allFailed = results.every(result => result.status === 'rejected');
@@ -445,6 +471,18 @@ function App() {
             />
           } 
         />
+        <Route 
+  path="/scores" 
+  element={
+    <ScoresPage 
+      data={scoresData} 
+      loading={loading} 
+      t={t} 
+      language={language} 
+      theme={theme} 
+    />
+  } 
+/>
       </Routes>
     </Router>
   );

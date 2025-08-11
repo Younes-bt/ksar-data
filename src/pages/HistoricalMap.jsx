@@ -271,7 +271,7 @@ const HistoricalMap = ({ data, loading, t, language, theme }) => {
         <>
           {/* Backdrop with higher z-index */}
           <div 
-            className="fixed inset-0 bg-black bg-opacity-50 z-[9998]"
+            className="fixed inset-0  bg-opacity-20 z-[9998]"
             onClick={closeModal}
           ></div>
           

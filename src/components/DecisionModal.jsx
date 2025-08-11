@@ -50,7 +50,7 @@ export default function DecisionModal({ decision, isOpen, onClose, t, theme, lan
     const totalVotes = decision.voting.accepted + decision.voting.refused + decision.voting.abstained;
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-60 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4  bg-opacity-60 backdrop-blur-sm">
             <div
                 className={`w-full max-w-lg max-h-[90vh] rounded-2xl shadow-2xl flex flex-col ${
                     theme === 'dark' ? 'bg-gray-800 border border-gray-700' : 'bg-white'

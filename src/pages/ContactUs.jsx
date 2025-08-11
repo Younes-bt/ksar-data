@@ -50,10 +50,10 @@ const ContactUsPage = ({
             hoursValue: '24-48 ساعة'
           },
           socialLinks: [
-            { name: 'Facebook', icon: Facebook, url: '#', color: 'hover:text-blue-600' },
-            { name: 'X', icon: Twitter, url: '#', color: 'hover:text-sky-500' },
-            { name: 'LinkedIn', icon: Linkedin, url: '#', color: 'hover:text-blue-700' },
-            { name: 'WhatsApp', icon: MessageSquare, url: '#', color: 'hover:text-green-500' }
+            { name: 'Facebook', icon: Facebook, url: 'https://www.facebook.com/profile.php?id=61578979396224', color: 'hover:text-blue-600' },
+            { name: 'X', icon: Twitter, url: 'https://x.com/OpicomTech', color: 'hover:text-sky-500' },
+            { name: 'LinkedIn', icon: Linkedin, url: 'https://www.linkedin.com/in/unesbt42/', color: 'hover:text-blue-700' },
+            { name: 'WhatsApp', icon: MessageSquare, url: 'https://wa.me/+212723208407?text=مرحيا!!', color: 'hover:text-green-500' }
           ]
         };
 
@@ -78,10 +78,10 @@ const ContactUsPage = ({
             hoursValue: '24-48 hours'
           },
           socialLinks: [
-            { name: 'Facebook', icon: Facebook, url: '#', color: 'hover:text-blue-600' },
-            { name: 'Twitter/X', icon: Twitter, url: '#', color: 'hover:text-sky-500' },
-            { name: 'LinkedIn', icon: Linkedin, url: '#', color: 'hover:text-blue-700' },
-            { name: 'WhatsApp', icon: MessageSquare, url: '#', color: 'hover:text-green-500' }
+            { name: 'Facebook', icon: Facebook, url: 'https://www.facebook.com/profile.php?id=61578979396224', color: 'hover:text-blue-600' },
+            { name: 'X', icon: Twitter, url: 'https://x.com/OpicomTech', color: 'hover:text-sky-500' },
+            { name: 'LinkedIn', icon: Linkedin, url: 'https://www.linkedin.com/in/unesbt42/', color: 'hover:text-blue-700' },
+            { name: 'WhatsApp', icon: MessageSquare, url: 'https://wa.me/+212723208407?text=مرحيا!!', color: 'hover:text-green-500' }
           ]
         };
 
@@ -106,10 +106,10 @@ const ContactUsPage = ({
             hoursValue: '24-48 heures'
           },
           socialLinks: [
-            { name: 'Facebook', icon: Facebook, url: '#', color: 'hover:text-blue-600' },
-            { name: 'Twitter/X', icon: Twitter, url: '#', color: 'hover:text-sky-500' },
-            { name: 'LinkedIn', icon: Linkedin, url: '#', color: 'hover:text-blue-700' },
-            { name: 'WhatsApp', icon: MessageSquare, url: '#', color: 'hover:text-green-500' }
+            { name: 'Facebook', icon: Facebook, url: 'https://www.facebook.com/profile.php?id=61578979396224', color: 'hover:text-blue-600' },
+            { name: 'X', icon: Twitter, url: 'https://x.com/OpicomTech', color: 'hover:text-sky-500' },
+            { name: 'LinkedIn', icon: Linkedin, url: 'https://www.linkedin.com/in/unesbt42/', color: 'hover:text-blue-700' },
+            { name: 'WhatsApp', icon: MessageSquare, url: 'https://wa.me/+212723208407?text=مرحيا!!', color: 'hover:text-green-500' }
           ]
         };
     }

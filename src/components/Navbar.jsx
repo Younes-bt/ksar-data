@@ -12,6 +12,7 @@ function Navbar({ language, setLanguage, theme, setTheme, t }) {
   const navItems = [
     { path: "/", label: t?.navbar?.home || "Home" },
     { path: "/rgph", label: t?.navbar?.RGPH || "RGPH" },
+    { path: "/scores", label: t?.navbar?.scores || "CSK scores" },
     { path: "/insights", label: t?.navbar?.insights || "Insights" },
     { path: "/medicines", label: t?.navbar?.medicine || "Medicine Prices" },
     { path: "/download", label: t?.navbar?.download || "download" },
