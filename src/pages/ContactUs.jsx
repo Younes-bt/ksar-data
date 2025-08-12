@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { 
-  Mail, 
-  Phone, 
-  MessageCircle, 
+import {
+  Mail,
   Send,
   Facebook,
   Twitter,
@@ -10,45 +8,51 @@ import {
   MessageSquare,
   User,
   MapPin,
-  Clock
+  Clock,
+  CheckCircle,
+  AlertTriangle
 } from 'lucide-react';
 
-const ContactUsPage = ({ 
-  language = 'ar', 
-  theme = 'dark' 
+const ContactUsPage = ({
+  language = 'en',
+  theme = 'dark'
 }) => {
+  // --- START OF CHANGES ---
+
+  // 1. Replace with your actual Web3Forms Access Key
+  const [accessKey, setAccessKey] = useState('ebee2453-d9f1-4357-8bce-785556588020');
+
   const [formData, setFormData] = useState({
     name: '',
-    contact: '',
+    contact: '', // Changed from 'email' to 'contact' to be more generic
     message: ''
   });
 
-  
-  
+  const [submissionStatus, setSubmissionStatus] = useState(null); // 'success', 'error', or null
 
-  // Translations
+  // --- END OF CHANGES ---
+
   const getTranslations = () => {
     switch (language) {
       case 'ar':
         return {
           heroTitle: 'تواصل معنا',
-          heroSubtitle: 'نحن هنا للاستماع إليك. راسلنا أو تواصل معنا عبر وسائل التواصل الاجتماعي',
+          heroSubtitle: 'نحن هنا للاستماع إليك. املأ النموذج أو تواصل معنا مباشرة.',
           formTitle: 'أرسل لنا رسالة',
-          formSubtitle: 'سواء كان لديك اقتراح، سؤال، أو تريد التعاون معنا',
           namePlaceholder: 'اسمك الكامل',
           contactPlaceholder: 'بريدك الإلكتروني أو رقم هاتفك',
           messagePlaceholder: 'رسالتك...',
           sendButton: 'إرسال الرسالة',
-          socialTitle: 'تابعنا على وسائل التواصل',
-          socialSubtitle: 'تواصل معنا مباشرة عبر منصاتنا الاجتماعية',
-          contactInfo: {
-            title: 'معلومات التواصل',
-            email: 'البريد الإلكتروني',
-            location: 'الموقع',
-            locationValue: 'القصر الكبير، المغرب',
-            hours: 'ساعات الاستجابة',
-            hoursValue: '24-48 ساعة'
-          },
+          submittingButton: 'جاري الإرسال...',
+          successMessage: 'تم إرسال رسالتك بنجاح! شكراً لتواصلك معنا.',
+          errorMessage: 'حدث خطأ ما. يرجى المحاولة مرة أخرى.',
+          contactInfoTitle: 'معلومات التواصل',
+          email: 'البريد الإلكتروني',
+          location: 'الموقع',
+          locationValue: 'القصر الكبير، المغرب',
+          hours: 'ساعات الاستجابة',
+          hoursValue: '24-48 ساعة',
+          socialTitle: 'تابعنا',
           socialLinks: [
             { name: 'Facebook', icon: Facebook, url: 'https://www.facebook.com/profile.php?id=61578979396224', color: 'hover:text-blue-600' },
             { name: 'X', icon: Twitter, url: 'https://x.com/OpicomTech', color: 'hover:text-sky-500' },
@@ -56,27 +60,25 @@ const ContactUsPage = ({
             { name: 'WhatsApp', icon: MessageSquare, url: 'https://wa.me/+212723208407?text=مرحيا!!', color: 'hover:text-green-500' }
           ]
         };
-
       case 'en':
         return {
-          heroTitle: 'Contact Us',
-          heroSubtitle: 'We\'re here to listen. Send us a message or reach out via social media',
-          formTitle: 'Send Us a Message',
-          formSubtitle: 'Whether you have a suggestion, question, or want to collaborate with us',
+          heroTitle: 'Get in Touch',
+          heroSubtitle: 'We\'re here to listen. Fill out the form or contact us directly.',
+          formTitle: 'Send a Message',
           namePlaceholder: 'Your full name',
           contactPlaceholder: 'Your email or phone number',
           messagePlaceholder: 'Your message...',
           sendButton: 'Send Message',
-          socialTitle: 'Follow Us on Social Media',
-          socialSubtitle: 'Connect with us directly through our social platforms',
-          contactInfo: {
-            title: 'Contact Information',
-            email: 'Email',
-            location: 'Location',
-            locationValue: 'Ksar El Kebir, Morocco',
-            hours: 'Response Time',
-            hoursValue: '24-48 hours'
-          },
+          submittingButton: 'Submitting...',
+          successMessage: 'Your message was sent successfully! Thank you for reaching out.',
+          errorMessage: 'Something went wrong. Please try again.',
+          contactInfoTitle: 'Contact Information',
+          email: 'Email',
+          location: 'Location',
+          locationValue: 'Ksar El Kebir, Morocco',
+          hours: 'Response Time',
+          hoursValue: '24-48 hours',
+          socialTitle: 'Follow Us',
           socialLinks: [
             { name: 'Facebook', icon: Facebook, url: 'https://www.facebook.com/profile.php?id=61578979396224', color: 'hover:text-blue-600' },
             { name: 'X', icon: Twitter, url: 'https://x.com/OpicomTech', color: 'hover:text-sky-500' },
@@ -84,27 +86,25 @@ const ContactUsPage = ({
             { name: 'WhatsApp', icon: MessageSquare, url: 'https://wa.me/+212723208407?text=مرحيا!!', color: 'hover:text-green-500' }
           ]
         };
-
       default: // French
         return {
           heroTitle: 'Contactez-Nous',
-          heroSubtitle: 'Nous sommes là pour vous écouter. Envoyez-nous un message ou contactez-nous via les réseaux sociaux',
-          formTitle: 'Envoyez-nous un Message',
-          formSubtitle: 'Que vous ayez une suggestion, une question, ou que vous souhaitiez collaborer avec nous',
+          heroSubtitle: 'Nous sommes là pour vous écouter. Remplissez le formulaire ou contactez-nous directement.',
+          formTitle: 'Envoyer un Message',
           namePlaceholder: 'Votre nom complet',
           contactPlaceholder: 'Votre email ou numéro de téléphone',
           messagePlaceholder: 'Votre message...',
           sendButton: 'Envoyer le Message',
-          socialTitle: 'Suivez-nous sur les Réseaux Sociaux',
-          socialSubtitle: 'Connectez-vous avec nous directement via nos plateformes sociales',
-          contactInfo: {
-            title: 'Informations de Contact',
-            email: 'Email',
-            location: 'Localisation',
-            locationValue: 'Ksar El Kebir, Maroc',
-            hours: 'Temps de Réponse',
-            hoursValue: '24-48 heures'
-          },
+          submittingButton: 'Envoi en cours...',
+          successMessage: 'Votre message a été envoyé avec succès ! Merci de nous avoir contactés.',
+          errorMessage: 'Une erreur s\'est produite. Veuillez réessayer.',
+          contactInfoTitle: 'Informations de Contact',
+          email: 'Email',
+          location: 'Localisation',
+          locationValue: 'Ksar El Kebir, Maroc',
+          hours: 'Temps de Réponse',
+          hoursValue: '24-48 heures',
+          socialTitle: 'Suivez-nous',
           socialLinks: [
             { name: 'Facebook', icon: Facebook, url: 'https://www.facebook.com/profile.php?id=61578979396224', color: 'hover:text-blue-600' },
             { name: 'X', icon: Twitter, url: 'https://x.com/OpicomTech', color: 'hover:text-sky-500' },
@@ -117,157 +117,207 @@ const ContactUsPage = ({
 
   const t = getTranslations();
 
-  // Theme classes
   const themeClasses = {
     bg: theme === 'dark' ? 'bg-gray-950' : 'bg-gray-50',
     cardBg: theme === 'dark' ? 'bg-gray-900' : 'bg-white',
+    infoPanelBg: theme === 'dark' ? 'bg-gray-950' : 'bg-gray-100',
     borderColor: theme === 'dark' ? 'border-gray-800' : 'border-gray-200',
     textPrimary: theme === 'dark' ? 'text-white' : 'text-gray-900',
     textSecondary: theme === 'dark' ? 'text-gray-400' : 'text-gray-600',
     textAccent: theme === 'dark' ? 'text-blue-400' : 'text-blue-600',
-    iconBg: theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100',
-    inputBg: theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50',
+    inputBg: theme === 'dark' ? 'bg-gray-800' : 'bg-white',
     inputBorder: theme === 'dark' ? 'border-gray-700' : 'border-gray-300',
     inputFocus: theme === 'dark' ? 'focus:border-blue-500 focus:ring-blue-500' : 'focus:border-blue-500 focus:ring-blue-500',
-    gradientFrom: theme === 'dark' ? 'from-blue-600' : 'from-blue-500',
-    gradientTo: theme === 'dark' ? 'to-purple-600' : 'to-purple-500',
     buttonBg: theme === 'dark' ? 'bg-blue-600 hover:bg-blue-700' : 'bg-blue-600 hover:bg-blue-700'
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  // --- START OF CHANGES ---
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Create email body
-    const emailBody = `
-الاسم: ${formData.name}
-معلومات التواصل: ${formData.contact}
+    setSubmissionStatus('submitting');
 
-الرسالة:
-${formData.message}
-    `;
-    
-    // Create mailto link
-    const mailtoLink = `mailto:bt.younesse@gmail.com?subject=رسالة من موقع KSAR-DATA&body=${encodeURIComponent(emailBody)}`;
-    
-    // Open email client
-    window.location.href = mailtoLink;
-    
-    // Reset form
-    setFormData({
-      name: '',
-      contact: '',
-      message: ''
-    });
+    const data = {
+      ...formData,
+      access_key: accessKey,
+      subject: `New Message from ${formData.name} via Ksar-Data`,
+    };
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+      if (result.success) {
+        setSubmissionStatus('success');
+        setFormData({ name: '', contact: '', message: '' }); // Clear form
+        setTimeout(() => setSubmissionStatus(null), 5000); // Hide message after 5s
+      } else {
+        console.error('Submission Error:', result);
+        setSubmissionStatus('error');
+      }
+    } catch (error) {
+      console.error('Network Error:', error);
+      setSubmissionStatus('error');
+    }
   };
+
+  // --- END OF CHANGES ---
 
   return (
-    <div 
-      className={`min-h-screen ${themeClasses.bg} pt-10`}
+    <div
+      className={`min-h-screen ${themeClasses.bg} py-12 md:py-20`}
       dir={language === 'ar' ? 'rtl' : 'ltr'}
       style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif' } : undefined}
     >
-      {/* Hero Section */}
-      <section className="relative overflow-hidden">
-        <div className={`absolute inset-0 bg-gradient-to-br ${themeClasses.gradientFrom} ${themeClasses.gradientTo} opacity-1`}></div>
-        <div className="container mx-auto px-6 lg:px-12 py-16 relative">
-          <div className="text-center max-w-4xl mx-auto">
-            <img 
-              src={`${theme === 'dark' ? '/logo_on_dark.png' : '/Logo_on_white.png'}`} 
-              alt="Ksar El Kebir Gate"
-              className="w-50 justify-self-center mb-5 max-w-2xl h-auto object-contain drop-shadow-2xl"
-            />
-            <h1 className={`text-4xl lg:text-6xl font-bold mb-6 ${themeClasses.textPrimary}`}>
-              {t.heroTitle}
-            </h1>
-            <p className={`text-xl lg:text-2xl mb-8 ${themeClasses.textSecondary} leading-relaxed`}>
-              {t.heroSubtitle}
-            </p>
-          </div>
+      <div className="container mx-auto px-4">
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <h1 className={`text-4xl lg:text-5xl font-bold mb-4 ${themeClasses.textPrimary}`}>
+            {t.heroTitle}
+          </h1>
+          <p className={`text-lg lg:text-xl ${themeClasses.textSecondary}`}>
+            {t.heroSubtitle}
+          </p>
         </div>
-      </section>
 
-      {/* Main Content */}
-      <section className="py-16">
-        <div className="container mx-auto px-6 lg:px-12">
-          <div className="grid lg:grid-cols-2 gap-12">
-            
+        <div className={`max-w-6xl mx-auto rounded-2xl border ${themeClasses.borderColor} shadow-2xl overflow-hidden flex flex-col lg:flex-row`}>
+          <div className={`w-full lg:w-3/5 p-8 md:p-12 ${themeClasses.cardBg}`}>
+            <h2 className={`text-2xl font-bold mb-6 ${themeClasses.textPrimary}`}>
+              {t.formTitle}
+            </h2>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="relative">
+                <User className={`absolute top-1/2 -translate-y-1/2 w-5 h-5 ${themeClasses.textSecondary} ${language === 'ar' ? 'right-4' : 'left-4'}`} />
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  placeholder={t.namePlaceholder}
+                  className={`w-full p-3 ${language === 'ar' ? 'pr-12' : 'pl-12'} rounded-lg ${themeClasses.inputBg} border ${themeClasses.inputBorder} ${themeClasses.textPrimary} ${themeClasses.inputFocus} transition-colors`}
+                  required
+                />
+              </div>
 
-            {/* Contact Info & Social Media */}
-            <div className="space-y-8 ">
-              
-              {/* Contact Information */}
-              <div className={`rounded-lg border shadow-lg p-8 ${themeClasses.cardBg} ${themeClasses.borderColor}`}>
+              <div className="relative">
+                <Mail className={`absolute top-1/2 -translate-y-1/2 w-5 h-5 ${themeClasses.textSecondary} ${language === 'ar' ? 'right-4' : 'left-4'}`} />
+                <input
+                  type="text"
+                  name="contact"
+                  value={formData.contact}
+                  onChange={handleInputChange}
+                  placeholder={t.contactPlaceholder}
+                  className={`w-full p-3 ${language === 'ar' ? 'pr-12' : 'pl-12'} rounded-lg ${themeClasses.inputBg} border ${themeClasses.inputBorder} ${themeClasses.textPrimary} ${themeClasses.inputFocus} transition-colors`}
+                  required
+                />
+              </div>
+
+              <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleInputChange}
+                placeholder={t.messagePlaceholder}
+                rows="6"
+                className={`w-full p-4 rounded-lg ${themeClasses.inputBg} border ${themeClasses.inputBorder} ${themeClasses.textPrimary} ${themeClasses.inputFocus} transition-colors`}
+                required
+              ></textarea>
+
+              {/* --- DYNAMIC SUBMISSION STATUS --- */}
+              <div>
+                <button
+                  type="submit"
+                  disabled={submissionStatus === 'submitting'}
+                  className={`w-full flex items-center justify-center p-4 rounded-lg text-white font-bold text-lg ${themeClasses.buttonBg} transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed transform hover:scale-105`}
+                >
+                  {submissionStatus === 'submitting' ? (
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                      <span className={`${language === 'ar' ? 'mr-3' : 'ml-3'}`}>{t.submittingButton}</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>{t.sendButton}</span>
+                      <Send className={`w-5 h-5 ${language === 'ar' ? 'mr-3' : 'ml-3'}`} />
+                    </>
+                  )}
+                </button>
+
+                {submissionStatus === 'success' && (
+                  <div className="mt-4 flex items-center text-green-500 bg-green-500/10 p-3 rounded-lg">
+                    <CheckCircle className="w-5 h-5" />
+                    <p className={`text-sm font-medium ${language === 'ar' ? 'mr-3' : 'ml-3'}`}>{t.successMessage}</p>
+                  </div>
+                )}
+
+                {submissionStatus === 'error' && (
+                  <div className="mt-4 flex items-center text-red-500 bg-red-500/10 p-3 rounded-lg">
+                    <AlertTriangle className="w-5 h-5" />
+                    <p className={`text-sm font-medium ${language === 'ar' ? 'mr-3' : 'ml-3'}`}>{t.errorMessage}</p>
+                  </div>
+                )}
+              </div>
+              {/* --- END OF DYNAMIC STATUS --- */}
+
+            </form>
+          </div>
+
+          <div className={`w-full lg:w-2/5 p-8 md:p-12 ${themeClasses.infoPanelBg} ${language === 'ar' ? 'lg:border-r' : 'lg:border-l'} ${themeClasses.borderColor}`}>
+            <div className="space-y-8">
+              <div>
                 <h3 className={`text-2xl font-bold mb-6 ${themeClasses.textPrimary}`}>
-                  {t.contactInfo.title}
+                  {t.contactInfoTitle}
                 </h3>
-                
                 <div className="space-y-6">
-                  {/* Email */}
-                  <div className="flex items-center">
-                    <div className={`p-3 rounded-lg ${themeClasses.iconBg} ${language === 'ar' ? 'ml-4' : 'mr-4'}`}>
-                      <Mail className={`w-5 h-5 ${themeClasses.textAccent}`} />
-                    </div>
+                  <div className="flex items-start">
+                    <Mail className={`w-5 h-5 mt-1 flex-shrink-0 ${themeClasses.textAccent} ${language === 'ar' ? 'ml-4' : 'mr-4'}`} />
                     <div>
-                      <p className={`font-medium ${themeClasses.textPrimary}`}>{t.contactInfo.email}</p>
-                      <a 
-                        href="mailto:bt.younesse@gmail.com"
-                        className={`${themeClasses.textAccent} hover:underline`}
-                      >
-                        bt.younesse@gmail.com
-                      </a>
+                      <p className={`font-semibold ${themeClasses.textPrimary}`}>{t.email}</p>
+                      <a href="mailto:bt.younesse@gmail.com" className={`${themeClasses.textSecondary} hover:underline`}>bt.younesse@gmail.com</a>
                     </div>
                   </div>
-
-                  {/* Location */}
-                  <div className="flex items-center">
-                    <div className={`p-3 rounded-lg ${themeClasses.iconBg} ${language === 'ar' ? 'ml-4' : 'mr-4'}`}>
-                      <MapPin className={`w-5 h-5 ${themeClasses.textAccent}`} />
-                    </div>
+                  <div className="flex items-start">
+                    <MapPin className={`w-5 h-5 mt-1 flex-shrink-0 ${themeClasses.textAccent} ${language === 'ar' ? 'ml-4' : 'mr-4'}`} />
                     <div>
-                      <p className={`font-medium ${themeClasses.textPrimary}`}>{t.contactInfo.location}</p>
-                      <p className={`${themeClasses.textSecondary}`}>{t.contactInfo.locationValue}</p>
+                      <p className={`font-semibold ${themeClasses.textPrimary}`}>{t.location}</p>
+                      <p className={themeClasses.textSecondary}>{t.locationValue}</p>
                     </div>
                   </div>
-
-                  {/* Response Time */}
-                  <div className="flex items-center">
-                    <div className={`p-3 rounded-lg ${themeClasses.iconBg} ${language === 'ar' ? 'ml-4' : 'mr-4'}`}>
-                      <Clock className={`w-5 h-5 ${themeClasses.textAccent}`} />
-                    </div>
+                  <div className="flex items-start">
+                    <Clock className={`w-5 h-5 mt-1 flex-shrink-0 ${themeClasses.textAccent} ${language === 'ar' ? 'ml-4' : 'mr-4'}`} />
                     <div>
-                      <p className={`font-medium ${themeClasses.textPrimary}`}>{t.contactInfo.hours}</p>
-                      <p className={`${themeClasses.textSecondary}`}>{t.contactInfo.hoursValue}</p>
+                      <p className={`font-semibold ${themeClasses.textPrimary}`}>{t.hours}</p>
+                      <p className={themeClasses.textSecondary}>{t.hoursValue}</p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Social Media */}
-              <div className={`rounded-lg border shadow-lg p-8 ${themeClasses.cardBg} ${themeClasses.borderColor}`}>
-                <h3 className={`text-2xl font-bold mb-4 ${themeClasses.textPrimary}`}>
+              <div>
+                <h3 className={`text-2xl font-bold mb-6 ${themeClasses.textPrimary}`}>
                   {t.socialTitle}
                 </h3>
-                <p className={`text-lg mb-6 ${themeClasses.textSecondary}`}>
-                  {t.socialSubtitle}
-                </p>
-                
-                <div className="grid grid-cols-2 gap-4">
-                  {t.socialLinks.map((social, index) => (
+                <div className="flex space-x-4" dir="ltr">
+                  {t.socialLinks.map((social) => (
                     <a
-                      key={index}
+                      key={social.name}
                       href={social.url}
-                      className={`flex items-center p-4 rounded-lg border ${themeClasses.iconBg} ${themeClasses.borderColor} ${social.color} transition-colors group`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title={social.name}
+                      className={`p-3 rounded-full border ${themeClasses.borderColor} ${themeClasses.cardBg} ${social.color} transition-all duration-300 transform hover:scale-110`}
                     >
-                      <social.icon className={`w-6 h-6 ${themeClasses.textSecondary} group-hover:text-current ${language === 'ar' ? 'ml-3' : 'mr-3'}`} />
-                      <span className={`font-medium ${themeClasses.textPrimary}`}>{social.name}</span>
+                      <social.icon className="w-6 h-6" />
                     </a>
                   ))}
                 </div>
@@ -275,22 +325,19 @@ ${formData.message}
             </div>
           </div>
         </div>
-      </section>
-      {/* FOOTER CTA */}
-      <section className={`py-16 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'}`}>
-        <div className="container mx-auto px-6 lg:px-12">
-          <div className="text-center">
-            <div className={`inline-flex items-center px-6 py-3 rounded-full border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+
+      </div>
+
+      <footer className="text-center mt-16">
+         <div className={`inline-flex items-center px-4 py-2 rounded-full border text-sm ${themeClasses.borderColor} ${themeClasses.textSecondary} ${themeClasses.cardBg}`}>
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-3"></div>
-              <span className={themeClasses.textSecondary}>
-                {language === 'ar' ? 'نسخة تجريبية – الإصدار 1.1.7 | جميع الحقوق محفوظة © 2025' : 
-                 language === 'en' ? 'Beta Version – v1.1.7 | All Rights Reserved © 2025' : 
-                 'Version d’essai – v1.1.7 | Tous droits réservés © 2025'}
+              <span>
+                {language === 'ar' ? 'نسخة تجريبية – الإصدار 1.1.7 | © 2025' :
+                 language === 'en' ? 'Beta Version – v1.1.7 | © 2025' :
+                 'Version d’essai – v1.1.7 | © 2025'}
               </span>
             </div>
-          </div>
-        </div>
-      </section>
+      </footer>
     </div>
   );
 };

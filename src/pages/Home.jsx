@@ -1,571 +1,307 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
-import { Typewriter } from 'react-simple-typewriter'
-import { Search, TrendingUp, Users, ArrowRight, BarChart3 } from 'lucide-react';
+import { Typewriter } from 'react-simple-typewriter';
+import { Search, Users, Eye, Info, ArrowDown, ArrowRight, TrendingUp, Wallet, Globe } from 'lucide-react';
 import GlobeBackground from '../components/GlobeBackground';
 
+// A custom hook for the count-up animation
+const useCountUp = (end, duration = 2000) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let start = 0;
+    const endValue = parseInt(String(end).replace(/,/g, ''));
+    if (start === endValue) return;
+
+    let startTime = null;
+
+    const animate = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const current = Math.floor(progress * (endValue - start) + start);
+      setCount(current.toLocaleString()); // Format with commas
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }, [end, duration]);
+
+  return count;
+};
+
+
 const Home = ({ t, language, theme }) => {
-  const text1 = [t?.home?.yourCity || 'YOUR CITY..', t?.home?.yourBudget || 'YOUR BUDGET']
+  // Translations structured for the final layout
+  const translations = {
+    ar: {
+      typewriter: ['مدينتك.', 'ميزانيتك.', 'بياناتك.'],
+      welcome: 'بوابة بيانات القصر الكبير',
+      subtitle: 'مبادرة محلية مفتوحة المصدر لجعل البيانات العامة سهلة الفهم، شفافة، ومتاحة للجميع لاستكشافها.',
+      exploreCTA: 'اكتشف الأعمدة الأساسية',
+      pillarsTitle: 'الأعمدة الأساسية للمنصة',
+      motionTitle: 'البيانات في حركة',
+      motionStats: {
+        budget: 'إجمالي ميزانية 2024',
+        population: 'تقدير السكان',
+        datasets: 'مجموعات البيانات'
+      },
+      insightTitle: 'هل تعلم؟',
+      insightStat: 'أكثر من 98% من الأسر في القصر الكبير متصلة بشبكة الكهرباء، مما يعكس بنية تحتية واسعة الانتشار.',
+      features: [
+        { icon: Search, title: 'مستكشف الميزانية', description: 'ابحث في البيانات المالية للمدينة.', link: '/search', color: 'blue' },
+        { icon: Users, title: 'بيانات الإحصاء (RGPH)', description: 'استكشف الإحصاءات السكانية والسكنية.', link: '/rgph', color: 'teal' },
+        { icon: Eye, title: 'تصورات ورؤى', description: 'حوّل الأرقام إلى رؤى واضحة.', link: '/insights', color: 'purple' },
+        { icon: Info, title: 'عن المبادرة', description: 'تعرف على مهمتنا وكيفية المساهمة.', link: '/about', color: 'green' }
+      ],
+      footer: 'نسخة تجريبية – الإصدار 1.1.7 | جميع الحقوق محفوظة © 2025'
+    },
+    en: {
+      typewriter: ['Your City.', 'Your Budget.', 'Your Data.'],
+      welcome: 'The Ksar El Kebir Data Gateway',
+      subtitle: 'A local, open-source initiative to make public data understandable, transparent, and explorable for everyone.',
+      exploreCTA: 'Explore The Pillars',
+      pillarsTitle: 'The Four Pillars of the Platform',
+      motionTitle: 'Data in Motion',
+      motionStats: {
+        budget: 'Total 2024 Budget',
+        population: 'Estimated Population',
+        datasets: 'Datasets Available'
+      },
+      insightTitle: 'Did You Know?',
+      insightStat: 'Over 98% of households in Ksar El Kebir are connected to the electricity grid, reflecting widespread infrastructure.',
+      features: [
+        { icon: Search, title: 'Budget Explorer', description: 'Investigate the city\'s financial data.', link: '/search', color: 'blue' },
+        { icon: Users, title: 'Census (RGPH) Data', description: 'Explore population and housing statistics.', link: '/rgph', color: 'teal' },
+        { icon: Eye, title: 'Visuals & Insights', description: 'Turn complex numbers into clear insights.', link: '/insights', color: 'purple' },
+        { icon: Info, title: 'About The Initiative', description: 'Learn about our mission and how to contribute.', link: '/about', color: 'green' }
+      ],
+      footer: 'Beta Version – v1.1.7 | All Rights Reserved © 2025'
+    },
+    fr: {
+      typewriter: ['Votre Ville.', 'Votre Budget.', 'Vos Données.'],
+      welcome: 'Le Portail de Données de Ksar El Kebir',
+      subtitle: 'Une initiative locale et open-source pour rendre les données publiques compréhensibles, transparentes et explorables par tous.',
+      exploreCTA: 'Découvrez les Piliers',
+      pillarsTitle: 'Les Quatre Piliers de la Plateforme',
+      motionTitle: 'Données en Mouvement',
+      motionStats: {
+        budget: 'Budget Total 2024',
+        population: 'Population Estimée',
+        datasets: 'Ensembles de Données'
+      },
+      insightTitle: 'Le Saviez-Vous ?',
+      insightStat: 'Plus de 98 % des ménages à Ksar El Kebir sont raccordés au réseau électrique, reflétant une infrastructure étendue.',
+      features: [
+        { icon: Search, title: 'Explorateur de Budget', description: 'Examinez les données financières de la ville.', link: '/search', color: 'blue' },
+        { icon: Users, title: 'Données du Recensement', description: 'Explorez les statistiques démographiques.', link: '/rgph', color: 'teal' },
+        { icon: Eye, title: 'Visuels & Aperçus', description: 'Traduisez les chiffres en informations claires.', link: '/insights', color: 'purple' },
+        { icon: Info, title: 'À Propos de l\'Initiative', description: 'Découvrez notre mission et comment contribuer.', link: '/about', color: 'green' }
+      ],
+      footer: 'Version d’essai – v1.1.7 | Tous droits réservés © 2025'
+    }
+  };
 
-
-  const arabicStyle = {
-    fontFamily: 'Noto Kufi Arabic, sans-serif',
-    direction: 'rtl',
-    
-  }
-
-  // Theme classes for consistency
+  const content = translations[language] || translations.en;
+  
   const themeClasses = {
     bg: theme === 'dark' ? 'bg-gray-950' : 'bg-gray-50',
     cardBg: theme === 'dark' ? 'bg-gray-900' : 'bg-white',
+    sectionBg: theme === 'dark' ? 'bg-black/20' : 'bg-gray-100',
     borderColor: theme === 'dark' ? 'border-gray-800' : 'border-gray-200',
     textPrimary: theme === 'dark' ? 'text-white' : 'text-gray-900',
     textSecondary: theme === 'dark' ? 'text-gray-400' : 'text-gray-600',
-    textAccent: theme === 'dark' ? 'text-blue-400' : 'text-blue-600',
-    gradientFrom: theme === 'dark' ? 'from-blue-600' : 'from-blue-500',
-    gradientTo: theme === 'dark' ? 'to-purple-600' : 'to-purple-500'
+    gradientFrom: theme === 'dark' ? 'from-amber-600' : 'from-amber-600',
+    gradientTo: theme === 'dark' ? 'to-amber-400' : 'to-amber-400',
+    // Card-specific styles
+    gradients: {
+      blue: 'from-blue-500/10 to-transparent',
+      teal: 'from-teal-500/10 to-transparent',
+      purple: 'from-purple-500/10 to-transparent',
+      green: 'from-green-500/10 to-transparent',
+    },
+    hovers: {
+      blue: 'hover:border-blue-500',
+      teal: 'hover:border-teal-500',
+      purple: 'hover:border-purple-500',
+      green: 'hover:border-green-500',
+    },
+    accents: {
+      blue: theme === 'dark' ? 'text-blue-400' : 'text-blue-600',
+      teal: theme === 'dark' ? 'text-teal-400' : 'text-teal-600',
+      purple: theme === 'dark' ? 'text-purple-400' : 'text-purple-600',
+      green: theme === 'dark' ? 'text-green-400' : 'text-green-600',
+    }
   };
 
+  const scrollToPillars = () => {
+    document.getElementById('pillars').scrollIntoView({ behavior: 'smooth' });
+  };
+  
+  // Animated values for the tickers
+  const totalBudget = useCountUp(285500000);
+  const population = useCountUp(126617);
+  const datasets = useCountUp(42);
+
   return (
-    <div style={language === 'ar' ? 
-          { fontFamily: 'Noto Kufi Arabic, sans-serif' } : 
-          { fontFamily: 'Inter, sans-serif', direction:'ltr' }
-        }  className="min-h-screen relative overflow-hidden">
-      {/* HERO SECTION */}
-      <div className={`relative overflow-hidden ${themeClasses.bg}`}>
-        {/* Animated Dark Blue Gradient Background */}
-        
-        {/* Subtle animated dots pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-20 w-2 h-2 bg-cyan-400 rounded-full animate-ping delay-20"></div>
-          <div className="absolute bottom-32 right-32 w-2 h-2 bg-blue-400 rounded-full animate-ping delay-3000"></div>
-          <div className="absolute top-1/2 left-1/3 w-1 h-1 bg-purple-400 rounded-full animate-pulse delay-3000"></div>
-          <div className="absolute top-1/4 right-1/4 w-2 h-2 bg-indigo-400 rounded-full animate-ping delay-3000"></div>
-        </div>
-
-        {/* Main Content Container */}
-        <div className="relative z-10 min-h-screen flex items-center">
-          <div className="container mx-auto px-3 lg:px-15">
-            <div className="lg:flex lg:flex-cols-2 gap-12 items-center">
-      <GlobeBackground theme={theme}/>
-              
-              {/* Left Side - Text Content */}
-              <div className="space-y-15 text-center">
-                
-                {/* Main Headlines */}
-                <div className="space-y-4">
-                    <h1 className=" lg:text-6xl font-[1000] leading-tight">
-                      {/* First Line */}
-                      <span
-                        style={language === 'ar' ? arabicStyle : undefined}
-                        className={`md:text-8xl text-6xl text-center bg-gradient-to-r ${theme === 'dark' ? 'from-amber-600 via-amber-300 to-amber-600' : 'from-amber-600 via-amber-400 to-amber-600'} bg-clip-text text-transparent `}
-                      >
-                        <Typewriter
-                          words={text1}
-                          loop={false}
-                          cursor
-                          typeSpeed={100}
-                          deleteSpeed={30}
-                          delaySpeed={2000}
-                        />
-                      </span>
-                    </h1>
-                  </div>
-
-                {/* Main Description */}
-                <div className="space-y-6 text-center">
-                  
-                  <h2 style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif', direction:'rtl' } : undefined} className={`text-xl md:text-4xl font-bold leading-relaxed ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'}`}>
-                    {t?.home?.welcomeMessage || 'WELCOME TO KSAR-DATA'}
-                  </h2>
-
-                  
-                  <p style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif', direction:'rtl' } : undefined} className={`text-base md:text-xl leading-relaxed max-w-xl ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'}`}>
-                    {t?.home?.subtitle || 'An interactive web application aimed at helping users explore public data related to the city of Ksar El Kebir in a visual and user-friendly way.'}
-                  </p>
-                </div>
-
-                
-                
-              </div>
-
-              {/* Right Side - PNG Image */}
-              <div className="relative flex justify-center lg:justify-end">
-                <div className="relative">
-                  {/* Subtle glow effect behind image */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/10 to-purple-400/10 blur-3xl transform scale-110"></div>
-                  
-                  {/* PNG Image Container */}
-                  <div className="relative  mt-8">
-                    <img 
-                      src={theme === 'dark'
-                        ? 'https://res.cloudinary.com/daeuundyc/image/upload/f_auto,q_auto/ksar-el-kebir-gate_lqfind.png'
-                        : 'https://res.cloudinary.com/daeuundyc/image/upload/f_auto,q_auto/ksar-el-kebir-gate_dark_ujloxv.png'
-
-                      }
-                      alt="Ksar El Kebir Gate"
-                      className="w-100 sm:w-250 max-w-2xl h-auto object-contain drop-shadow-2xl"
-                    />
-                  </div>
-
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* SEARCH SECTION */}
-      <section 
-        className={`py-20 ${themeClasses.bg}`}
-        dir={language === 'ar' ? 'rtl' : 'ltr'}
-        style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif' } : undefined}
-      >
-        <div className="container mx-auto px-6 lg:px-12">
-          <div className="lg:flex lg:items-center lg:gap-16">
-            
-            {/* Text Content */}
-            <div className={`lg:w-1/2 space-y-6 ${language === 'ar' ? 'text-right' : 'text-left'} mb-12 lg:mb-0`}>
-              <div className="flex items-center space-x-3 mb-4">
-                <div className={`p-3 rounded-full ${theme === 'dark' ? 'bg-blue-600/20' : 'bg-blue-100'}`}>
-                  <Search className={`w-6 h-6 ${themeClasses.textAccent}`} />
-                </div>
-                <h2 className={`text-3xl lg:text-4xl font-bold ${themeClasses.textPrimary}`}>
-                  {t?.home?.searchTitle || 'EXPLORE THE BUDGET'}
-                </h2>
-              </div>
-              
-              <p className={`text-lg leading-relaxed ${themeClasses.textSecondary}`}>
-                {t?.home?.searchDescription || 'Dive deep into Ksar El Kebir\'s financial data. Search through thousands of budget entries, filter by year and type, and discover where public money flows. Our intuitive search makes complex budget data accessible to everyone.'}
-              </p>
-              
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3">
-                  <div className={`w-2 h-2 rounded-full bg-green-500 ${language === 'ar' ? 'ml-3' : 'mr-3'}`}></div>
-                  <span className={themeClasses.textSecondary}>
-                    {t?.home?.searchFeature1 || 'Advanced search and filtering'}
-                  </span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className={`w-2 h-2 rounded-full bg-green-500 ${language === 'ar' ? 'ml-3' : 'mr-3'}`}></div>
-                  <span className={themeClasses.textSecondary}>
-                    {t?.home?.searchFeature2 || 'Multi-year budget comparison'}
-                  </span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className={`w-2 h-2 rounded-full bg-green-500 ${language === 'ar' ? 'ml-3' : 'mr-3'}`}></div>
-                  <span className={themeClasses.textSecondary}>
-                    {t?.home?.searchFeature3 || 'Mobile-friendly interface'}
-                  </span>
-                </div>
-              </div>
-
-              <div className="pt-4">
-                <Link to="/search">
-                  <button className={`inline-flex items-center px-6 py-3 text-base font-semibold rounded-full border-2 transition-all duration-300 hover:scale-105 ${theme === 'dark' ? 'border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white' : 'border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white'}`}>
-                    {t?.home?.searchCTA || 'START SEARCHING'}
-                    <ArrowRight className={`w-4 h-4 ${language === 'ar' ? 'mr-2 rotate-180' : 'ml-2'}`} />
-                  </button>
-                </Link>
-              </div>
-            </div>
-
-            {/* Image/Visual */}
-            <div className="lg:w-1/2 relative">
-              <div className="relative">
-                {/* Glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-400/10 to-cyan-400/10 blur-2xl transform scale-110"></div>
-                
-                {/* Placeholder for search page screenshot/illustration */}
-                <div className={`relative z-10 rounded-lg border-2 p-8 ${theme === 'dark' ? 'bg-gray-800/50 border-gray-700' : 'bg-white/80 border-gray-200'} backdrop-blur-sm`}>
-                  <div className="space-y-4">
-                    <div className={`h-12 rounded-lg ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'} flex items-center px-4`}>
-                      <Search className={`w-5 h-5 ${themeClasses.textSecondary} mr-3`} />
-                      <div className={`h-2 bg-gradient-to-r ${themeClasses.gradientFrom} ${themeClasses.gradientTo} rounded-full w-1/3`}></div>
-                    </div>
-                    <div className="grid grid-cols-3 gap-3">
-                      {[1, 2, 3, 4, 5, 3].map((i) => (
-                        <div key={i} className={`h-8 rounded ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-100'}`}></div>
-                      ))}
-                    </div>
-                    <div className="space-y-2">
-                      {[1, 2, 3].map((i) => (
-                        <div key={i} className={`h-6 rounded ${theme === 'dark' ? 'bg-gray-600' : 'bg-gray-150'}`}></div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* RGPH SECTION - NEW */}                
-      <section 
-        className={`py-20 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'}`}
-        dir={language === 'ar' ? 'rtl' : 'ltr'}
-        style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif' } : undefined}
-      >
-        <div className="container mx-auto px-6 lg:px-12">
-          <div className="lg:flex lg:items-center lg:gap-16">
-            
-            {/* Image/Visual - Left side */}
-            <div className="lg:w-1/2 relative mb-12 lg:mb-0 order-2 lg:order-1">
-              <div className="relative">
-                {/* Glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-teal-400/10 to-cyan-400/10 blur-2xl transform scale-110"></div>
-                
-                {/* RGPH data visualization */}
-                <div className={`relative z-10 rounded-lg border-2 p-8 ${theme === 'dark' ? 'bg-gray-800/50 border-gray-700' : 'bg-white/80 border-gray-200'} backdrop-blur-sm`}>
-                  <div className="space-y-6">
-                    {/* Population demographics visualization */}
-                    <div className="grid grid-cols-2 gap-4">
-                      {/* Male/Female distribution */}
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between">
-                          <div className={`w-3 h-3 rounded-full bg-blue-500`}></div>
-                          <div className={`h-2 bg-blue-500 rounded-full flex-1 mx-2`}></div>
-                          <span className={`text-xs ${themeClasses.textSecondary}`}>49%</span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <div className={`w-3 h-3 rounded-full bg-pink-500`}></div>
-                          <div className={`h-2 bg-pink-500 rounded-full flex-1 mx-2`}></div>
-                          <span className={`text-xs ${themeClasses.textSecondary}`}>51%</span>
-                        </div>
-                      </div>
-                      
-                      {/* Age groups */}
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between">
-                          <div className={`w-3 h-3 rounded-full bg-green-500`}></div>
-                          <div className={`h-2 bg-green-500 rounded-full w-1/4`}></div>
-                          <span className={`text-xs ${themeClasses.textSecondary} ml-2`}>25%</span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <div className={`w-3 h-3 rounded-full bg-yellow-500`}></div>
-                          <div className={`h-2 bg-yellow-500 rounded-full w-3/5`}></div>
-                          <span className={`text-xs ${themeClasses.textSecondary} ml-2`}>60%</span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <div className={`w-3 h-3 rounded-full bg-orange-500`}></div>
-                          <div className={`h-2 bg-orange-500 rounded-full w-1/6`}></div>
-                          <span className={`text-xs ${themeClasses.textSecondary} ml-2`}>15%</span>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {/* Housing conditions indicators */}
-                    <div className="space-y-3">
-                      <div className="flex items-center space-x-3">
-                        <div className={`w-4 h-4 rounded ${theme === 'dark' ? 'bg-teal-600' : 'bg-teal-500'}`}></div>
-                        <div className={`h-2 rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 flex-1`}></div>
-                        <span className={`text-xs ${themeClasses.textSecondary}`}>98%</span>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <div className={`w-4 h-4 rounded ${theme === 'dark' ? 'bg-blue-600' : 'bg-blue-500'}`}></div>
-                        <div className={`h-2 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 flex-1`}></div>
-                        <span className={`text-xs ${themeClasses.textSecondary}`}>97%</span>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <div className={`w-4 h-4 rounded ${theme === 'dark' ? 'bg-purple-600' : 'bg-purple-500'}`}></div>
-                        <div className={`h-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex-1`}></div>
-                        <span className={`text-xs ${themeClasses.textSecondary}`}>99%</span>
-                      </div>
-                    </div>
-
-                    {/* Years comparison */}
-                    <div className="flex justify-center space-x-6 pt-4">
-                      <div className="text-center">
-                        <div className={`w-8 h-8 rounded-full ${theme === 'dark' ? 'bg-teal-600' : 'bg-teal-500'} mx-auto mb-1 flex items-center justify-center`}>
-                          <span className="text-xs text-white font-bold">42</span>
-                        </div>
-                        <div className={`h-2 rounded ${theme === 'dark' ? 'bg-gray-600' : 'bg-gray-200'} w-8`}></div>
-                      </div>
-                      <div className="text-center">
-                        <div className={`w-8 h-8 rounded-full ${theme === 'dark' ? 'bg-cyan-600' : 'bg-cyan-500'} mx-auto mb-1 flex items-center justify-center`}>
-                          <span className="text-xs text-white font-bold">A</span>
-                        </div>
-                        <div className={`h-2 rounded ${theme === 'dark' ? 'bg-gray-600' : 'bg-gray-200'} w-8`}></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Text Content */}
-            <div className={`lg:w-1/2 space-y-6 ${language === 'ar' ? 'text-right' : 'text-left'} order-1 lg:order-2`}>
-              <div className="flex items-center space-x-3 mb-4">
-                <div className={`p-3 rounded-full ${theme === 'dark' ? 'bg-teal-600/20' : 'bg-teal-100'}`}>
-                  <BarChart3 className={`w-6 h-6 ${theme === 'dark' ? 'text-teal-400' : 'text-teal-600'}`} />
-                </div>
-                <h2 className={`text-3xl lg:text-4xl font-bold ${themeClasses.textPrimary}`}>
-                  {t?.home?.rgphTitle || 'CENSUS DATA (RGPH)'}
-                </h2>
-              </div>
-              
-              <p className={`text-lg leading-relaxed ${themeClasses.textSecondary}`}>
-                {t?.home?.rgphDescription || 'Explore comprehensive demographic and housing data from Morocco\'s General Population and Housing Census. Access detailed statistics about education, employment, languages, and living conditions in Ksar El Kebir.'}
-              </p>
-              
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3">
-                  <div className={`w-2 h-2 rounded-full bg-teal-500 ${language === 'ar' ? 'ml-3' : 'mr-3'}`}></div>
-                  <span className={themeClasses.textSecondary}>
-                    {t?.home?.rgphFeature1 || 'Population demographics by age and gender'}
-                  </span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className={`w-2 h-2 rounded-full bg-teal-500 ${language === 'ar' ? 'ml-3' : 'mr-3'}`}></div>
-                  <span className={themeClasses.textSecondary}>
-                    {t?.home?.rgphFeature2 || 'Education and employment statistics'}
-                  </span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className={`w-2 h-2 rounded-full bg-teal-500 ${language === 'ar' ? 'ml-3' : 'mr-3'}`}></div>
-                  <span className={themeClasses.textSecondary}>
-                    {t?.home?.rgphFeature3 || 'Housing conditions and infrastructure'}
-                  </span>
-                </div>
-              </div>
-
-              <div className="pt-4">
-                <Link to="/rgph">
-                  <button className={`inline-flex items-center px-6 py-3 text-base font-semibold rounded-full border-2 transition-all duration-300 hover:scale-105 ${theme === 'dark' ? 'border-teal-500 text-teal-400 hover:bg-teal-500 hover:text-white' : 'border-teal-600 text-teal-600 hover:bg-teal-600 hover:text-white'}`}>
-                    {t?.home?.rgphCTA || 'EXPLORE CENSUS DATA'}
-                    <ArrowRight className={`w-4 h-4 ${language === 'ar' ? 'mr-2 rotate-180' : 'ml-2'}`} />
-                  </button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* INSIGHTS SECTION */}
-      <section 
-        className={`py-20 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'}`}
-        dir={language === 'ar' ? 'rtl' : 'ltr'}
-        style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif' } : undefined}
-      >
-        <div className="container mx-auto px-6 lg:px-12">
-          <div className="lg:flex lg:items-center lg:gap-16">
-            
-            {/* Image/Visual - Left side for variety */}
-            <div className="lg:w-1/2 relative mb-12 lg:mb-0 order-2 lg:order-1">
-              <div className="relative">
-                {/* Glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-400/10 to-pink-400/10 blur-2xl transform scale-110"></div>
-                
-                {/* Placeholder for insights visualization */}
-                <div className={`relative z-10 rounded-lg border-2 p-8 ${theme === 'dark' ? 'bg-gray-800/50 border-gray-700' : 'bg-white/80 border-gray-200'} backdrop-blur-sm`}>
-                  <div className="space-y-6">
-                    {/* Chart placeholder */}
-                    <div className="relative">
-                      <div className={`h-32 rounded-lg ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'} p-4`}>
-                        <div className="flex items-end justify-between h-full space-x-2">
-                          {[60, 80, 45, 90, 70, 55].map((height, i) => (
-                            <div 
-                              key={i} 
-                              className={`bg-gradient-to-t ${themeClasses.gradientFrom} ${themeClasses.gradientTo} rounded-t`}
-                              style={{ height: `${height}%`, width: '12%' }}
-                            ></div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {/* Analytics cards */}
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className={`p-3 rounded-lg ${theme === 'dark' ? 'bg-gray-600' : 'bg-gray-100'}`}>
-                        <div className={`w-full h-2 bg-gradient-to-r ${themeClasses.gradientFrom} ${themeClasses.gradientTo} rounded-full mb-2`}></div>
-                        <div className={`h-4 rounded ${theme === 'dark' ? 'bg-gray-500' : 'bg-gray-200'} w-3/4`}></div>
-                      </div>
-                      <div className={`p-3 rounded-lg ${theme === 'dark' ? 'bg-gray-600' : 'bg-gray-100'}`}>
-                        <div className={`w-full h-2 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full mb-2`}></div>
-                        <div className={`h-4 rounded ${theme === 'dark' ? 'bg-gray-500' : 'bg-gray-200'} w-2/3`}></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Text Content */}
-            <div className={`lg:w-1/2 space-y-6 ${language === 'ar' ? 'text-right' : 'text-left'} order-1 lg:order-2`}>
-              <div className="flex items-center space-x-3 mb-4">
-                <div className={`p-3 rounded-full ${theme === 'dark' ? 'bg-purple-600/20' : 'bg-purple-100'}`}>
-                  <TrendingUp className={`w-6 h-6 ${theme === 'dark' ? 'text-purple-400' : 'text-purple-600'}`} />
-                </div>
-                <h2 className={`text-3xl lg:text-4xl font-bold ${themeClasses.textPrimary}`}>
-                  {t?.home?.insightsTitle || 'DISCOVER INSIGHTS'}
-                </h2>
-              </div>
-              
-              <p className={`text-lg leading-relaxed ${themeClasses.textSecondary}`}>
-                {t?.home?.insightsDescription || 'Uncover meaningful patterns and trends in the city\'s financial data. Our interactive analytics transform complex budget information into clear, visual insights that tell the story of how your city invests in its future.'}
-              </p>
-              
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3">
-                  <div className={`w-2 h-2 rounded-full bg-purple-500 ${language === 'ar' ? 'ml-3' : 'mr-3'}`}></div>
-                  <span className={themeClasses.textSecondary}>
-                    {t?.home?.insightsFeature1 || 'Interactive charts and visualizations'}
-                  </span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className={`w-2 h-2 rounded-full bg-purple-500 ${language === 'ar' ? 'ml-3' : 'mr-3'}`}></div>
-                  <span className={themeClasses.textSecondary}>
-                    {t?.home?.insightsFeature2 || 'Multi-year trend analysis'}
-                  </span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className={`w-2 h-2 rounded-full bg-purple-500 ${language === 'ar' ? 'ml-3' : 'mr-3'}`}></div>
-                  <span className={themeClasses.textSecondary}>
-                    {t?.home?.insightsFeature3 || 'Key performance indicators'}
-                  </span>
-                </div>
-              </div>
-
-              <div className="pt-4">
-                <Link to="/insights">
-                  <button className={`inline-flex items-center px-6 py-3 text-base font-semibold rounded-full border-2 transition-all duration-300 hover:scale-105 ${theme === 'dark' ? 'border-purple-500 text-purple-400 hover:bg-purple-500 hover:text-white' : 'border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white'}`}>
-                    {t?.home?.insightsCTA || 'VIEW ANALYTICS'}
-                    <ArrowRight className={`w-4 h-4 ${language === 'ar' ? 'mr-2 rotate-180' : 'ml-2'}`} />
-                  </button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ABOUT US SECTION */}
-      <section 
-        className={`py-20 ${themeClasses.bg}`}
-        dir={language === 'ar' ? 'rtl' : 'ltr'}
-        style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif' } : undefined}
-      >
-        <div className="container mx-auto px-6 lg:px-12">
-          <div className="lg:flex lg:items-center lg:gap-16">
-            
-            {/* Text Content */}
-            <div className={`lg:w-1/2 space-y-6 ${language === 'ar' ? 'text-right' : 'text-left'} mb-12 lg:mb-0`}>
-              <div className="flex items-center space-x-3 mb-4">
-                <div className={`p-3 rounded-full ${theme === 'dark' ? 'bg-green-600/20' : 'bg-green-100'}`}>
-                  <Users className={`w-6 h-6 ${theme === 'dark' ? 'text-green-400' : 'text-green-600'}`} />
-                </div>
-                <h2 className={`text-3xl lg:text-4xl font-bold ${themeClasses.textPrimary}`}>
-                  {t?.home?.aboutTitle || 'ABOUT KSAR-DATA'}
-                </h2>
-              </div>
-              
-              <p className={`text-lg leading-relaxed ${themeClasses.textSecondary}`}>
-                {t?.home?.aboutDescription || 'KSAR-DATA is a local initiative dedicated to making public data transparent and accessible. We believe in the power of information to strengthen democracy and civic engagement in our community.'}
-              </p>
-              
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3">
-                  <div className={`w-2 h-2 rounded-full bg-green-500 ${language === 'ar' ? 'ml-3' : 'mr-3'}`}></div>
-                  <span className={themeClasses.textSecondary}>
-                    {t?.home?.aboutFeature1 || 'Non-political, community-driven'}
-                  </span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className={`w-2 h-2 rounded-full bg-green-500 ${language === 'ar' ? 'ml-3' : 'mr-3'}`}></div>
-                  <span className={themeClasses.textSecondary}>
-                    {t?.home?.aboutFeature2 || 'Open source and transparent'}
-                  </span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className={`w-2 h-2 rounded-full bg-green-500 ${language === 'ar' ? 'ml-3' : 'mr-3'}`}></div>
-                  <span className={themeClasses.textSecondary}>
-                    {t?.home?.aboutFeature3 || 'Built for civic awareness'}
-                  </span>
-                </div>
-              </div>
-
-              <div className="pt-4">
-                <Link to="/about">
-                  <button className={`inline-flex items-center px-6 py-3 text-base font-semibold rounded-full border-2 transition-all duration-300 hover:scale-105 ${theme === 'dark' ? 'border-green-500 text-green-400 hover:bg-green-500 hover:text-white' : 'border-green-600 text-green-600 hover:bg-green-600 hover:text-white'}`}>
-                    {t?.home?.aboutCTA || 'LEARN MORE'}
-                    <ArrowRight className={`w-4 h-4 ${language === 'ar' ? 'mr-2 rotate-180' : 'ml-2'}`} />
-                  </button>
-                </Link>
-              </div>
-            </div>
-
-            {/* Image/Visual */}
-            <div className="lg:w-1/2 relative">
-              <div className="relative">
-                {/* Glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-green-400/10 to-teal-400/10 blur-2xl transform scale-110"></div>
-                
-                {/* Team/Community illustration */}
-                <div className={`relative z-10 rounded-lg border-2 p-8 ${theme === 'dark' ? 'bg-gray-800/50 border-gray-700' : 'bg-white/80 border-gray-200'} backdrop-blur-sm`}>
-                  <div className="space-y-6">
-                    {/* Community icons */}
-                    <div className="flex justify-center space-x-4">
-                      {[1, 2, 3, 4].map((i) => (
-                        <div key={i} className={`w-12 h-12 rounded-full ${theme === 'dark' ? 'bg-gray-600' : 'bg-gray-200'} flex items-center justify-center`}>
-                          <Users className={`w-6 h-6 ${themeClasses.textAccent}`} />
-                        </div>
-                      ))}
-                    </div>
-                    
-                    {/* Mission statement visualization */}
-                    <div className="text-center space-y-3">
-                      <div className={`h-4 rounded-full bg-gradient-to-r ${themeClasses.gradientFrom} ${themeClasses.gradientTo} mx-auto w-3/4`}></div>
-                      <div className={`h-3 rounded-full ${theme === 'dark' ? 'bg-gray-600' : 'bg-gray-200'} mx-auto w-1/2`}></div>
-                      <div className={`h-3 rounded-full ${theme === 'dark' ? 'bg-gray-600' : 'bg-gray-200'} mx-auto w-2/3`}></div>
-                    </div>
-                    
-                    {/* Values indicators */}
-                    <div className="flex justify-around pt-4">
-                      <div className="text-center">
-                        <div className={`w-8 h-8 rounded-full bg-green-500 mx-auto mb-2 flex items-center justify-center`}>
-                          <div className="w-2 h-2 bg-white rounded-full"></div>
-                        </div>
-                        <div className={`h-2 rounded ${theme === 'dark' ? 'bg-gray-600' : 'bg-gray-200'} w-12`}></div>
-                      </div>
-                      <div className="text-center">
-                        <div className={`w-8 h-8 rounded-full bg-blue-500 mx-auto mb-2 flex items-center justify-center`}>
-                          <div className="w-2 h-2 bg-white rounded-full"></div>
-                        </div>
-                        <div className={`h-2 rounded ${theme === 'dark' ? 'bg-gray-600' : 'bg-gray-200'} w-12`}></div>
-                      </div>
-                      <div className="text-center">
-                        <div className={`w-8 h-8 rounded-full bg-purple-500 mx-auto mb-2 flex items-center justify-center`}>
-                          <div className="w-2 h-2 bg-white rounded-full"></div>
-                        </div>
-                        <div className={`h-2 rounded ${theme === 'dark' ? 'bg-gray-600' : 'bg-gray-200'} w-12`}></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FOOTER CTA */}
-      <section className={`py-16 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'}`}>
-        <div className="container mx-auto px-6 lg:px-12">
-          <div className="text-center">
-            <div className={`inline-flex items-center px-6 py-3 rounded-full border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-3"></div>
-              <span className={themeClasses.textSecondary}>
-                {language === 'ar' ? 'نسخة تجريبية – الإصدار 1.1.7 | جميع الحقوق محفوظة © 2025' : 
-                 language === 'en' ? 'Beta Version – v1.1.7 | All Rights Reserved © 2025' : 
-                 'Version d’essai – v1.1.7 | Tous droits réservés © 2025'}
+    <div 
+      style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif' } : { fontFamily: 'Inter, sans-serif' }}
+      className={`${themeClasses.bg}`}
+      dir={language === 'ar' ? 'rtl' : 'ltr'}
+    >
+      {/* HERO SECTION - SPLIT SCREEN */}
+      <section className="min-h-screen grid grid-cols-1 lg:grid-cols-2">
+        {/* Left Panel: Text Content */}
+        <div className="relative flex flex-col justify-center items-center lg:items-start text-center lg:text-left p-8 md:p-16 order-2 lg:order-1">
+          <GlobeBackground theme={theme} />
+          <div className="relative z-10 w-full max-w-xl">
+            <h1 className={`text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-4 ${themeClasses.textPrimary}`}>
+              {content.welcome}
+              <span className={`block bg-gradient-to-r ${themeClasses.gradientFrom} ${themeClasses.gradientTo} bg-clip-text text-transparent`}>
+                <Typewriter
+                  words={content.typewriter}
+                  loop={false}
+                  cursor
+                  cursorStyle='_'
+                  typeSpeed={90}
+                  deleteSpeed={60}
+                  delaySpeed={2000}
+                />
               </span>
+            </h1>
+            <p className={`text-lg md:text-xl leading-relaxed mb-8 ${themeClasses.textSecondary}`}>
+              {content.subtitle}
+            </p>
+            <button
+              onClick={scrollToPillars}
+              className={`inline-flex items-center px-8 py-4 text-lg font-bold rounded-full transition-transform transform hover:scale-105 ${theme === 'dark' ? 'bg-gray-50 text-gray-900' : 'bg-gray-900 text-gray-50'}`}
+            >
+              {content.exploreCTA}
+              <ArrowDown className={`w-5 h-5 ${language === 'ar' ? 'mr-3' : 'ml-3'}`} />
+            </button>
+          </div>
+        </div>
+
+        {/* Right Panel: Image (No background) */}
+        <div className="relative flex items-center justify-center p-8 order-1 lg:order-2">
+           <img 
+              src={theme === 'dark'
+                ? 'https://res.cloudinary.com/daeuundyc/image/upload/f_auto,q_auto/ksar-el-kebir-gate_lqfind.png'
+                : 'https://res.cloudinary.com/daeuundyc/image/upload/f_auto,q_auto/ksar-el-kebir-gate_dark_ujloxv.png'
+              }
+              alt="Ksar El Kebir Gate"
+              className="relative z-20 w-full max-w-2xl h-auto object-contain drop-shadow-2xl animate-float"
+            />
+        </div>
+      </section>
+
+      {/* PILLARS SECTION */}
+      <section id="pillars" className={`py-20 md:py-28 ${themeClasses.sectionBg}`}>
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className={`text-3xl md:text-4xl font-bold ${themeClasses.textPrimary}`}>{content.pillarsTitle}</h2>
+          </div>
+          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            {content.features.map((feature) => (
+              <Link to={feature.link} key={feature.title} className="group block">
+                <div className={`relative h-full p-8 rounded-2xl border-2 ${themeClasses.cardBg} ${themeClasses.borderColor} ${themeClasses.hovers[feature.color]} bg-gradient-to-br ${themeClasses.gradients[feature.color]} transition-all duration-300 transform hover:scale-105`}>
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <div className="mb-4">
+                        <feature.icon className={`w-10 h-10 ${themeClasses.accents[feature.color]}`} />
+                      </div>
+                      <h3 className={`text-2xl font-bold mb-2 ${themeClasses.textPrimary}`}>{feature.title}</h3>
+                      <p className={`${themeClasses.textSecondary}`}>{feature.description}</p>
+                    </div>
+                    <ArrowRight className={`w-6 h-6 text-gray-500 transition-transform duration-300 group-hover:translate-x-1 ${language === 'ar' ? 'rotate-180 group-hover:-translate-x-1' : ''}`} />
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* DATA IN MOTION SECTION */}
+      <section className="py-20">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className={`text-3xl md:text-4xl font-bold ${themeClasses.textPrimary}`}>{content.motionTitle}</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {/* Budget Ticker */}
+            <div className={`p-6 rounded-lg border ${themeClasses.borderColor} ${themeClasses.cardBg}`}>
+              <div className="flex items-center space-x-4">
+                <Wallet className={`w-8 h-8 ${themeClasses.accents.blue}`} />
+                <div>
+                  <p className={`text-sm ${themeClasses.textSecondary}`}>{content.motionStats.budget}</p>
+                  <p className={`text-2xl font-bold ${themeClasses.textPrimary}`}>{totalBudget} <span className="text-base font-medium">MAD</span></p>
+                </div>
+              </div>
+            </div>
+            {/* Population Ticker */}
+            <div className={`p-6 rounded-lg border ${themeClasses.borderColor} ${themeClasses.cardBg}`}>
+              <div className="flex items-center space-x-4">
+                <Globe className={`w-8 h-8 ${themeClasses.accents.teal}`} />
+                <div>
+                  <p className={`text-sm ${themeClasses.textSecondary}`}>{content.motionStats.population}</p>
+                  <p className={`text-2xl font-bold ${themeClasses.textPrimary}`}>{population}</p>
+                </div>
+              </div>
+            </div>
+            {/* Datasets Ticker */}
+            <div className={`p-6 rounded-lg border ${themeClasses.borderColor} ${themeClasses.cardBg}`}>
+              <div className="flex items-center space-x-4">
+                <TrendingUp className={`w-8 h-8 ${themeClasses.accents.purple}`} />
+                <div>
+                  <p className={`text-sm ${themeClasses.textSecondary}`}>{content.motionStats.datasets}</p>
+                  <p className={`text-2xl font-bold ${themeClasses.textPrimary}`}>{datasets}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
+      
+      {/* QUICK INSIGHT SECTION */}
+      <section className="pb-20 md:pb-28">
+        <div className="container mx-auto px-6">
+          <div className={`relative max-w-4xl mx-auto p-8 md:p-12 rounded-2xl border ${themeClasses.borderColor} overflow-hidden`}>
+            <div className={`absolute -inset-2 bg-gradient-to-br from-purple-600/10 to-transparent blur-xl`}></div>
+            <div className="relative text-center">
+              <h3 className={`text-sm font-bold uppercase tracking-widest mb-4 ${themeClasses.textSecondary}`}>
+                {content.insightTitle}
+              </h3>
+              <p className={`text-2xl md:text-3xl font-medium ${themeClasses.textPrimary}`}>
+                "{content.insightStat}"
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className={`py-8 border-t`} style={{borderColor: themeClasses.borderColor}}>
+        <div className="container mx-auto px-6 text-center">
+          <div className={`inline-flex items-center px-4 py-2 rounded-full border text-sm ${themeClasses.borderColor} ${themeClasses.textSecondary} ${themeClasses.cardBg}`}>
+
+            <span>{content.footer}</span>
+          </div>
+        </div>
+      </footer>
+      
+      {/* Adding a keyframe animation for the floating effect */}
+      <style jsx>{`
+        @keyframes float {
+          0% { transform: translateY(0px); }
+          50% { transform: translateY(-15px); }
+          100% { transform: translateY(0px); }
+        }
+        .animate-float {
+          animation: float 6s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   );
 };

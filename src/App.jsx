@@ -17,7 +17,8 @@ import ContactUs from "./pages/ContactUs";
 import Download from "./pages/Download";
 import HistoricalMap from './pages/HistoricalMap';
 import ScoresPage from "./pages/ScoresPage";
-import ComingSoon from "./pages/ComingSoon"
+import ComingSoon from "./pages/ComingSoon";
+import DidYouKnow from "./pages/DidYouKnow"
 
 // Component to handle conditional navbar rendering
 function AppContent({ 
@@ -212,6 +213,17 @@ function AppContent({
           element={
             <ScoresPage 
               data={scoresData} 
+              loading={loading} 
+              t={t} 
+              language={language} 
+              theme={theme} 
+            />
+          } 
+        />
+        <Route 
+          path="/facts-dev" 
+          element={
+            <DidYouKnow 
               loading={loading} 
               t={t} 
               language={language} 

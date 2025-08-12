@@ -141,7 +141,7 @@ export default function DecisionsTable({ data, isLoading, t, theme, language }) 
   return (
     <>
       {/* Mobile Card View - Show on screens smaller than lg (1024px) */}
-      <div className="block lg:hidden">
+      <div className="block lg:hidden" >
         {isLoading ? (
           Array.from({ length: 5 }).map((_, idx) => (
             <div key={`loading-card-${idx}`} className="p-3 mb-3 rounded-lg border bg-gray-50 dark:bg-gray-800 animate-pulse">
@@ -180,7 +180,7 @@ export default function DecisionsTable({ data, isLoading, t, theme, language }) 
         />
 
       {/* Desktop Table View - Show on lg screens and larger */}
-      <div className="hidden lg:block overflow-auto rounded-md border max-h-[70vh] shadow-cyan-500/20 shadow-2xl">
+      <div  className="hidden lg:block overflow-auto rounded-md border max-h-[70vh] shadow-cyan-500/20 shadow-2xl">
         <Table>
           <TableHeader>
             <TableRow>
@@ -254,7 +254,7 @@ export default function DecisionsTable({ data, isLoading, t, theme, language }) 
                         <span className="text-xs">{decision.decision_number}</span>
                       </TableCell>
                       <TableCell className="max-w-xs">
-                        <div className="truncate text-xs" title={getDecisionTitle(decision)}>
+                        <div dir={language === 'ar' ? 'rtl' : 'ltr'} className="truncate text-xs" title={getDecisionTitle(decision)}>
                           {getDecisionTitle(decision)}
                         </div>
                       </TableCell>
@@ -280,13 +280,13 @@ export default function DecisionsTable({ data, isLoading, t, theme, language }) 
                         <TableCell colSpan="7" className={`${
                     theme === 'dark' ? 'bg-gray-800 border border-gray-700' : 'bg-white'
                 } p-6`}>
-                          <div className="space-y-4 ">
+                          <div dir={language === 'ar' ? 'rtl' : 'ltr'} className="space-y-4 ">
                             {/* Decision Title */}
                             <div className={`text-center p-3 ${theme === 'dark' ? 'bg-gray-700 border border-gray-100' : 'bg-gray-100 border border-gray-950'} ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'} rounded-lg w-90 md:w-full`}>
-                                <h3 className="text-lg font-semibold text-gray-950 mb-2 text-wrap">
+                                <h3 className="text-lg font-semibold mb-2 text-wrap">
                                 {t?.decisionspage?.decision_details || 'تفاصيل القرار'}
                               </h3>
-                              <p className="text-gray-900 text-sm leading-relaxed text-wrap">
+                              <p className="text-sm leading-relaxed text-wrap">
                                 {getDecisionTitle(decision)}
                               </p>
                               </div>
@@ -294,19 +294,19 @@ export default function DecisionsTable({ data, isLoading, t, theme, language }) 
 
                             {/* Voting Summary */}
                             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                              <div className={`text-center p-3 ${theme === 'dark' ? 'bg-gray-700 border border-gray-100' : 'bg-gray-100 border border-gray-950'} rounded-lg w-90 md:w-full`}>
+                              <div className={`text-center p-3 ${theme === 'dark' ? 'bg-gray-200 border border-gray-100' : 'bg-gray-100 border border-gray-950'} rounded-lg w-90 md:w-full`}>
                                 <div className="text-2xl font-bold text-green-600">{decision.voting.accepted}</div>
                                 <div className="text-sm text-green-700">{t?.decisionspage?.accepted || 'موافق'}</div>
                               </div>
-                              <div className={`text-center p-3 ${theme === 'dark' ? 'bg-gray-700 border border-gray-100' : 'bg-gray-100 border border-gray-950'} rounded-lg w-90 md:w-full`} w-90 md:w-full>
+                              <div className={`text-center p-3 ${theme === 'dark' ? 'bg-gray-200 border border-gray-100' : 'bg-gray-100 border border-gray-950'} rounded-lg w-90 md:w-full`} w-90 md:w-full>
                                 <div className="text-2xl font-bold text-red-600">{decision.voting.refused}</div>
                                 <div className="text-sm text-red-700">{t?.decisionspage?.refused || 'رافض'}</div>
                               </div>
-                              <div className={`text-center p-3 ${theme === 'dark' ? 'bg-gray-700 border border-gray-100' : 'bg-gray-100 border border-gray-950'} rounded-lg w-90 md:w-full`}>
+                              <div className={`text-center p-3 ${theme === 'dark' ? 'bg-gray-200 border border-gray-100' : 'bg-gray-100 border border-gray-950'} rounded-lg w-90 md:w-full`}>
                                 <div className="text-2xl font-bold text-yellow-600">{decision.voting.abstained}</div>
                                 <div className="text-sm text-yellow-700">{t?.decisionspage?.abstained || 'ممتنع'}</div>
                               </div>
-                              <div className={`text-center p-3 ${theme === 'dark' ? 'bg-gray-700 border border-gray-100' : 'bg-gray-100 border border-gray-950'} rounded-lg w-90 md:w-full`}>
+                              <div className={`text-center p-3 ${theme === 'dark' ? 'bg-gray-200 border border-gray-100' : 'bg-gray-100 border border-gray-950'} rounded-lg w-90 md:w-full`}>
                                 <div className="text-2xl font-bold text-blue-600">{decision.voting.present_members}</div>
                                 <div className="text-sm text-blue-700">{t?.decisionspage?.present_members || 'الأعضاء الحاضرون'}</div>
                               </div>
@@ -354,7 +354,7 @@ export default function DecisionsTable({ data, isLoading, t, theme, language }) 
                                     <div className="max-h-32 overflow-y-auto space-y-1">
                                       {decision.abstained_members.map((member, memberIdx) => (
                                         <div key={memberIdx} className={`p-2  rounded text-sm ${theme === 'dark' ? 'bg-gray-700 border border-gray-100' : 'bg-gray-100 border border-gray-950'} ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'}`}>
-                                          <div className="font-medium text-gray-950">{member}</div>
+                                          <div className="font-medium ">{member}</div>
                                         </div>
                                       ))}
                                     </div>
@@ -370,8 +370,8 @@ export default function DecisionsTable({ data, isLoading, t, theme, language }) 
                                     </h4>
                                     <div className="max-h-32 overflow-y-auto space-y-1">
                                       {decision.refused_members.map((member, memberIdx) => (
-                                        <div key={memberIdx} className={`p-2  rounded text-sm ${theme === 'dark' ? 'bg-gray-700 border border-gray-100' : 'bg-gray-100 border border-gray-950'} ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'}`}>
-                                          <div className="font-medium text-gray-950">{member}</div>
+                                        <div key={memberIdx} className={`p-2 ${theme === 'dark' ? 'bg-gray-700 border border-gray-100' : 'bg-gray-100 border border-gray-950'} ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'} rounded text-sm`}>
+                                          <div className="font-medium ">{member}</div>
                                         </div>
                                       ))}
                                     </div>

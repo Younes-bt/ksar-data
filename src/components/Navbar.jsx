@@ -11,16 +11,26 @@ function Navbar({ language, setLanguage, theme, setTheme, t }) {
 
   const navItems = [
     { path: "/", label: t?.navbar?.home || "Home" },
+  ]
+
+  const dataGroup = [
     { path: "/rgph", label: t?.navbar?.RGPH || "RGPH" },
     { path: "/scores", label: t?.navbar?.scores || "CSK scores" },
-    { path: "/insights", label: t?.navbar?.insights || "Insights" },
     { path: "/medicines", label: t?.navbar?.medicine || "Medicine Prices" },
+  ]
+
+  const informationGroup = [
+    { path: "/insights", label: t?.navbar?.insights || "Insights" },
+    { path: "/facts", label: t?.navbar?.facts || "facts" },
+  ]
+
+  const aboutGroup = [
     { path: "/download", label: t?.navbar?.download || "download" },
     { path: "/about", label: t?.navbar?.about || "About" },
     { path: "/contactUs", label: t?.navbar?.contact || "Contact" },
   ]
 
-  const groupedItems = [
+  const servicesGroup = [
     { path: "/search", label: t?.navbar?.search || "Budget" },
     { path: "/decisions", label: t?.navbar?.decisions || "Decisions" },
     { path: "/attendance", label: t?.navbar?.attendance || "Attendance" },
@@ -63,13 +73,15 @@ function Navbar({ language, setLanguage, theme, setTheme, t }) {
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
+
+            {/* Services Group */}
             <NavigationMenuItem>
               <NavigationMenuTrigger className={`rounded-md transition-colors ${theme === 'dark' ? 'hover:bg-gray-200 hover:text-gray-950' : 'hover:bg-blue-600 hover:text-gray-200'}`}>
                 {t?.navbar?.services || "Services"}
               </NavigationMenuTrigger>
-              <NavigationMenuContent>
+              <NavigationMenuContent >
                 <ul className={`grid gap-3 p-4 md:w-[400px] ${theme === 'dark' ? 'bg-gray-950 ' : 'bg-gray-50 '}`}>
-                  {groupedItems.map(item => (
+                  {servicesGroup.map(item => (
                     <li key={item.path}>
                       <NavigationMenuLink asChild>
                         <Link
@@ -84,15 +96,76 @@ function Navbar({ language, setLanguage, theme, setTheme, t }) {
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
-            {navItems.slice(1).map(item => (
-              <NavigationMenuItem key={item.path}>
-                <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                  <Link to={item.path} className={`px-3 py-2 rounded-md transition-colors ${theme === 'dark' ? 'hover:bg-gray-200 hover:text-gray-950' : 'hover:bg-blue-600 hover:text-gray-200'}`}>
-                    {item.label}
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            ))}
+
+            {/* Data Group */}
+            <NavigationMenuItem>
+              <NavigationMenuTrigger className={`rounded-md transition-colors ${theme === 'dark' ? 'hover:bg-gray-200 hover:text-gray-950' : 'hover:bg-blue-600 hover:text-gray-200'}`}>
+                {t?.navbar?.data || "Data"}
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className={`grid gap-3 p-4 md:w-[400px] ${theme === 'dark' ? 'bg-gray-950 ' : 'bg-gray-50 '}`}>
+                  {dataGroup.map(item => (
+                    <li key={item.path}>
+                      <NavigationMenuLink asChild>
+                        <Link
+                          to={item.path}
+                          className={`block rounded-md leading-none no-underline outline-none transition-colors  ${theme === 'dark' ? 'hover:bg-gray-200 hover:text-gray-950' : 'hover:bg-blue-600 hover:text-gray-200'}`}
+                        >
+                          {item.label}
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+
+            {/* Information Group */}
+            <NavigationMenuItem>
+              <NavigationMenuTrigger className={`rounded-md transition-colors ${theme === 'dark' ? 'hover:bg-gray-200 hover:text-gray-950' : 'hover:bg-blue-600 hover:text-gray-200'}`}>
+                {t?.navbar?.information || "Information"}
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className={`grid gap-3 p-4 md:w-[400px] ${theme === 'dark' ? 'bg-gray-950 ' : 'bg-gray-50 '}`}>
+                  {informationGroup.map(item => (
+                    <li key={item.path}>
+                      <NavigationMenuLink asChild>
+                        <Link
+                          to={item.path}
+                          className={`block rounded-md leading-none no-underline outline-none transition-colors  ${theme === 'dark' ? 'hover:bg-gray-200 hover:text-gray-950' : 'hover:bg-blue-600 hover:text-gray-200'}`}
+                        >
+                          {item.label}
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+
+            {/* About Group */}
+            <NavigationMenuItem>
+              <NavigationMenuTrigger className={`rounded-md transition-colors ${theme === 'dark' ? 'hover:bg-gray-200 hover:text-gray-950' : 'hover:bg-blue-600 hover:text-gray-200'}`}>
+                {t?.navbar?.aboutUs || "About Us"}
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className={`grid gap-3 p-4 md:w-[400px] ${theme === 'dark' ? 'bg-gray-950 ' : 'bg-gray-50 '}`}>
+                  {aboutGroup.map(item => (
+                    <li key={item.path}>
+                      <NavigationMenuLink asChild>
+                        <Link
+                          to={item.path}
+                          className={`block rounded-md leading-none no-underline outline-none transition-colors  ${theme === 'dark' ? 'hover:bg-gray-200 hover:text-gray-950' : 'hover:bg-blue-600 hover:text-gray-200'}`}
+                        >
+                          {item.label}
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+            
           </NavigationMenuList>
         </NavigationMenu>
 
@@ -143,18 +216,7 @@ function Navbar({ language, setLanguage, theme, setTheme, t }) {
                 {t?.navbar?.home || "Home"}
               </Link>
               
-              {groupedItems.map(item => (
-                <Link
-                  style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif', fontSize:'1rem' } : { fontFamily: 'Inter, sans-serif', direction:'ltr', fontSize:'1rem' }}
-                  key={item.path}
-                  to={item.path}
-                  className={`text-center font-sans font-semibold px-3 py-2 rounded-md transition-colors ${theme === 'dark' ? 'hover:bg-gray-800 text-white' : 'hover:bg-gray-100 text-gray-950'}`}
-                  onClick={closeMobileMenu}
-                >
-                  {item.label}
-                </Link>
-              ))}
-              {navItems.slice(1).map(item => (
+              {[...servicesGroup, ...dataGroup, ...informationGroup, ...aboutGroup].map(item => (
                 <Link
                   style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif', fontSize:'1rem' } : { fontFamily: 'Inter, sans-serif', direction:'ltr', fontSize:'1rem' }}
                   key={item.path}
@@ -173,4 +235,4 @@ function Navbar({ language, setLanguage, theme, setTheme, t }) {
   )
 }
 
-export default Navbar
+export default Navbar;
