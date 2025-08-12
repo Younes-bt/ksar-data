@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import translations from "./i18n";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
@@ -17,8 +17,212 @@ import ContactUs from "./pages/ContactUs";
 import Download from "./pages/Download";
 import HistoricalMap from './pages/HistoricalMap';
 import ScoresPage from "./pages/ScoresPage";
+import ComingSoon from "./pages/ComingSoon"
 
+// Component to handle conditional navbar rendering
+function AppContent({ 
+  scoresData, budgetData, rgphData, medicineData, supportData, 
+  attendanceData, votingsData, placesData, loading, error, 
+  language, setLanguage, theme, setTheme, t 
+}) {
+  const location = useLocation();
+  
+  // Define routes where navbar should be hidden
+  const hideNavbarRoutes = ['/'];
+  const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname);
 
+  return (
+    <>
+      {/* Conditionally render Navbar */}
+      {!shouldHideNavbar && (
+        <Navbar
+          language={language}
+          setLanguage={setLanguage}
+          theme={theme}
+          setTheme={setTheme}
+          t={t}
+        />
+      )}
+
+      <Routes>
+        <Route
+          path="/Home-dev"
+          element={<Home t={t} language={language} theme={theme} />}
+        />
+        <Route
+          path="/search-dev"
+          element={
+            <SearchPage
+              data={budgetData}
+              loading={loading}
+              t={t}
+              language={language}
+              theme={theme}
+            />
+          }
+        />
+        <Route
+          path="/rgph-dev"
+          element={
+            <RgphPage
+              data={rgphData}
+              loading={loading}
+              t={t}
+              language={language}
+              theme={theme}
+            />
+          }
+        />
+        <Route 
+          path="/insights-dev" 
+          element={
+            <NewInsightsPage 
+              data={budgetData} 
+              t={t} 
+              language={language} 
+              theme={theme} 
+            />
+          } 
+        />
+        <Route 
+          path="/insights2-dev" 
+          element={
+            <RgphInsights 
+              data={rgphData} 
+              t={t} 
+              language={language} 
+              theme={theme} 
+            />
+          } 
+        />
+        <Route 
+          path="/medicines-dev" 
+          element={
+            <MedicinePrices 
+              data={medicineData} 
+              loading={loading} 
+              t={t} 
+              language={language} 
+              theme={theme} 
+            />
+          } 
+        />
+        <Route 
+          path="/support-dev" 
+          element={
+            <SupportGrants 
+              data={supportData} 
+              loading={loading} 
+              t={t} 
+              language={language} 
+              theme={theme} 
+            />
+          } 
+        />
+        <Route 
+          path="/attendance-dev" 
+          element={
+            <Attendance 
+              data={attendanceData} 
+              loading={loading} 
+              t={t} 
+              language={language} 
+              theme={theme} 
+            />
+          } 
+        />
+        <Route 
+          path="/persons-attendance-dev" 
+          element={
+            <PersonsAttendance 
+              data={attendanceData} 
+              loading={loading} 
+              t={t} 
+              language={language} 
+              theme={theme} 
+            />
+          } 
+        />
+        <Route 
+          path="/decisions-dev" 
+          element={
+            <Decisions 
+              data={votingsData} 
+              loading={loading} 
+              t={t} 
+              language={language} 
+              theme={theme} 
+            />
+          } 
+        />
+        <Route 
+          path="/about-dev" 
+          element={
+            <About 
+              t={t} 
+              language={language} 
+              theme={theme} 
+            />
+          } 
+        />
+        <Route 
+          path="/contactUs-dev" 
+          element={
+            <ContactUs 
+              t={t} 
+              language={language} 
+              theme={theme} 
+            />
+          } 
+        />
+        <Route 
+          path="/" 
+          element={
+            <ComingSoon 
+              t={t} 
+              language={language} 
+              theme={theme} 
+            />
+          } 
+        />
+        <Route 
+          path="/download-dev" 
+          element={
+            <Download 
+              t={t} 
+              language={language} 
+              theme={theme} 
+            />
+          } 
+        />
+        <Route 
+          path="/map-dev" 
+          element={
+            <HistoricalMap 
+              data={placesData}
+              loading={loading}
+              t={t} 
+              language={language} 
+              theme={theme} 
+            />
+          } 
+        />
+        <Route 
+          path="/scores-dev" 
+          element={
+            <ScoresPage 
+              data={scoresData} 
+              loading={loading} 
+              t={t} 
+              language={language} 
+              theme={theme} 
+            />
+          } 
+        />
+      </Routes>
+    </>
+  );
+}
 
 function App() {
   const [scoresData, setScoresData] = useState([]);
@@ -310,180 +514,23 @@ function App() {
 
   return (
     <Router>
-      <Navbar
+      <AppContent 
+        scoresData={scoresData}
+        budgetData={budgetData}
+        rgphData={rgphData}
+        medicineData={medicineData}
+        supportData={supportData}
+        attendanceData={attendanceData}
+        votingsData={votingsData}
+        placesData={placesData}
+        loading={loading}
+        error={error}
         language={language}
         setLanguage={setLanguage}
         theme={theme}
         setTheme={setTheme}
         t={t}
       />
-
-      <Routes>
-        <Route
-          path="/"
-          element={<Home t={t} language={language} theme={theme} />}
-        />
-        <Route
-          path="/search"
-          element={
-            <SearchPage
-              data={budgetData}
-              loading={loading}
-              t={t}
-              language={language}
-              theme={theme}
-            />
-          }
-        />
-        <Route
-          path="/rgph"
-          element={
-            <RgphPage
-              data={rgphData}
-              loading={loading}
-              t={t}
-              language={language}
-              theme={theme}
-            />
-          }
-        />
-        <Route 
-          path="/insights" 
-          element={
-            <NewInsightsPage 
-              data={budgetData} 
-              t={t} 
-              language={language} 
-              theme={theme} 
-            />
-          } 
-        />
-        <Route 
-          path="/insights2" 
-          element={
-            <RgphInsights 
-              data={rgphData} 
-              t={t} 
-              language={language} 
-              theme={theme} 
-            />
-          } 
-        />
-        <Route 
-          path="/medicines" 
-          element={
-            <MedicinePrices 
-              data={medicineData} 
-              loading={loading} 
-              t={t} 
-              language={language} 
-              theme={theme} 
-            />
-          } 
-        />
-        <Route 
-          path="/support" 
-          element={
-            <SupportGrants 
-              data={supportData} 
-              loading={loading} 
-              t={t} 
-              language={language} 
-              theme={theme} 
-            />
-          } 
-        />
-        <Route 
-          path="/attendance" 
-          element={
-            <Attendance 
-              data={attendanceData} 
-              loading={loading} 
-              t={t} 
-              language={language} 
-              theme={theme} 
-            />
-          } 
-        />
-        <Route 
-          path="/persons-attendance" 
-          element={
-            <PersonsAttendance 
-              data={attendanceData} 
-              loading={loading} 
-              t={t} 
-              language={language} 
-              theme={theme} 
-            />
-          } 
-        />
-        <Route 
-          path="/decisions" 
-          element={
-            <Decisions 
-              data={votingsData} 
-              loading={loading} 
-              t={t} 
-              language={language} 
-              theme={theme} 
-            />
-          } 
-        />
-        <Route 
-          path="/about" 
-          element={
-            <About 
-              t={t} 
-              language={language} 
-              theme={theme} 
-            />
-          } 
-        />
-        <Route 
-          path="/contactUs" 
-          element={
-            <ContactUs 
-              t={t} 
-              language={language} 
-              theme={theme} 
-            />
-          } 
-        />
-        <Route 
-          path="/download" 
-          element={
-            <Download 
-              t={t} 
-              language={language} 
-              theme={theme} 
-            />
-          } 
-        />
-        <Route 
-          path="/map" 
-          element={
-            <HistoricalMap 
-              data={placesData}
-              loading={loading}
-              t={t} 
-              language={language} 
-              theme={theme} 
-            />
-          } 
-        />
-        <Route 
-  path="/scores" 
-  element={
-    <ScoresPage 
-      data={scoresData} 
-      loading={loading} 
-      t={t} 
-      language={language} 
-      theme={theme} 
-    />
-  } 
-/>
-      </Routes>
     </Router>
   );
 }

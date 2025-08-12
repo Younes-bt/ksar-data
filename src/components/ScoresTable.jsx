@@ -131,10 +131,10 @@ export default function ScoresTable({ data, isLoading, t, theme, language }) {
           <span>{match['match__date-formatted']} - {match['match__time-formatted']}</span>
         </div>
         
-        <div className="grid grid-cols-3 items-center gap-2 text-center mb-3">
-          <span className={`font-semibold text-sm truncate ${isCSKHome ? cskClasses : ''}`}>{match['match-slim__team-home-title']}</span>
-          <span className="font-bold text-lg tabular-nums">{match['match-slim__scores-hom']} - {match['match-slim__scores-away']}</span>
-          <span className={`font-semibold text-sm truncate ${!isCSKHome ? cskClasses : ''}`}>{match['match-slim__team-away-title']}</span>
+        <div className="grid grid-cols-1 items-center gap-2 text-center mb-3">
+          <span className={`font-semibold text-sm truncate ${theme === 'dark' ? ' text-white' : ' text-gray-950'}`}>{match['match-slim__team-home-title']}</span>
+          <span className={`font-bold text-lg tabular-nums ${theme === 'dark' ? ' text-white' : ' text-gray-950'}`}>{match['match-slim__scores-hom']} - {match['match-slim__scores-away']}</span>
+          <span className={`font-semibold text-sm truncate ${theme === 'dark' ? ' text-white' : ' text-gray-950'}`}>{match['match-slim__team-away-title']}</span>
         </div>
 
         <div className="flex justify-between items-center">
@@ -217,7 +217,7 @@ export default function ScoresTable({ data, isLoading, t, theme, language }) {
 
       {/* Mobile Card View */}
       <div className="block md:hidden">
-        {isLoading ? Array.from({ length: 5 }).map((_, idx) => <div key={idx} className="p-3 mb-3 rounded-lg border bg-gray-50 dark:bg-gray-900 animate-pulse h-28"></div>) : filteredAndSortedData.length === 0 ? <EmptyState /> : filteredAndSortedData.map((match, idx) => <MobileCard key={idx} match={match} />)}
+        {isLoading ? Array.from({ length: 5 }).map((_, idx) => <div key={idx} className={`p-3 mb-3 rounded-lg border ${theme === 'dark' ? ' text-white' : ' text-gray-950'} animate-pulse h-28`}></div>) : filteredAndSortedData.length === 0 ? <EmptyState /> : filteredAndSortedData.map((match, idx) => <MobileCard key={idx} match={match} />)}
       </div>
 
       {/* Desktop Table View */}
