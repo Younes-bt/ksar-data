@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Select, SelectItem, SelectTrigger, SelectContent, SelectValue } from "@/components/ui/select";
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+// MODIFIED: Import PaginationEllipsis
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious, PaginationEllipsis } from "@/components/ui/pagination";
 import SupportTable from "../components/SupportTable";
 
 // Function to normalize text for search
@@ -12,8 +13,6 @@ const normalizeText = (text) => {
     .trim();
 };
 
-
-
 export default function SupportGrants({ data, loading, t, language, theme }) {
   const [search, setSearch] = useState("");
   const [yearFilter, setYearFilter] = useState("");
@@ -23,6 +22,9 @@ export default function SupportGrants({ data, loading, t, language, theme }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(15);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage, currentPage]);
   // Get unique years from data for filter dropdown
   const getUniqueYears = () => {
     const years = [...new Set(data.map(item => item.السنة))].sort((a, b) => b - a);
@@ -204,26 +206,6 @@ export default function SupportGrants({ data, loading, t, language, theme }) {
         {t?.supportpage?.search_support_data || 'Search Sports Association Support Grants'}
       </h1>
 
-      {/* Statistics Cards 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div className={`p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
-          <h3 className="text-sm font-medium text-gray-500 mb-1">{t?.supportpage?.total_grants || 'Total Grants'}</h3>
-          <p className="text-2xl font-bold text-green-600">{stats.totalGrants} DH</p>
-          <p className="text-xs text-gray-400">{t?.supportpage?.from || 'from'} {stats.totalEntries} {t?.supportpage?.entries || 'entries'}</p>
-        </div>
-        <div className={`p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
-          <h3 className="text-sm font-medium text-gray-500 mb-1">{t?.supportpage?.unique_associations || 'Unique Associations'}</h3>
-          <p className="text-2xl font-bold text-blue-600">{stats.uniqueAssociations}</p>
-          <p className="text-xs text-gray-400">{t?.supportpage?.different_orgs || 'different organizations'}</p>
-        </div>
-        <div className={`p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
-          <h3 className="text-sm font-medium text-gray-500 mb-1">{t?.supportpage?.years_covered || 'Years Covered'}</h3>
-          <p className="text-2xl font-bold text-purple-600">{getUniqueYears().length}</p>
-          <p className="text-xs text-gray-400">2020 - 2024</p>
-        </div>
-      </div>
-      */}
-
       <div className="flex flex-wrap gap-4 z-10">
         <Input
           type="text"
@@ -329,16 +311,18 @@ export default function SupportGrants({ data, loading, t, language, theme }) {
         </div>
       </div>
 
-      {/* Pagination controls */}
+      {/* MODIFIED: Pagination controls */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-4">
         <Pagination className="mb-10">
-          <PaginationContent>
+          <PaginationContent className={language === 'ar' ? 'flex-row-reverse' : ''}>
             <PaginationPrevious
               onClick={() => handlePageChange(currentPage - 1)}
               className={currentPage === 1 ? 'pointer-events-none opacity-50' : ''}
+              label={t?.supportpage?.previous || 'Previous'}
+              dir={language === 'ar' ? 'rtl' : 'ltr'}
             />
             {getPageNumbers().map((page, index) => (
-              <PaginationItem key={index} className="hover:cursor-pointer">
+              <PaginationItem key={index} style={{cursor: 'pointer'}}>
                 {typeof page === "number" ? (
                   <PaginationLink
                     onClick={() => handlePageChange(page)}
@@ -348,18 +332,19 @@ export default function SupportGrants({ data, loading, t, language, theme }) {
                     {page}
                   </PaginationLink>
                 ) : (
-                  <span className="px-2 py-1 text-gray-400">...</span>
+                  <PaginationEllipsis label={t?.supportpage?.more_pages || 'More pages'} />
                 )}
               </PaginationItem>
             ))}
             <PaginationNext
               onClick={() => handlePageChange(currentPage + 1)}
               className={currentPage === totalPages ? 'pointer-events-none opacity-50' : ''}
+              label={t?.supportpage?.next || 'Next'}
+              dir={language === 'ar' ? 'rtl' : 'ltr'}
             />
           </PaginationContent>
         </Pagination>
       </div>
-      
     </div>
   );
 }

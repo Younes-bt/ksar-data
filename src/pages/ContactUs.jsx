@@ -50,7 +50,7 @@ const ContactUsPage = ({
           email: 'البريد الإلكتروني',
           location: 'الموقع',
           locationValue: 'القصر الكبير، المغرب',
-          hours: 'ساعات الاستجابة',
+          hours: 'مدة الاستجابة',
           hoursValue: '24-48 ساعة',
           socialTitle: 'تابعنا',
           socialLinks: [

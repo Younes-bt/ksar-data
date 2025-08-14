@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react"; // MODIFIED: Imported useMemo
 import { Input } from "@/components/ui/input";
 import { Select, SelectItem, SelectTrigger, SelectContent, SelectValue } from "@/components/ui/select";
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious, PaginationEllipsis } from "@/components/ui/pagination";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AttendanceTable from "../components/AttendanceTable";
 import PersonsAttendanceTable from "../components/PersonsAttendanceTable";
@@ -20,10 +20,10 @@ export default function Attendance({ data, loading, t, language, theme }) {
   const [sessionTypeFilter, setSessionTypeFilter] = useState("");
   const [yearFilter, setYearFilter] = useState("");
   const [monthFilter, setMonthFilter] = useState("");
-  const [filteredData, setFilteredData] = useState([]);
-  const [isFiltering, setIsFiltering] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(15);
+  
+  // MODIFIED: Removed isFiltering and filteredData state. They will be replaced by useMemo.
 
   // State for person-based view (PersonsAttendance)
   const [personSearch, setPersonSearch] = useState("");
@@ -36,17 +36,71 @@ export default function Attendance({ data, loading, t, language, theme }) {
   const [sortConfig, setSortConfig] = useState({ 
     key: 'attendancePercentage', 
     direction: 'desc' 
-  }); // Default sort by attendance percentage descending
+  });
 
-  // Flatten sessions data for session-based view
-  const flattenedData = data.flatMap(file => 
-    file.sessions.map(session => ({
-      ...session,
-      file: file.file,
-      year: session.date.split('-')[0],
-      month: session.date.split('-')[1]
-    }))
-  );
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage, personCurrentPage]);
+
+  // MODIFIED: Memoize flattenedData to avoid recalculating on every render
+  const flattenedData = useMemo(() => {
+    return data.flatMap(file =>
+      file.sessions.map(session => ({
+        ...session,
+        file: file.file,
+        year: session.date.split('-')[0],
+        month: session.date.split('-')[1]
+      }))
+    );
+  }, [data]);
+
+  // MODIFIED: Calculate filteredData directly with useMemo
+  const filteredData = useMemo(() => {
+    let temp = flattenedData;
+
+    if (search) {
+      const normalizedSearch = normalizeText(search);
+      temp = temp.filter(session => {
+        const sessionType = normalizeText(session.session_type);
+        const sessionNumber = normalizeText(session.session_number);
+        const date = normalizeText(session.date);
+        const file = normalizeText(session.file);
+
+        return (
+          sessionType?.includes(normalizedSearch) ||
+          sessionNumber?.includes(normalizedSearch) ||
+          date?.includes(normalizedSearch) ||
+          file?.includes(normalizedSearch)
+        );
+      });
+    }
+
+    if (sessionTypeFilter) {
+      temp = temp.filter(session => {
+        if (sessionTypeFilter === "normal") return session.session_type === "عادية";
+        if (sessionTypeFilter === "exceptional") return session.session_type === "استثنائية";
+        return true;
+      });
+    }
+
+    if (yearFilter) {
+      temp = temp.filter(session => session.year === yearFilter);
+    }
+
+    if (monthFilter) {
+      temp = temp.filter(session => session.month === monthFilter);
+    }
+
+    return temp;
+  }, [flattenedData, search, sessionTypeFilter, yearFilter, monthFilter]);
+
+  // MODIFIED: Effect to reset to page 1 when filters change
+  useEffect(() => {
+    if (currentPage !== 1) {
+      setCurrentPage(1);
+    }
+  }, [search, sessionTypeFilter, yearFilter, monthFilter]);
+
 
   // Get unique years and months for session filters
   const getUniqueYears = () => {
@@ -259,58 +313,7 @@ export default function Attendance({ data, loading, t, language, theme }) {
     setPersonCurrentPage(1); // Reset to first page when sorting
   };
 
-  // Effect for session-based filtering
-  useEffect(() => {
-    setIsFiltering(true);
-    
-    const timeoutId = setTimeout(() => {
-      let temp = flattenedData;
-
-      if (search) {
-        const normalizedSearch = normalizeText(search);
-        temp = temp.filter(session => {
-          const sessionType = normalizeText(session.session_type);
-          const sessionNumber = normalizeText(session.session_number);
-          const date = normalizeText(session.date);
-          const file = normalizeText(session.file);
-
-          return (
-            sessionType?.includes(normalizedSearch) ||
-            sessionNumber?.includes(normalizedSearch) ||
-            date?.includes(normalizedSearch) ||
-            file?.includes(normalizedSearch)
-          );
-        });
-      }
-
-      if (sessionTypeFilter) {
-        temp = temp.filter(session => {
-          switch (sessionTypeFilter) {
-            case "normal":
-              return session.session_type === "عادية";
-            case "exceptional":
-              return session.session_type === "استثنائية";
-            default:
-              return true;
-          }
-        });
-      }
-
-      if (yearFilter) {
-        temp = temp.filter(session => session.year === yearFilter);
-      }
-
-      if (monthFilter) {
-        temp = temp.filter(session => session.month === monthFilter);
-      }
-
-      setFilteredData(temp);
-      setIsFiltering(false);
-      setCurrentPage(1);
-    }, 100);
-
-    return () => clearTimeout(timeoutId);
-  }, [search, sessionTypeFilter, yearFilter, monthFilter, data]);
+  // MODIFIED: REMOVED the original useEffect for session filtering
 
   // Effect for person-based filtering and sorting
   useEffect(() => {
@@ -482,7 +485,7 @@ export default function Attendance({ data, loading, t, language, theme }) {
       }
 
       if (rightSibling < totalPersonPages - 1) {
-        if (rightSibling < totalPersonPages - 2) pageNumbers.push("...");
+        if (rightSibling < totalPages - 2) pageNumbers.push("...");
         pageNumbers.push(totalPersonPages);
       } else {
         for (let i = rightSibling + 1; i <= totalPersonPages; i++) pageNumbers.push(i);
@@ -592,23 +595,18 @@ export default function Attendance({ data, loading, t, language, theme }) {
           </div>
 
           <div className="flex items-center justify-between mt-4">
+             {/* MODIFIED: Removed the 'isFiltering' logic and message */}
             <p className="text-sm text-gray-600">
-              {isFiltering ? (
-                <span className="flex items-center gap-2">
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
-                  {t?.attendancepage?.filtering || 'جاري التصفية...'}
-                </span>
-              ) : (
-                `${t?.attendancepage?.showing || 'عرض'} ${paginatedData.length} ${t?.attendancepage?.of || 'من'} ${totalRows} ${t?.attendancepage?.results || 'نتيجة'}${flattenedData.length > 0 ? ` ${t?.attendancepage?.from_total || 'من أصل'} ${flattenedData.length} ${t?.attendancepage?.total || 'إجمالي'}` : ''}`
-              )}
+              {`${t?.attendancepage?.showing || 'عرض'} ${paginatedData.length} ${t?.attendancepage?.of || 'من'} ${totalRows} ${t?.attendancepage?.results || 'نتيجة'}${flattenedData.length > 0 ? ` ${t?.attendancepage?.from_total || 'من أصل'} ${flattenedData.length} ${t?.attendancepage?.total || 'إجمالي'}` : ''}`}
             </p>
           </div>
 
           <p className='text-red-500 text-sm text-center mb-2'>
             {t?.attendancepage?.click_for_details || 'اضغط على الجلسة لعرض التفاصيل'}
           </p>
-
-          <AttendanceTable t={t} data={paginatedData} isLoading={isFiltering} theme={theme} language={language}/>
+           
+           {/* MODIFIED: Pass the top-level 'loading' prop instead of 'isFiltering' */}
+          <AttendanceTable t={t} data={paginatedData} isLoading={loading} theme={theme} language={language}/>
 
           <div className={`mt-4 p-4 text-center rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
             <div className="flex items-center gap-2 text-sm text-gray-600">
@@ -623,13 +621,15 @@ export default function Attendance({ data, loading, t, language, theme }) {
 
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-4">
             <Pagination className="mb-10">
-              <PaginationContent>
+              <PaginationContent className={language === 'ar' ? 'flex-row-reverse' : ''}>
                 <PaginationPrevious
                   onClick={() => handlePageChange(currentPage - 1)}
                   className={currentPage === 1 ? 'pointer-events-none opacity-50' : ''}
+                  label={t?.attendancepage?.previous || 'Previous'}
+                  dir={language === 'ar' ? 'rtl' : 'ltr'}
                 />
                 {getPageNumbers().map((page, index) => (
-                  <PaginationItem key={index} className="hover:cursor-pointer">
+                  <PaginationItem key={index} style={{cursor: 'pointer'}}>
                     {typeof page === "number" ? (
                       <PaginationLink
                         onClick={() => handlePageChange(page)}
@@ -639,13 +639,15 @@ export default function Attendance({ data, loading, t, language, theme }) {
                         {page}
                       </PaginationLink>
                     ) : (
-                      <span className="px-2 py-1 text-gray-400">...</span>
+                      <PaginationEllipsis label={t?.attendancepage?.more_pages || 'More pages'} />
                     )}
                   </PaginationItem>
                 ))}
                 <PaginationNext
                   onClick={() => handlePageChange(currentPage + 1)}
                   className={currentPage === totalPages ? 'pointer-events-none opacity-50' : ''}
+                  label={t?.attendancepage?.next || 'Next'}
+                  dir={language === 'ar' ? 'rtl' : 'ltr'}
                 />
               </PaginationContent>
             </Pagination>
@@ -653,6 +655,7 @@ export default function Attendance({ data, loading, t, language, theme }) {
         </TabsContent>
 
         <TabsContent value="persons">
+          {/* Person-based content remains unchanged */}
           <div className="flex flex-wrap gap-4 z-10">
             <Input
               type="text"
@@ -733,17 +736,17 @@ export default function Attendance({ data, loading, t, language, theme }) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            <div className={`p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+            <div className={`p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-950 border-gray-500' : 'bg-white border-gray-200'}`}>
               <div className="text-2xl font-bold text-blue-600">{processedData.length}</div>
               <div className="text-sm text-gray-500">{t?.personsattendancepage?.total_members || 'إجمالي الأعضاء'}</div>
             </div>
-            <div className={`p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+            <div className={`p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-950 border-gray-500' : 'bg-white border-gray-200'}`}>
               <div className="text-2xl font-bold text-green-600">
                 {processedData.filter(p => parseFloat(p.attendancePercentage) >= 90).length}
               </div>
               <div className="text-sm text-gray-500">{t?.personsattendancepage?.excellent_performers || 'ممتاز (90%+)'}</div>
             </div>
-            <div className={`p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+            <div className={`p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-950 border-gray-500' : 'bg-white border-gray-200'}`}>
               <div className="text-2xl font-bold text-yellow-600">
                 {processedData.filter(p => {
                   const pct = parseFloat(p.attendancePercentage);
@@ -752,7 +755,7 @@ export default function Attendance({ data, loading, t, language, theme }) {
               </div>
               <div className="text-sm text-gray-500">{t?.personsattendancepage?.good_performers || 'جيد (75-89%)'}</div>
             </div>
-            <div className={`p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+            <div className={`p-4 rounded-lg border ${theme === 'dark' ? 'bg-gray-950 border-gray-500' : 'bg-white border-gray-200'}`}>
               <div className="text-2xl font-bold text-red-600">
                 {processedData.filter(p => parseFloat(p.attendancePercentage) < 50).length}
               </div>
@@ -782,13 +785,15 @@ export default function Attendance({ data, loading, t, language, theme }) {
 
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-4">
             <Pagination className="mb-10">
-              <PaginationContent>
+              <PaginationContent className={language === 'ar' ? 'flex-row-reverse' : ''}>
                 <PaginationPrevious
                   onClick={() => handlePersonPageChange(personCurrentPage - 1)}
                   className={personCurrentPage === 1 ? 'pointer-events-none opacity-50' : ''}
+                  label={t?.personsattendancepage?.previous || 'Previous'}
+                  dir={language === 'ar' ? 'rtl' : 'ltr'}
                 />
                 {getPersonPageNumbers().map((page, index) => (
-                  <PaginationItem key={index} className="hover:cursor-pointer">
+                  <PaginationItem key={index} style={{cursor: 'pointer'}}>
                     {typeof page === "number" ? (
                       <PaginationLink
                         onClick={() => handlePersonPageChange(page)}
@@ -798,23 +803,21 @@ export default function Attendance({ data, loading, t, language, theme }) {
                         {page}
                       </PaginationLink>
                     ) : (
-                      <span className="px-2 py-1 text-gray-400">...</span>
+                      <PaginationEllipsis label={t?.personsattendancepage?.more_pages || 'More pages'} />
                     )}
                   </PaginationItem>
                 ))}
                 <PaginationNext
                   onClick={() => handlePersonPageChange(personCurrentPage + 1)}
                   className={personCurrentPage === totalPersonPages ? 'pointer-events-none opacity-50' : ''}
+                  label={t?.personsattendancepage?.next || 'Next'}
+                  dir={language === 'ar' ? 'rtl' : 'ltr'}
                 />
               </PaginationContent>
             </Pagination>
           </div>
         </TabsContent>
       </Tabs>
-      
     </div>
-      
-
-    
   );
 }

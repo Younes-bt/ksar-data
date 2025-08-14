@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Select, SelectItem, SelectTrigger, SelectContent, SelectValue } from "@/components/ui/select";
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+// MODIFIED: Import PaginationEllipsis
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious, PaginationEllipsis } from "@/components/ui/pagination";
 import RGPHTable from "@/components/RGPHTable";
 
 // Function to normalize text (handles Arabic diacritics and encoding)
@@ -12,8 +13,6 @@ const normalizeText = (text) => {
     .toLowerCase()
     .trim();
 };
-
-
 
 export default function RgphPage({ data, loading, t, language, theme }) {
   const [search, setSearch] = useState("");
@@ -203,16 +202,18 @@ export default function RgphPage({ data, loading, t, language, theme }) {
     return pageNumbers;
   };
 
-  // Pagination component
-  const PaginationComponent = ({ currentPage, totalPages, onPageChange, tableId }) => (
+  // MODIFIED: Pagination component updated for i18n
+  const PaginationComponent = ({ currentPage, totalPages, onPageChange, tableId, t, language }) => (
     <Pagination className="mb-10">
-      <PaginationContent>
+      <PaginationContent className={language === 'ar' ? 'flex-row-reverse' : ''}>
         <PaginationPrevious
           onClick={() => onPageChange(currentPage - 1)}
           className={currentPage === 1 ? 'pointer-events-none opacity-50' : ''}
+          label={t?.rgphpage?.previous || 'Previous'}
+          dir={language === 'ar' ? 'rtl' : 'ltr'}
         />
         {getPageNumbers(currentPage, totalPages).map((page, index) => (
-          <PaginationItem key={`${tableId}-${index}`} className="hover:cursor-pointer">
+          <PaginationItem key={`${tableId}-${index}`} style={{cursor: 'pointer'}}>
             {typeof page === "number" ? (
               <PaginationLink
                 onClick={() => onPageChange(page)}
@@ -222,13 +223,15 @@ export default function RgphPage({ data, loading, t, language, theme }) {
                 {page}
               </PaginationLink>
             ) : (
-              <span className="px-2 py-1 text-gray-400">...</span>
+              <PaginationEllipsis label={t?.rgphpage?.more_pages || 'More pages'} />
             )}
           </PaginationItem>
         ))}
         <PaginationNext
           onClick={() => onPageChange(currentPage + 1)}
           className={currentPage === totalPages ? 'pointer-events-none opacity-50' : ''}
+          label={t?.rgphpage?.next || 'Next'}
+          dir={language === 'ar' ? 'rtl' : 'ltr'}
         />
       </PaginationContent>
     </Pagination>
@@ -337,13 +340,15 @@ export default function RgphPage({ data, loading, t, language, theme }) {
 
           <RGPHTable t={t} data={paginatedData1} isLoading={isFiltering} theme={theme} language={language} tableType="part1"/>
 
-          {/* Pagination for table 1 */}
+          {/* MODIFIED: Pagination for table 1 */}
           {totalPages1 > 1 && (
             <PaginationComponent 
               currentPage={currentPage1} 
               totalPages={totalPages1} 
               onPageChange={handlePageChange1}
               tableId="table1"
+              t={t}
+              language={language}
             />
           )}
         </div>
@@ -372,13 +377,15 @@ export default function RgphPage({ data, loading, t, language, theme }) {
 
           <RGPHTable t={t} data={paginatedData2} isLoading={isFiltering} theme={theme} language={language} tableType="part2"/>
 
-          {/* Pagination for table 2 */}
+          {/* MODIFIED: Pagination for table 2 */}
           {totalPages2 > 1 && (
             <PaginationComponent 
               currentPage={currentPage2} 
               totalPages={totalPages2} 
               onPageChange={handlePageChange2}
               tableId="table2"
+              t={t}
+              language={language}
             />
           )}
         </div>

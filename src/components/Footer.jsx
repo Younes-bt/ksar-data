@@ -12,7 +12,9 @@ const Footer = ({ language, theme }) => {
             quickLinks: 'روابط سريعة',
             connectTitle: 'تواصل معنا',
             copyright: 'الإصدار 1.1 | جميع الحقوق محفوظة © 2025',
-            disclaimer: 'إخلاء مسؤولية البيانات', // MODIFICATION 1: Added disclaimer text
+            // MODIFICATION: Added new translation keys
+            privacyPolicy: 'سياسة الخصوصية',
+            termsOfUse: 'شروط الاستخدام',
             links: [
                 { text: 'مستكشف الميزانية', path: '/search', icon: Search },
                 { text: 'بيانات السكان', path: '/rgph', icon: Users },
@@ -31,7 +33,9 @@ const Footer = ({ language, theme }) => {
             quickLinks: 'Quick Links',
             connectTitle: 'Connect With Us',
             copyright: 'Version – v1.1 | All Rights Reserved © 2025',
-            disclaimer: 'Data Disclaimer', // MODIFICATION 1: Added disclaimer text
+            // MODIFICATION: Added new translation keys
+            privacyPolicy: 'Privacy Policy',
+            termsOfUse: 'Terms of Use',
             links: [
                 { text: 'Budget Explorer', path: '/search', icon: Search },
                 { text: 'Population (RGPH)', path: '/rgph', icon: Users },
@@ -50,7 +54,9 @@ const Footer = ({ language, theme }) => {
             quickLinks: 'Liens Rapides',
             connectTitle: 'Contactez-nous',
             copyright: 'Version – v1.1 | Tous droits réservés © 2025',
-            disclaimer: 'Avis sur les données', // MODIFICATION 1: Added disclaimer text
+            // MODIFICATION: Added new translation keys
+            privacyPolicy: 'Politique de confidentialité',
+            termsOfUse: 'Conditions d\'utilisation',
             links: [
                 { text: 'Explorateur de Budget', path: '/search', icon: Search },
                 { text: 'Population (RGPH)', path: '/rgph', icon: Users },
@@ -72,7 +78,6 @@ const Footer = ({ language, theme }) => {
         textSecondary: theme === 'dark' ? 'text-gray-400' : 'text-gray-600',
         borderColor: theme === 'dark' ? 'border-gray-800' : 'border-gray-200',
         linkHover: theme === 'dark' ? 'hover:text-blue-400' : 'hover:text-blue-600',
-        // MODIFICATION 2: Added a specific hover for the subtle link to avoid blue color
         subtleLinkHover: theme === 'dark' ? 'hover:text-gray-200' : 'hover:text-gray-900',
     };
 
@@ -86,7 +91,6 @@ const Footer = ({ language, theme }) => {
                 {/* Top Section: CTA and Links */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-12">
                     {/* ... (This entire section remains unchanged) ... */}
-                    {/* CTA Section */}
                     <div className="lg:col-span-1 hidden md:grid">
                         <h2 className={`text-2xl font-bold mb-3 ${themeClasses.textPrimary}`}>
                             {t.ctaTitle}
@@ -102,7 +106,6 @@ const Footer = ({ language, theme }) => {
                             <ArrowRight className={`w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 ${language === 'ar' ? 'mr-2 rotate-180 group-hover:-translate-x-1' : 'ml-2'}`} />
                         </Link>
                     </div>
-                    {/* Quick Links and Connect Section */}
                     <div className="lg:col-span-2 grid grid-cols-2 md:grid-cols-3 gap-8">
                         <div className="hidden md:block"></div>
                         <div>
@@ -122,7 +125,7 @@ const Footer = ({ language, theme }) => {
                             <h3 className={`font-semibold mb-4 ${themeClasses.textPrimary}`}>{t.connectTitle}</h3>
                             <ul className="space-y-3">
                                 <li>
-                                    <a href="mailto:ksardata@gmail.com" className={`flex items-center text-sm ${themeClasses.textSecondary} ${themeClasses.linkHover} transition-colors`}>
+                                    <a href="/contactUs" className={`flex items-center text-sm ${themeClasses.textSecondary} ${themeClasses.linkHover} transition-colors`}>
                                         <Mail className={`w-4 h-4 flex-shrink-0 ${language === 'ar' ? 'ml-3' : 'mr-3'}`} />
                                         <span>{t.contact.email}</span>
                                     </a>
@@ -149,15 +152,22 @@ const Footer = ({ language, theme }) => {
                     </div>
                 </div>
 
-                {/* MODIFICATION 3: Updated the Bottom Section for Copyright and Disclaimer */}
+                {/* MODIFICATION: Updated the Bottom Section for Copyright and new links */}
                 <div className={`pt-8 border-t ${themeClasses.borderColor} text-center text-sm ${themeClasses.textSecondary}`}>
                     <span>{t.copyright}</span>
                     <span className="mx-2">|</span>
                     <Link
-                        to="/about"
+                        to="/privacy-policy"
                         className={`underline decoration-dotted underline-offset-2 transition-colors ${themeClasses.subtleLinkHover}`}
                     >
-                        {t.disclaimer}
+                        {t.privacyPolicy}
+                    </Link>
+                    <span className="mx-2">|</span>
+                    <Link
+                        to="/terms-of-use"
+                        className={`underline decoration-dotted underline-offset-2 transition-colors ${themeClasses.subtleLinkHover}`}
+                    >
+                        {t.termsOfUse}
                     </Link>
                 </div>
             </div>

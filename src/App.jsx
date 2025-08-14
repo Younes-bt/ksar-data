@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import translations from "./i18n";
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer"; // 1. Import the Footer component
+import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import SearchPage from "./pages/SearchPage";
 import NewInsightsPage from "./pages/NewInsightsPage";
@@ -22,6 +22,9 @@ import ComingSoon from "./pages/ComingSoon";
 import DidYouKnow from "./pages/DidYouKnow";
 import ScrollToTop from './components/ScrollToTop'; 
 import DisclaimerBanner from './components/DisclaimerBanner';
+// MODIFICATION: Import the new page components
+import PrivacyPolicyPage from "./pages/PrivacyPolicy";
+import TermsOfUsePage from "./pages/TermsOfUse";
 
 // Component to handle conditional rendering
 function AppContent({ 
@@ -31,15 +34,13 @@ function AppContent({
 }) {
   const location = useLocation();
   
-  // Define routes where components should be hidden
   const hideNavbarRoutes = ['/soon'];
-  const hideFooterRoutes = ['/soon']; // Hide footer on the same routes
+  const hideFooterRoutes = ['/soon'];
   const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname);
   const shouldHideFooter = hideFooterRoutes.includes(location.pathname);
 
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Conditionally render Navbar */}
       {!shouldHideNavbar && (
         <Navbar
           language={language}
@@ -52,7 +53,7 @@ function AppContent({
 
       <main className="flex-grow">
         <Routes>
-          {/* ... all your Route components ... */}
+          {/* ... other routes remain unchanged ... */}
           <Route
             path="/"
             element={<Home t={t} language={language} theme={theme} />}
@@ -238,16 +239,37 @@ function AppContent({
               />
             } 
           />
+          
+          {/* MODIFICATION: Add new routes for legal pages */}
+          <Route 
+            path="/privacy-policy" 
+            element={
+              <PrivacyPolicyPage 
+                language={language} 
+                theme={theme} 
+              />
+            } 
+          />
+          <Route 
+            path="/terms-of-use" 
+            element={
+              <TermsOfUsePage 
+                language={language} 
+                theme={theme} 
+              />
+            } 
+          />
+
         </Routes>
       </main>
 
-      {/* 2. Conditionally render Footer */}
       {!shouldHideFooter && <Footer language={language} theme={theme} />}
     </div>
   );
 }
 
 function App() {
+  // ... (The rest of the App component remains unchanged) ...
   const [scoresData, setScoresData] = useState([]);
   const [budgetData, setBudgetData] = useState([]);
   const [rgphData, setRGPHData] = useState([]);
@@ -345,5 +367,6 @@ function App() {
     </Router>
   );
 }
+
 
 export default App;

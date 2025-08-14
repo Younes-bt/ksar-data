@@ -1,3 +1,5 @@
+
+
 import * as React from "react"
 import {
   ChevronLeftIcon,
@@ -59,40 +61,50 @@ function PaginationLink({
   );
 }
 
+// MODIFIED: Accepts 'label' and 'dir' props for i18n
 function PaginationPrevious({
   className,
+  label = "Previous",
+  dir = "ltr",
   ...props
 }) {
+  const PrevIcon = dir === 'rtl' ? ChevronRightIcon : ChevronLeftIcon;
   return (
     <PaginationLink
       aria-label="Go to previous page"
       size="default"
       className={cn("gap-1 px-2.5 sm:pl-2.5", className)}
       {...props}>
-      <ChevronLeftIcon />
-      <span className="hidden sm:block">Previous</span>
+      <PrevIcon className="size-4" />
+      <span className="hidden sm:block">{label}</span>
     </PaginationLink>
   );
 }
 
+// MODIFIED: Accepts 'label' and 'dir' props for i18n
 function PaginationNext({
   className,
+  label = "Next",
+  dir = "ltr",
   ...props
 }) {
+  const NextIcon = dir === 'rtl' ? ChevronLeftIcon : ChevronRightIcon;
   return (
     <PaginationLink
       aria-label="Go to next page"
       size="default"
       className={cn("gap-1 px-2.5 sm:pr-2.5", className)}
       {...props}>
-      <span className="hidden sm:block">Next</span>
-      <ChevronRightIcon />
+      <span className="hidden sm:block">{label}</span>
+      <NextIcon className="size-4" />
     </PaginationLink>
   );
 }
 
+// MODIFIED: Accepts 'label' prop for screen reader i18n
 function PaginationEllipsis({
   className,
+  label = "More pages",
   ...props
 }) {
   return (
@@ -102,7 +114,7 @@ function PaginationEllipsis({
       className={cn("flex size-9 items-center justify-center", className)}
       {...props}>
       <MoreHorizontalIcon className="size-4" />
-      <span className="sr-only">More pages</span>
+      <span className="sr-only">{label}</span>
     </span>
   );
 }

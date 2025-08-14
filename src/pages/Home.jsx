@@ -46,20 +46,20 @@ const Home = ({ t, language, theme }) => {
       motionTitle: 'البيانات في حركة',
       motionStats: {
         budget: 'إجمالي ميزانية 2025',
-        population: 'تقدير السكان',
+        population: 'تقدير السكان 2024',
         datasets: 'مجموعات البيانات'
       },
       insightTitle: 'هل تعلم؟',
       insightStat: 'هل تعلم أن المدينة تدفع أكثر من 6,000 درهم يومياً فقط كفوائد على ديونها؟ هذا يعني أكثر من 2 مليون درهم سنوياً.',
       services: [
         { icon: Search, title: 'مستكشف الميزانية', description: 'ابحث في البيانات المالية للمدينة.', link: '/search', color: 'blue' },
-        { icon: Gavel, title: 'القرارات', description: 'تتبع قرارات المجلس البلدي.', link: '/decisions', color: 'amber' },
+        { icon: Gavel, title: 'القرارات', description: 'تتبع قرارات المجلس الجماعي.', link: '/decisions', color: 'amber' },
         { icon: Calendar, title: 'الحضور', description: 'مراقبة حضور أعضاء المجلس.', link: '/attendance', color: 'green' },
         { icon: HeartHandshake, title: 'الدعم', description: 'عرض تفاصيل الدعم المقدم للجمعيات.', link: '/support', color: 'red' }
       ],
       dataGroups: [
         { icon: Users, title: 'بيانات الإحصاء (RGPH)', description: 'استكشف الإحصاءات السكانية والسكنية.', link: '/rgph', color: 'teal' },
-        { icon: BarChart3, title: 'نقاط CSK', description: 'تحليل أداء نقاط CSK.', link: '/scores', color: 'indigo' },
+        { icon: BarChart3, title: 'نقاط النادي الرياضي القصري', description: 'تحليل أداء نقاط النادي الرياضي القصري.', link: '/scores', color: 'indigo' },
         { icon: FileText, title: 'أسعار الأدوية', description: 'قاعدة بيانات أسعار الأدوية.', link: '/medicines', color: 'pink' }
       ],
       informationGroups: [
@@ -85,7 +85,7 @@ const Home = ({ t, language, theme }) => {
       motionTitle: 'Data in Motion',
       motionStats: {
         budget: 'Total 2025 Budget',
-        population: 'Estimated Population',
+        population: 'Estimated Population 2024',
         datasets: 'Datasets Available'
       },
       insightTitle: 'Did You Know?',
@@ -124,7 +124,7 @@ const Home = ({ t, language, theme }) => {
       motionTitle: 'Données en Mouvement',
       motionStats: {
         budget: 'Budget Total 2025',
-        population: 'Population Estimée',
+        population: 'Population Estimée 2024',
         datasets: 'Ensembles de Données'
       },
       insightTitle: 'Le Saviez-Vous ?',
@@ -248,9 +248,9 @@ const Home = ({ t, language, theme }) => {
         <div className="relative flex flex-col justify-center items-center lg:items-start text-center lg:text-center px-8 md:p-16 order-1 lg:order-1">
           <GlobeBackground theme={theme} />
           <div className="relative z-10 w-full max-w-xl">
-            <h1 className={`text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-4 ${themeClasses.textPrimary}`}>
+            <h1 className={`text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-4 leading-18 ${themeClasses.textPrimary}`}>
               {content.welcome}
-              <span className={`block my-5 bg-gradient-to-r ${themeClasses.gradientFrom} ${themeClasses.gradientTo} bg-clip-text text-transparent`}>
+              <span className={`block my-3 bg-gradient-to-r ${themeClasses.gradientFrom} ${themeClasses.gradientTo} bg-clip-text text-transparent`}>
                 <Typewriter
                   words={content.typewriter}
                   loop={false}

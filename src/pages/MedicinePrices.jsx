@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Select, SelectItem, SelectTrigger, SelectContent, SelectValue } from "@/components/ui/select";
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+// MODIFIED: Import PaginationEllipsis
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious, PaginationEllipsis } from "@/components/ui/pagination";
 import MedicineTable from "../components/MedicineTable";
 
 // Function to normalize text for search
@@ -11,8 +12,6 @@ const normalizeText = (text) => {
     .toLowerCase()
     .trim();
 };
-
-
 
 export default function MedicinePrices({ data, loading, t, language, theme }) {
   const [search, setSearch] = useState("");
@@ -199,73 +198,6 @@ export default function MedicinePrices({ data, loading, t, language, theme }) {
           className="w-full sm:w-1/2"
           dir="auto"
         />
-        {/*
-        <Select onValueChange={(v) => setStatusFilter(v === "all" ? "" : v)} defaultValue="all">
-          <SelectTrigger className={`w-full sm:w-1/4 ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
-            <SelectValue placeholder={t?.medicinepage?.filter_by_status || "Filter by Status"} />
-          </SelectTrigger>
-          <SelectContent className={`${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
-            <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="all">
-              {t?.medicinepage?.all_status || 'All Status'}
-            </SelectItem>
-            <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="commercialized">
-              {t?.medicinepage?.commercialized || 'Available'}
-            </SelectItem>
-            <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="not_commercialized">
-              {t?.medicinepage?.not_commercialized || 'Not Available'}
-            </SelectItem>
-          </SelectContent>
-        </Select>
-
-        <Select onValueChange={(v) => setTypeFilter(v === "all" ? "" : v)} defaultValue="all">
-          <SelectTrigger className={`w-full sm:w-1/4 ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
-            <SelectValue placeholder={t?.medicinepage?.filter_by_form || "Filter by Form"} />
-          </SelectTrigger>
-          <SelectContent className={`${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
-            <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="all">
-              {t?.medicinepage?.all_forms || 'All Forms'}
-            </SelectItem>
-            <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="tablet">
-              {t?.medicinepage?.tablet || 'Tablets'}
-            </SelectItem>
-            <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="capsule">
-              {t?.medicinepage?.capsule || 'Capsules'}
-            </SelectItem>
-            <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="injection">
-              {t?.medicinepage?.injection || 'Injections'}
-            </SelectItem>
-            <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="syrup">
-              {t?.medicinepage?.syrup || 'Syrups'}
-            </SelectItem>
-            <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="cream">
-              {t?.medicinepage?.cream || 'Creams'}
-            </SelectItem>
-            <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="drops">
-              {t?.medicinepage?.drops || 'Drops'}
-            </SelectItem>
-          </SelectContent>
-        </Select>
-
-        <Select onValueChange={(v) => setTherapeuticClassFilter(v === "all" ? "" : v)} defaultValue="all">
-          <SelectTrigger className={`w-full sm:w-1/4 ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
-            <SelectValue placeholder={t?.medicinepage?.filter_by_therapeutic_class || "Filter by Class"} />
-          </SelectTrigger>
-          <SelectContent className={`${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
-            <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="all">
-              {t?.medicinepage?.all_classes || 'All Classes'}
-            </SelectItem>
-            {getUniqueTherapeuticClasses().map((classItem) => (
-              <SelectItem 
-                key={classItem} 
-                className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} 
-                value={classItem}
-              >
-                {classItem}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        */}
 
         <Select onValueChange={handleRowsPerPageChange} defaultValue="15">
           <SelectTrigger className={`w-full sm:w-32 ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
@@ -320,16 +252,18 @@ export default function MedicinePrices({ data, loading, t, language, theme }) {
         </div>
       </div>
 
-      {/* Pagination controls */}
+      {/* MODIFIED: Pagination controls */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-4">
         <Pagination className="mb-10">
-          <PaginationContent>
+          <PaginationContent className={language === 'ar' ? 'flex-row-reverse' : ''}>
             <PaginationPrevious
               onClick={() => handlePageChange(currentPage - 1)}
               className={currentPage === 1 ? 'pointer-events-none opacity-50' : ''}
+              label={t?.medicinepage?.previous || 'Previous'}
+              dir={language === 'ar' ? 'rtl' : 'ltr'}
             />
             {getPageNumbers().map((page, index) => (
-              <PaginationItem key={index} className="hover:cursor-pointer">
+              <PaginationItem key={index} style={{cursor: 'pointer'}}>
                 {typeof page === "number" ? (
                   <PaginationLink
                     onClick={() => handlePageChange(page)}
@@ -339,13 +273,15 @@ export default function MedicinePrices({ data, loading, t, language, theme }) {
                     {page}
                   </PaginationLink>
                 ) : (
-                  <span className="px-2 py-1 text-gray-400">...</span>
+                  <PaginationEllipsis label={t?.medicinepage?.more_pages || 'More pages'} />
                 )}
               </PaginationItem>
             ))}
             <PaginationNext
               onClick={() => handlePageChange(currentPage + 1)}
               className={currentPage === totalPages ? 'pointer-events-none opacity-50' : ''}
+              label={t?.medicinepage?.next || 'Next'}
+              dir={language === 'ar' ? 'rtl' : 'ltr'}
             />
           </PaginationContent>
         </Pagination>

@@ -1,7 +1,10 @@
+
+
 import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Select, SelectItem, SelectTrigger, SelectContent, SelectValue } from "@/components/ui/select";
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+// MODIFIED: Import PaginationEllipsis
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious, PaginationEllipsis } from "@/components/ui/pagination";
 import BudgetTable from "@/components/BudgetTable";
 import GlobeBackground from '../components/GlobeBackground';
 
@@ -26,6 +29,12 @@ export default function SearchPage({ data, loading, t, language, theme }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(15);
 
+  
+  useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [currentPage, currentPage]);
+
+    
   const themeClasses = {
     bg: theme === 'dark' ? 'bg-gray-950' : 'bg-gray-50',
     cardBg: theme === 'dark' ? 'bg-gray-900' : 'bg-white',
@@ -37,6 +46,8 @@ export default function SearchPage({ data, loading, t, language, theme }) {
     gradientTo: theme === 'dark' ? 'to-purple-600' : 'to-purple-500'
   };
 
+
+  
   useEffect(() => {
     setIsFiltering(true);
     
@@ -252,39 +263,41 @@ export default function SearchPage({ data, loading, t, language, theme }) {
         </div>
       </div>
 
-      {/* Pagination controls */}
+      {/* MODIFIED: Pagination controls now support i18n and RTL */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-4">
         <Pagination className="mb-10">
-          <PaginationContent>
+          <PaginationContent className={language === 'ar' ? 'flex-row-reverse' : ''}>
             <PaginationPrevious
               onClick={() => handlePageChange(currentPage - 1)}
               className={currentPage === 1 ? 'pointer-events-none opacity-50' : ''}
+              label={t?.searchpage?.previous || 'Previous'}
+              dir={language === 'ar' ? 'rtl' : 'ltr'}
             />
             {getPageNumbers().map((page, index) => (
-              <PaginationItem key={index} className="hover:cursor-pointer">
+              <PaginationItem key={index}>
                 {typeof page === "number" ? (
                   <PaginationLink
                     onClick={() => handlePageChange(page)}
                     isActive={currentPage === page}
                     className={currentPage === page ? 'bg-blue-600 text-white' : ''}
+                    style={{cursor: 'pointer'}}
                   >
                     {page}
                   </PaginationLink>
                 ) : (
-                  <span className="px-2 py-1 text-gray-400">...</span>
+                  <PaginationEllipsis label={t?.searchpage?.more_pages || 'More pages'} />
                 )}
               </PaginationItem>
             ))}
             <PaginationNext
               onClick={() => handlePageChange(currentPage + 1)}
               className={currentPage === totalPages ? 'pointer-events-none opacity-50' : ''}
+              label={t?.searchpage?.next || 'Next'}
+              dir={language === 'ar' ? 'rtl' : 'ltr'}
             />
           </PaginationContent>
         </Pagination>
-
-        
       </div>
-     
     </div>
   );
 }

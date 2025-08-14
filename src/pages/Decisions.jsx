@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Select, SelectItem, SelectTrigger, SelectContent, SelectValue } from "@/components/ui/select";
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+// MODIFIED: Import PaginationEllipsis
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious, PaginationEllipsis } from "@/components/ui/pagination";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DecisionsTable from "../components/DecisionsTable";
 import MembersVotingTable from "../components/MembersVotingTable";
@@ -34,6 +35,11 @@ export default function Decisions({ data, loading, t, language, theme }) {
   const [memberCurrentPage, setMemberCurrentPage] = useState(1);
   const [memberRowsPerPage, setMemberRowsPerPage] = useState(15);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage, memberCurrentPage]);
+  
+
   // Helper function to extract year and month from new date format
   const extractDateComponents = (dateString) => {
     if (dateString.includes('-')) {
@@ -54,6 +60,7 @@ export default function Decisions({ data, loading, t, language, theme }) {
     return { year: '', month: '' };
   };
 
+  
   // Process data for decisions view (flatten decisions)
   const flattenedData = data.map(decision => {
     const { year, month } = extractDateComponents(decision.date);
@@ -500,15 +507,18 @@ const processMemberVotingData = () => {
         </div>
       </div>
 
+          {/* MODIFIED: Pagination for decisions */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-4">
             <Pagination className="mb-10">
-              <PaginationContent>
+              <PaginationContent className={language === 'ar' ? 'flex-row-reverse' : ''}>
                 <PaginationPrevious
                   onClick={() => handlePageChange(currentPage - 1)}
                   className={currentPage === 1 ? 'pointer-events-none opacity-50' : ''}
+                  label={t?.decisionspage?.previous || 'Previous'}
+                  dir={language === 'ar' ? 'rtl' : 'ltr'}
                 />
                 {getPageNumbers().map((page, index) => (
-                  <PaginationItem key={index} className="hover:cursor-pointer">
+                  <PaginationItem key={index} style={{cursor: 'pointer'}}>
                     {typeof page === "number" ? (
                       <PaginationLink
                         onClick={() => handlePageChange(page)}
@@ -518,13 +528,15 @@ const processMemberVotingData = () => {
                         {page}
                       </PaginationLink>
                     ) : (
-                      <span className="px-2 py-1 text-gray-400">...</span>
+                      <PaginationEllipsis label={t?.decisionspage?.more_pages || 'More pages'} />
                     )}
                   </PaginationItem>
                 ))}
                 <PaginationNext
                   onClick={() => handlePageChange(currentPage + 1)}
                   className={currentPage === totalPages ? 'pointer-events-none opacity-50' : ''}
+                  label={t?.decisionspage?.next || 'Next'}
+                  dir={language === 'ar' ? 'rtl' : 'ltr'}
                 />
               </PaginationContent>
             </Pagination>
@@ -602,15 +614,18 @@ const processMemberVotingData = () => {
           </div>
         </div>
       </div>
+          {/* MODIFIED: Pagination for members */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-4">
             <Pagination className="mb-10">
-              <PaginationContent>
+              <PaginationContent className={language === 'ar' ? 'flex-row-reverse' : ''}>
                 <PaginationPrevious
                   onClick={() => handleMemberPageChange(memberCurrentPage - 1)}
                   className={memberCurrentPage === 1 ? 'pointer-events-none opacity-50' : ''}
+                  label={t?.membersvotingpage?.previous || 'Previous'}
+                  dir={language === 'ar' ? 'rtl' : 'ltr'}
                 />
                 {getMemberPageNumbers().map((page, index) => (
-                  <PaginationItem key={index} className="hover:cursor-pointer">
+                  <PaginationItem key={index} style={{cursor: 'pointer'}}>
                     {typeof page === "number" ? (
                       <PaginationLink
                         onClick={() => handleMemberPageChange(page)}
@@ -620,21 +635,21 @@ const processMemberVotingData = () => {
                         {page}
                       </PaginationLink>
                     ) : (
-                      <span className="px-2 py-1 text-gray-400">...</span>
+                      <PaginationEllipsis label={t?.membersvotingpage?.more_pages || 'More pages'} />
                     )}
                   </PaginationItem>
                 ))}
                 <PaginationNext
                   onClick={() => handleMemberPageChange(memberCurrentPage + 1)}
                   className={memberCurrentPage === totalMemberPages ? 'pointer-events-none opacity-50' : ''}
+                  label={t?.membersvotingpage?.next || 'Next'}
+                  dir={language === 'ar' ? 'rtl' : 'ltr'}
                 />
               </PaginationContent>
             </Pagination>
           </div>
         </TabsContent>
       </Tabs>
-      {/* FOOTER CTA */}
-      
     </div>
   );
 }

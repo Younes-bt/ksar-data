@@ -80,17 +80,40 @@ export default function RGPHTable({ data, isLoading, t, theme, language, tableTy
                 </div>
             ) : (
                 <div className="grid grid-cols-3 gap-2 text-center">
-                    <div className={`p-2 ${blockStyle}`}>
-                        <div className="text-lg font-bold text-blue-600 dark:text-blue-400">{formatNumber(row.Masculin)}</div>
-                        <div className="text-xs text-gray-600 dark:text-gray-400">{formatNumber(row['Masculin (%)'])}{row['Masculin (%)'] ? '%' : ''}</div>
+                    {/* Masculin Block */}
+                    <div className={`p-2 ${blockStyle} flex flex-col justify-center min-h-[4.5rem]`}>
+                        {row.Masculin != null ? (
+                            <>
+                                <div className="text-lg font-bold text-blue-600 dark:text-blue-400">{formatNumber(row.Masculin)}</div>
+                                <div className="text-xs text-gray-600 dark:text-gray-400">{formatNumber(row['Masculin (%)'])}{row['Masculin (%)'] != null ? '%' : ''}</div>
+                            </>
+                        ) : (
+                            <div className="text-lg font-bold text-blue-600 dark:text-blue-400">{formatNumber(row['Masculin (%)'])}{row['Masculin (%)'] != null ? '%' : ''}</div>
+                        )}
                     </div>
-                    <div className={`p-2 ${blockStyle}`}>
-                        <div className="text-lg font-bold text-pink-600 dark:text-pink-400">{formatNumber(row.Féminin)}</div>
-                        <div className="text-xs text-gray-600 dark:text-gray-400">{formatNumber(row['Féminin (%)'])}{row['Féminin (%)'] ? '%' : ''}</div>
+
+                    {/* Féminin Block */}
+                    <div className={`p-2 ${blockStyle} flex flex-col justify-center min-h-[4.5rem]`}>
+                        {row.Féminin != null ? (
+                            <>
+                                <div className="text-lg font-bold text-pink-600 dark:text-pink-400">{formatNumber(row.Féminin)}</div>
+                                <div className="text-xs text-gray-600 dark:text-gray-400">{formatNumber(row['Féminin (%)'])}{row['Féminin (%)'] != null ? '%' : ''}</div>
+                            </>
+                        ) : (
+                            <div className="text-lg font-bold text-pink-600 dark:text-pink-400">{formatNumber(row['Féminin (%)'])}{row['Féminin (%)'] != null ? '%' : ''}</div>
+                        )}
                     </div>
-                    <div className={`p-2 ${blockStyle}`}>
-                        <div className="text-lg font-bold text-green-600 dark:text-green-400">{formatNumber(row.Ensemble)}</div>
-                        <div className="text-xs text-gray-600 dark:text-gray-400">{formatNumber(row['Ensemble (%)'])}{row['Ensemble (%)'] ? '%' : ''}</div>
+
+                    {/* Ensemble Block */}
+                    <div className={`p-2 ${blockStyle} flex flex-col justify-center min-h-[4.5rem]`}>
+                        {row.Ensemble != null ? (
+                            <>
+                                <div className="text-lg font-bold text-green-600 dark:text-green-400">{formatNumber(row.Ensemble)}</div>
+                                <div className="text-xs text-gray-600 dark:text-gray-400">{formatNumber(row['Ensemble (%)'])}{row['Ensemble (%)'] != null ? '%' : ''}</div>
+                            </>
+                        ) : (
+                            <div className="text-lg font-bold text-green-600 dark:text-green-400">{formatNumber(row['Ensemble (%)'])}{row['Ensemble (%)'] != null ? '%' : ''}</div>
+                        )}
                     </div>
                 </div>
             )}

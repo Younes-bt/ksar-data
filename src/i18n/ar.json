@@ -70,7 +70,9 @@
     "facts": "هل تعلم؟",
     "data":"بيانات عامة",
     "information":"البيانات في أسئلة",
-    "aboutUs" : "عن الموقع"
+    "aboutUs" : "عن الموقع",
+    "terms":"شروط الاستخدام",
+    "privacy": "سياسة الخصوصية"
 
   },
   "searchpage": {
@@ -92,9 +94,15 @@
     "total": "إجمالي",
     "no_sort": "بدون ترتيب",
     "highest_first": "من الأكثر للأقل",
-    "lowest_first": "من الأقل للأكثر"
+    "lowest_first": "من الأقل للأكثر",
+    "previous": "السابق",
+    "next": "التالي",
+    "more_pages": "المزيد من الصفحات"
   }, 
   "medicinepage": {
+    "previous": "السابق",
+    "next": "التالي",
+    "more_pages": "المزيد من الصفحات",
       "search_medicine_data": "البحث في أسعار الأدوية",
       "search_input_placeholder": "البحث بواسطة اسم الدواء أو الجرعة أو الشكل أو الفئة العلاجية",
       "medicine_name": "اسم الدواء",
@@ -132,6 +140,9 @@
       "last_update": "آخر تحديث"
     },
   "supportpage": {
+    "previous": "السابق",
+    "next": "التالي",
+    "more_pages": "المزيد من الصفحات",
       "search_support_data": "البحث في منح دعم الجمعيات الرياضية",
       "year": "السنة",
       "association_name": "اسم الجمعية",
@@ -217,6 +228,33 @@
     "no_data_description": "ستظهر نتائج المباريات هنا عند تحميل البيانات.",
     "home_team": "المستضيف",
     "away_team": "الضيف"
+  },
+
+  "rgphpage" : { 
+    "previous": "السابق",
+    "next": "التالي",
+    "more_pages": "المزيد من الصفحات"
+  },
+
+  "personsattendancepage": { 
+    "previous": "السابق",
+    "next": "التالي",
+    "more_pages": "المزيد من الصفحات"
+  },
+  "attendancepage": { 
+    "previous": "السابق",
+    "next": "التالي",
+    "more_pages": "المزيد من الصفحات"
+  },
+  "membersvotingpage": { 
+    "previous": "السابق",
+    "next": "التالي",
+    "more_pages": "المزيد من الصفحات"
+  },
+  "decisionspage": { 
+    "previous": "السابق",
+    "next": "التالي",
+    "more_pages": "المزيد من الصفحات"
   }
 
 
