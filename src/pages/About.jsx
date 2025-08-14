@@ -27,16 +27,20 @@ const AboutUsPage = ({
     switch (language) {
       case 'ar':
         return {
-          heroTitle: 'عن مشروع KSAR-DATA',
+          heroTitle: 'عن مشروع KSAR DATA',
           heroMission: 'مبادرة محلية لجعل البيانات العامة لمدينة القصر الكبير مفتوحة، مرئية، وسهلة الفهم.',
           why: {
             title: 'لماذا أنشأنا هذا المشروع؟',
-            description: 'البيانات العمومية لمدينتنا متوفرة… لكن الوصول إليها صعب، وتصفحها ممل، وغالبًا ما تُعرض في ملفات PDF إدارية معقدة. وُلد Ksar-Data من الحاجة لفهم ميزانية المدينة، ثم تحول لمبادرة مفتوحة نحو مجتمع أكثر وعيًا واطلاعًا.',
+            description: 'البيانات العمومية لمدينتنا متوفرة… لكن الوصول إليها صعب، وتصفحها ممل، وغالبًا ما تُعرض في ملفات PDF إدارية معقدة. وُلد KSAR DATA من الحاجة لفهم ميزانية المدينة، ثم تحول لمبادرة مفتوحة نحو مجتمع أكثر وعيًا واطلاعًا.',
             points: [
               'لا علاقة للموقع بأي جهة سياسية',
               'المشروع غير ربحي وممول ذاتيًا بالكامل',
               'الهدف الوحيد هو التوعية وخدمة المجتمع'
-            ]
+            ],
+            integrity: {
+              title: 'التزامنا بالدقة',
+              text: 'هذا المشروع ثمرة جهد شخصي، وقد حرصنا على مراجعة البيانات بعناية لضمان دقتها. يتم جمع المعلومات من الوثائق الرسمية عبر مزيج من الأدوات البرمجية والمراجعة اليدوية. ورغم هذه الدقة، تظل هناك – ولو بنسبة ضئيلة – إمكانية لحدوث خطأ غير مقصود. في حال لاحظت أي ملاحظة أو تناقض، فإن إسهامك في تصحيحه سيكون محل تقدير كبير. نرجو منك التواصل معنا لذلك.'
+            },
           },
           what: {
             title: 'ماذا ستجد في المنصة؟',
@@ -47,19 +51,21 @@ const AboutUsPage = ({
               { icon: Brain, title: 'هل تعلم؟', description: 'حقائق محلية مدهشة مستقاة من الإحصائيات الرسمية.' }
             ]
           },
+          // MODIFICATION START: Detailed steps for "How We Built It"
           how: {
             title: 'كيف بنينا المشروع؟',
             steps: [
-              { icon: Search, title: 'البحث وجمع البيانات', description: 'تحديد وتجميع المصادر الرسمية الموثوقة للبيانات (ملفات PDF).' },
-              { icon: Database, title: 'الاستخلاص والمعالجة', description: 'استخدام Python (PyPDF2, Pandas) لاستخراج وتنظيف وتحويل البيانات إلى صيغ منظمة (CSV, JSON).' },
-              { icon: GitBranch, title: 'التحليل والتجهيز', description: 'معالجة وتحليل متقدم للبيانات لضمان دقتها وتوافقها مع هيكل المشروع.' },
-              { icon: Paintbrush, title: 'التصميم والتطوير', description: 'بناء واجهة مستخدم عصرية وسهلة الاستخدام باستخدام React وTailwindCSS.' }
+              { icon: Search, title: 'البحث وجمع البيانات', description: 'نبحث بشكل منهجي عن الوثائق العمومية الرسمية ونقوم بأرشفتها، مثل تقارير الميزانية الجماعية، ونتائج الإحصاء العام للسكان والسكنى، وغيرها من المنشورات الإحصائية. الهدف هو بناء أساس موثوق من المواد المصدرية الأولية.' },
+              { icon: Database, title: 'الاستخلاص والمعالجة', description: 'غالباً ما تكون البيانات الأولية حبيسة جداول داخل ملفات PDF. نستخدم سكريبتات بايثون (مع مكتبات مثل PyPDF2 و Pandas) لاستخراج هذه المعلومات برمجياً. بعد ذلك، يتم تنظيف البيانات وتوحيدها وتحويلها إلى صيغ مهيكلة مثل CSV و JSON، مما يجعلها قابلة للقراءة آلياً.' },
+              { icon: GitBranch, title: 'التحليل والتجهيز', description: 'هذه مرحلة حاسمة حيث نتحقق من سلامة البيانات، ونعالج القيم المفقودة، ونعيد هيكلتها لتكون جاهزة للعرض البصري. نقوم بإجراء العمليات الحسابية، وإنشاء روابط بين مجموعات البيانات المختلفة، وتجهيزها لتطبيق الواجهة الأمامية.' },
+              { icon: Paintbrush, title: 'التصميم والتطوير', description: 'تتمثل الخطوة الأخيرة في جعل البيانات متاحة وجذابة. نصمم ونبني واجهة مستخدم تفاعلية باستخدام تقنيات الويب الحديثة مثل React و TailwindCSS. الهدف هو تحويل الجداول المعقدة إلى رسوم بيانية واضحة ولوحات تحكم سهلة الفهم للجميع.' }
             ],
             tech: 'Open Source • React • TailwindCSS • ShadCN • Recharts • Pandas • Python'
           },
+          // MODIFICATION END
           team: {
             title: 'من وراء المشروع؟',
-            description: 'KSAR-DATA هو مشروع من إنجاز يونس البتات، مطور برامج. تم بناؤه كجزء من جهد لرد الجميل للمجتمع، وتعزيز الشفافية، وتشجيع المشاركة المدنية.',
+            description: 'KSAR DATA هو مشروع من إنجاز يونس البتات، مطور برامج. تم بناؤه كجزء من جهد لرد الجميل للمجتمع، وتعزيز الشفافية، وتشجيع المشاركة المدنية.',
             quote: 'هذه مجرد البداية. نؤمن بقوة المعلومات المتاحة. إذا ساعد هذا المشروع طالبًا واحدًا أو مواطنًا على فهم مدينته بشكل أفضل - فإن الأمر يستحق ذلك.'
           },
           contact: {
@@ -68,21 +74,24 @@ const AboutUsPage = ({
             email: 'راسلنا عبر البريد الإلكتروني',
             social: 'تواصل معنا على فيسبوك'
           },
-          footer: 'نسخة تجريبية – الإصدار 1.1.7 | جميع الحقوق محفوظة © 2025'
         };
 
       case 'en':
         return {
-          heroTitle: 'About KSAR-DATA',
+          heroTitle: 'About KSAR DATA',
           heroMission: 'A local initiative to make the public data of Ksar El Kebir open, visible, and easy to understand.',
           why: {
             title: 'Why We Built This',
-            description: 'Public data about our city exists, but it\'s hard to access and often buried in complex PDF files. Ksar-Data was born from a need to understand the city budget and grew into an open initiative for a more informed community.',
+            description: 'Public data about our city exists, but it\'s hard to access and often buried in complex PDF files. KSAR DATA was born from a need to understand the city budget and grew into an open initiative for a more informed community.',
             points: [
               'No affiliation with any political party',
               'Non-profit and entirely self-funded',
               'Solely for community awareness and service'
-            ]
+            ],
+             integrity: {
+              title: 'Our Commitment to Accuracy',
+              text: 'This project is the fruit of a personal effort, and we have carefully reviewed the data to ensure its accuracy. Information is collected from official documents through a mix of software tools and manual verification. Despite this diligence, a small possibility of unintentional error remains. Should you notice any discrepancy, your contribution in correcting it would be greatly appreciated. We kindly ask you to contact us.'
+            }
           },
           what: {
             title: 'What You\'ll Find Inside',
@@ -93,19 +102,21 @@ const AboutUsPage = ({
               { icon: Brain, title: 'Did You Know?', description: 'Discover surprising local facts from official statistics.' }
             ]
           },
+          // MODIFICATION START: Detailed steps for "How We Built It"
           how: {
             title: 'How We Built It',
             steps: [
-              { icon: Search, title: 'Research & Data Collection', description: 'Identifying and gathering official, reliable data sources (PDFs).' },
-              { icon: Database, title: 'Extraction & Processing', description: 'Using Python (PyPDF2, Pandas) to extract, clean, and format data (CSV, JSON).' },
-              { icon: GitBranch, title: 'Analysis & Preparation', description: 'Advanced data processing and analysis to ensure accuracy and consistency.' },
-              { icon: Paintbrush, title: 'Design & Development', description: 'Building a modern, user-friendly interface with React and TailwindCSS.' }
+              { icon: Search, title: 'Research & Data Collection', description: 'We systematically search for and archive official public documents, such as municipal budget reports, national census results, and other statistical publications. The goal is to build a reliable foundation of primary source material.' },
+              { icon: Database, title: 'Extraction & Processing', description: 'Raw data is often locked in PDF tables. We use Python scripts (with libraries like PyPDF2 and Pandas) to programmatically extract this information. The data is then cleaned, standardized, and converted into structured formats like CSV and JSON, making it machine-readable.' },
+              { icon: GitBranch, title: 'Analysis & Preparation', description: 'This is a critical stage where we verify the data\'s integrity, handle missing values, and structure it for visualization. We perform calculations, establish relationships between different datasets, and prepare it for the front-end application.' },
+              { icon: Paintbrush, title: 'Design & Development', description: 'The final step is to make the data accessible and engaging. We design and build an interactive user interface using modern web technologies like React and TailwindCSS, transforming complex tables into clear charts and intuitive dashboards.' }
             ],
             tech: 'Open Source • React • TailwindCSS • ShadCN • Recharts • Pandas • Python'
           },
+          // MODIFICATION END
           team: {
             title: 'Who Is Behind This?',
-            description: 'KSAR-DATA is a project by Younes Bettate, a software developer. It was built to give back to the community, promote transparency, and encourage civic engagement.',
+            description: 'KSAR DATA is a project by El Bettate, a software developer. It was built to give back to the community, promote transparency, and encourage civic engagement.',
             quote: 'This is just the beginning. We believe in the power of accessible information. If this helps even one student or citizen better understand their city—it’s worth it.'
           },
           contact: {
@@ -114,21 +125,24 @@ const AboutUsPage = ({
             email: 'Contact us via Email',
             social: 'Connect on Facebook'
           },
-          footer: 'Beta Version – v1.1.7 | All Rights Reserved © 2025'
         };
 
       default: // French
         return {
-          heroTitle: 'À propos de KSAR-DATA',
+          heroTitle: 'À propos de KSAR DATA',
           heroMission: 'Une initiative locale pour rendre les données publiques de Ksar El Kebir ouvertes, visibles et faciles à comprendre.',
           why: {
             title: 'Pourquoi ce projet ?',
-            description: 'Les données publiques de notre ville existent, mais elles sont difficiles d\'accès et souvent cachées dans des fichiers PDF complexes. Ksar-Data est né du besoin de comprendre le budget municipal et a évolué en une initiative ouverte pour une communauté mieux informée.',
+            description: 'Les données publiques de notre ville existent, mais elles sont difficiles d\'accès et souvent cachées dans des fichiers PDF complexes. KSAR DATA est né du besoin de comprendre le budget municipal et a évolué en une initiative ouverte pour une communauté mieux informée.',
             points: [
               'Aucune affiliation politique',
               'Projet à but non lucratif et entièrement autofinancé',
               'Uniquement pour la sensibilisation et le service communautaire'
-            ]
+            ],
+            integrity: {
+              title: 'Notre engagement envers l\'exactitude',
+              text: 'Ce projet est le fruit d\'un effort personnel et nous avons soigneusement examiné les données pour en garantir l\'exactitude. Les informations sont collectées à partir de documents officiels grâce à une combinaison d\'outils logiciels et de vérifications manuelles. Malgré cette rigueur, une faible possibilité d\'erreur involontaire subsiste. Si vous remarquez une anomalie, votre contribution à sa correction serait grandement appréciée. Nous vous invitons à nous contacter.'
+            }
           },
           what: {
             title: 'Ce que vous y trouverez',
@@ -139,19 +153,21 @@ const AboutUsPage = ({
               { icon: Brain, title: 'Le saviez-vous ?', description: 'Découvrez des faits locaux surprenants issus de statistiques officielles.' }
             ]
           },
+          // MODIFICATION START: Detailed steps for "How We Built It"
           how: {
             title: 'Comment l\'avons-nous construit ?',
             steps: [
-              { icon: Search, title: 'Recherche et collecte', description: 'Identification et collecte de sources de données officielles (PDF).' },
-              { icon: Database, title: 'Extraction et traitement', description: 'Utilisation de Python (PyPDF2, Pandas) pour extraire, nettoyer et formater les données.' },
-              { icon: GitBranch, title: 'Analyse et préparation', description: 'Traitement et analyse avancés des données pour garantir leur exactitude.' },
-              { icon: Paintbrush, title: 'Conception et développement', description: 'Création d\'une interface moderne avec React et TailwindCSS.' }
+              { icon: Search, title: 'Recherche et collecte', description: 'Nous recherchons et archivons systématiquement les documents publics officiels, comme les rapports budgétaires et les résultats de recensement. L\'objectif est de construire une base fiable de sources primaires.' },
+              { icon: Database, title: 'Extraction et traitement', description: 'Les données brutes sont souvent verrouillées dans des tableaux PDF. Nous utilisons des scripts Python (PyPDF2, Pandas) pour extraire ces informations. Les données sont ensuite nettoyées, standardisées et converties en formats structurés (CSV, JSON).' },
+              { icon: GitBranch, title: 'Analyse et préparation', description: 'C\'est une étape critique où nous vérifions l\'intégrité des données, gérons les valeurs manquantes et les structurons pour la visualisation. Nous effectuons des calculs, établissons des liens entre les données et les préparons pour l\'application.' },
+              { icon: Paintbrush, title: 'Conception et développement', description: 'L\'étape finale est de rendre les données accessibles et engageantes. Nous concevons une interface utilisateur interactive avec React et TailwindCSS pour transformer les tableaux complexes en graphiques et tableaux de bord intuitifs.' }
             ],
             tech: 'Open Source • React • TailwindCSS • ShadCN • Recharts • Pandas • Python'
           },
+          // MODIFICATION END
           team: {
             title: 'Qui est derrière ce projet ?',
-            description: 'KSAR-DATA est un projet de Younes Bettate, un développeur de logiciels. Il a été créé pour redonner à la communauté, promouvoir la transparence et encourager l\'engagement civique.',
+            description: 'KSAR DATA est un projet de Younes El Bettate, un développeur. Il a été créé pour redonner à la communauté, promouvoir la transparence et encourager l\'engagement civique.',
             quote: 'Ce n\'est que le début. Nous croyons au pouvoir de l\'information accessible. Si cela aide ne serait-ce qu\'un étudiant à mieux comprendre sa ville, cela en vaut la peine.'
           },
           contact: {
@@ -160,7 +176,6 @@ const AboutUsPage = ({
             email: 'Contactez-nous par e-mail',
             social: 'Connectez-vous sur Facebook'
           },
-          footer: 'Version d’essai – v1.1.7 | Tous droits réservés © 2025'
         };
     }
   };
@@ -220,6 +235,12 @@ const AboutUsPage = ({
               </ul>
             </div>
           </div>
+          <div className={`mt-6 p-4 rounded-lg border ${themeClasses.borderColor} bg-black/5 dark:bg-white/5`}>
+          <h4 className={`font-semibold mb-2 ${themeClasses.textPrimary}`}>{t.why.integrity.title}</h4>
+          <p className={`text-sm ${themeClasses.textSecondary}`}>
+            {t.why.integrity.text}
+          </p>
+      </div>
         </section>
 
         {/* Section: What You'll Find */}
@@ -290,9 +311,9 @@ const AboutUsPage = ({
                 {t.contact.description}
               </p>
               <div className="space-y-4">
-                <a href="mailto:bt.younesse@gmail.com" className={`flex items-center p-4 rounded-lg border ${themeClasses.borderColor} ${themeClasses.cardBg} hover:border-blue-500 transition-colors`}>
+                <a href="mailto:ksardata@gmail.com" className={`flex items-center p-4 rounded-lg border ${themeClasses.borderColor} ${themeClasses.cardBg} hover:border-blue-500 transition-colors`}>
                   <Mail className={`w-6 h-6 ${themeClasses.textAccent} ${language === 'ar' ? 'ml-4' : 'mr-4'}`} />
-                  <span className={themeClasses.textPrimary}>{t.contact.email} : bt.younesse@gmail.com</span>
+                  <span className={themeClasses.textPrimary}>{t.contact.email} : ksardata@gmail.com</span>
                 </a>
                 <a href="https://www.facebook.com/profile.php?id=61578979396224" target="_blank" rel="noopener noreferrer" className={`flex items-center p-4 rounded-lg border ${themeClasses.borderColor} ${themeClasses.cardBg} hover:border-blue-500 transition-colors`}>
                   <MessageCircle className={`w-6 h-6 ${themeClasses.textAccent} ${language === 'ar' ? 'ml-4' : 'mr-4'}`} />
@@ -305,15 +326,7 @@ const AboutUsPage = ({
 
       </main>
 
-      {/* Footer */}
-      <footer className="py-8 border-t" style={{ borderColor: themeClasses.borderColor }}>
-        <div className="container mx-auto px-6 text-center">
-          <div className={`inline-flex items-center px-4 py-2 rounded-full border text-sm ${themeClasses.borderColor} ${themeClasses.textSecondary} ${themeClasses.cardBg}`}>
-            
-            <span>{t.footer}</span>
-          </div>
-        </div>
-      </footer>
+      
     </div>
   );
 };

@@ -620,15 +620,7 @@ const DidYouKnowPage = ({ language = 'en', theme = 'dark' }) => {
         </div>
       </div>
       
-      {/* Footer */}
-      <footer className={`py-8 border-t ${themeClasses.borderColor}`}>
-        <div className="container mx-auto px-6 text-center">
-          <div className={`inline-flex items-center px-4 py-2 rounded-full border text-sm ${themeClasses.borderColor} ${themeClasses.textSecondary} ${themeClasses.cardBg}`}>
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-3"></div>
-            <span>{content.footer}</span>
-          </div>
-        </div>
-      </footer>
+      
     </div>
   );
 };

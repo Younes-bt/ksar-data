@@ -8,7 +8,7 @@ const DownloadPage = ({ language = 'en', theme = 'dark' }) => {
     ar: {
       // --- TEXT RESTORED ---
       title: 'تحميل البيانات',
-      description: 'إيمانًا منّا بفلسفة البيانات المفتوحة وأهميتها في دعم البحث العلمي وتعزيز الشفافية، وحرصًا على تمكين الطلبة والباحثين والمهتمين من سهولة الوصول إلى البيانات المتعلقة بمدينة القصر الكبير، قمنا في مشروع KSAR-DATA بجمع ومعالجة وتنظيم هذه البيانات بعناية وفق منهجية دقيقة تضمن أعلى مستويات الجودة والمصداقية.وانطلاقًا من إيماننا بأن البيانات هي أساس التحليل العلمي وصنع القرار، فقد قمنا بإتاحة هذه البيانات بصيغ متعددة (JSON، CSV، Excel) لتناسب مختلف الاحتياجات التقنية والبحثية، مع ضمان سهولة تحميلها وإعادة استخدامها بحرية، بما يخدم الأغراض التعليمية والبحثية والتنموية. يمكنكم عبر هذه الصفحة تحميل النسخ المُحدّثة من البيانات التي تم عرضها على الموقع، والتي أُعدّت خصيصًا لتكون جاهزة للاستخدام المباشر، مساهمةً منّا في توفير مورد معرفي مفتوح يخدم مجتمعنا المحلي والمجتمع البحثي على حد سواء.',
+      description: 'إيمانًا منّا بفلسفة البيانات المفتوحة وأهميتها في دعم البحث العلمي وتعزيز الشفافية، وحرصًا على تمكين الطلبة والباحثين والمهتمين من سهولة الوصول إلى البيانات المتعلقة بمدينة القصر الكبير، قمنا في مشروع KSAR DATA بجمع ومعالجة وتنظيم هذه البيانات بعناية وفق منهجية دقيقة تضمن أعلى مستويات الجودة والمصداقية.وانطلاقًا من إيماننا بأن البيانات هي أساس التحليل العلمي وصنع القرار، فقد قمنا بإتاحة هذه البيانات بصيغ متعددة (JSON، CSV، Excel) لتناسب مختلف الاحتياجات التقنية والبحثية، مع ضمان سهولة تحميلها وإعادة استخدامها بحرية، بما يخدم الأغراض التعليمية والبحثية والتنموية. يمكنكم عبر هذه الصفحة تحميل النسخ المُحدّثة من البيانات التي تم عرضها على الموقع، والتي أُعدّت خصيصًا لتكون جاهزة للاستخدام المباشر، مساهمةً منّا في توفير مورد معرفي مفتوح يخدم مجتمعنا المحلي والمجتمع البحثي على حد سواء.',
       // --- END OF RESTORED TEXT ---
       downloadAllTitle: 'تنزيل شامل',
       downloadAllDesc: 'احصل على جميع مجموعات البيانات دفعة واحدة بالتنسيق الذي تفضله.',
@@ -41,7 +41,7 @@ const DownloadPage = ({ language = 'en', theme = 'dark' }) => {
     en: {
       // --- TEXT RESTORED ---
       title: 'Download Data',
-      description: 'Believing in the philosophy of open data and its importance in supporting scientific research and promoting transparency, and committed to enabling students, researchers, and enthusiasts to easily access data related to the city of Ksar El Kebir, we at the KSAR-DATA project have carefully collected, processed, and organized this data following a rigorous methodology that ensures the highest levels of quality and reliability. Based on our conviction that data is the foundation for scientific analysis and informed decision-making, we have made this information available in multiple formats (JSON, CSV, Excel) to meet diverse technical and research needs, ensuring it is easy to download and freely reusable for educational, scientific, and developmental purposes. Through this page, you can download the latest updated versions of the data presented on the site, specially prepared to be ready for immediate use, contributing to the provision of an open knowledge resource that benefits both our local community and the research community at large.',
+      description: 'Believing in the philosophy of open data and its importance in supporting scientific research and promoting transparency, and committed to enabling students, researchers, and enthusiasts to easily access data related to the city of Ksar El Kebir, we at the KSAR DATA project have carefully collected, processed, and organized this data following a rigorous methodology that ensures the highest levels of quality and reliability. Based on our conviction that data is the foundation for scientific analysis and informed decision-making, we have made this information available in multiple formats (JSON, CSV, Excel) to meet diverse technical and research needs, ensuring it is easy to download and freely reusable for educational, scientific, and developmental purposes. Through this page, you can download the latest updated versions of the data presented on the site, specially prepared to be ready for immediate use, contributing to the provision of an open knowledge resource that benefits both our local community and the research community at large.',
       // --- END OF RESTORED TEXT ---
       downloadAllTitle: 'Bulk Download',
       downloadAllDesc: 'Get all datasets at once in your preferred format.',
@@ -74,7 +74,7 @@ const DownloadPage = ({ language = 'en', theme = 'dark' }) => {
     fr: {
       // --- TEXT RESTORED ---
       title: 'Télécharger les Données',
-      description: 'Croyant en la philosophie des données ouvertes et en son importance pour soutenir la recherche scientifique et promouvoir la transparence, et engagés à permettre aux étudiants, chercheurs et passionnés d\'accéder facilement aux données relatives à la ville de Ksar El Kebir, nous au projet KSAR-DATA avons soigneusement collecté, traité et organisé ces données en suivant une méthodologie rigoureuse qui garantit les plus hauts niveaux de qualité et de fiabilité. Basé sur notre conviction que les données sont le fondement de l\'analyse scientifique et de la prise de décision éclairée, nous avons rendu ces informations disponibles dans plusieurs formats (JSON, CSV, Excel) pour répondre aux divers besoins techniques et de recherche, en veillant à ce qu\'elles soient faciles à télécharger et librement réutilisables à des fins éducatives, scientifiques et de développement. Grâce à cette page, vous pouvez télécharger les dernières versions mises à jour des données présentées sur le site, spécialement préparées pour être prêtes à l\'usage immédiat, contribuant à fournir une ressource de connaissance ouverte qui profite à la fois à notre communauté locale et à la communauté de recherche au sens large.',
+      description: 'Croyant en la philosophie des données ouvertes et en son importance pour soutenir la recherche scientifique et promouvoir la transparence, et engagés à permettre aux étudiants, chercheurs et passionnés d\'accéder facilement aux données relatives à la ville de Ksar El Kebir, nous au projet KSAR DATA avons soigneusement collecté, traité et organisé ces données en suivant une méthodologie rigoureuse qui garantit les plus hauts niveaux de qualité et de fiabilité. Basé sur notre conviction que les données sont le fondement de l\'analyse scientifique et de la prise de décision éclairée, nous avons rendu ces informations disponibles dans plusieurs formats (JSON, CSV, Excel) pour répondre aux divers besoins techniques et de recherche, en veillant à ce qu\'elles soient faciles à télécharger et librement réutilisables à des fins éducatives, scientifiques et de développement. Grâce à cette page, vous pouvez télécharger les dernières versions mises à jour des données présentées sur le site, spécialement préparées pour être prêtes à l\'usage immédiat, contribuant à fournir une ressource de connaissance ouverte qui profite à la fois à notre communauté locale et à la communauté de recherche au sens large.',
       // --- END OF RESTORED TEXT ---
       downloadAllTitle: 'Téléchargement groupé',
       downloadAllDesc: 'Obtenez tous les ensembles de données en une seule fois dans votre format préféré.',
@@ -292,35 +292,7 @@ const DownloadPage = ({ language = 'en', theme = 'dark' }) => {
           </div>
         </main>
 
-        {/* INFO SECTION */}
-        <footer className="mt-16">
-          <div className="text-center mb-8">
-            <h2 className={`text-2xl font-bold ${themeClasses.textPrimary}`}>{currentText.dataInfo}</h2>
-          </div>
-           <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                <div className={`p-6 rounded-lg border ${themeClasses.borderColor} ${themeClasses.cardBg}`}>
-                    <div className="flex items-center mb-3">
-                        <FileText size={20} className={themeClasses.textAccent}/>
-                        <h3 className={`font-semibold text-lg ml-2 ${themeClasses.textPrimary}`}>{currentText.fileFormats}</h3>
-                    </div>
-                    <p className={`text-sm ${themeClasses.textSecondary}`}>{currentText.jsonDesc}<br/>{currentText.csvDesc}<br/>{currentText.excelDesc}</p>
-                </div>
-                <div className={`p-6 rounded-lg border ${themeClasses.borderColor} ${themeClasses.cardBg}`}>
-                    <div className="flex items-center mb-3">
-                        <Code size={20} className={themeClasses.textAccent}/>
-                        <h3 className={`font-semibold text-lg ml-2 ${themeClasses.textPrimary}`}>{currentText.encoding}</h3>
-                    </div>
-                     <p className={`text-sm ${themeClasses.textSecondary}`}>{currentText.encodingDesc}</p>
-                </div>
-                <div className={`p-6 rounded-lg border ${themeClasses.borderColor} ${themeClasses.cardBg}`}>
-                     <div className="flex items-center mb-3">
-                        <CheckCircle size={20} className={themeClasses.textAccent}/>
-                        <h3 className={`font-semibold text-lg ml-2 ${themeClasses.textPrimary}`}>{currentText.usage}</h3>
-                    </div>
-                    <p className={`text-sm ${themeClasses.textSecondary}`}>{currentText.usageDesc}</p>
-                </div>
-            </div>
-        </footer>
+        
       </div>
     </div>
   );

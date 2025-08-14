@@ -145,7 +145,7 @@ const ContactUsPage = ({
     const data = {
       ...formData,
       access_key: accessKey,
-      subject: `New Message from ${formData.name} via Ksar-Data`,
+      subject: `New Message from ${formData.name} via KSAR DATA`,
     };
 
     try {
@@ -283,7 +283,7 @@ const ContactUsPage = ({
                     <Mail className={`w-5 h-5 mt-1 flex-shrink-0 ${themeClasses.textAccent} ${language === 'ar' ? 'ml-4' : 'mr-4'}`} />
                     <div>
                       <p className={`font-semibold ${themeClasses.textPrimary}`}>{t.email}</p>
-                      <a href="mailto:bt.younesse@gmail.com" className={`${themeClasses.textSecondary} hover:underline`}>bt.younesse@gmail.com</a>
+                      <a href="mailto:ksardata@gmail.com" className={`${themeClasses.textSecondary} hover:underline`}>ksardata@gmail.com</a>
                     </div>
                   </div>
                   <div className="flex items-start">
@@ -328,16 +328,7 @@ const ContactUsPage = ({
 
       </div>
 
-      <footer className="text-center mt-16">
-         <div className={`inline-flex items-center px-4 py-2 rounded-full border text-sm ${themeClasses.borderColor} ${themeClasses.textSecondary} ${themeClasses.cardBg}`}>
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-3"></div>
-              <span>
-                {language === 'ar' ? 'نسخة تجريبية – الإصدار 1.1.7 | © 2025' :
-                 language === 'en' ? 'Beta Version – v1.1.7 | © 2025' :
-                 'Version d’essai – v1.1.7 | © 2025'}
-              </span>
-            </div>
-      </footer>
+      
     </div>
   );
 };

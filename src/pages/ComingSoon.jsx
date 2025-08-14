@@ -110,7 +110,7 @@ const ComingSoon = ({ t, language, theme }) => {
 
             {/* Brand Name & Subtitle */}
             <h1 className={`text-5xl md:text-6xl font-bold ${themeClasses.textPrimary}`}>
-              KSAR-DATA
+              KSAR DATA
             </h1>
             <div className="flex items-center justify-center lg:justify-start space-x-2 mt-3">
               <Sparkles className={`w-5 h-5 ${themeClasses.textAccent}`} />

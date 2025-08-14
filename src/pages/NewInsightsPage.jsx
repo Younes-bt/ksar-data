@@ -193,7 +193,7 @@ const NewInsightsPage = ({
       ctx.fillStyle = theme === 'dark' ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.9)';
       ctx.textAlign = 'center';
       
-      const watermarkText = 'www.ksar-data.ma';
+      const watermarkText = 'www.KSAR DATA.ma';
       const textWidth = ctx.measureText(watermarkText).width;
       const x = canvas.width / 2;
       const y = canvas.height - 30;
@@ -309,7 +309,7 @@ Sorry, image export failed. Please try again or use your browser's screenshot to
       URL.revokeObjectURL(url);
       
       setTimeout(() => {
-        const text = encodeURIComponent(`${translations.title} - ${translations.subtitle}\n\nGenerated from www.ksar-data.ma`);
+        const text = encodeURIComponent(`${translations.title} - ${translations.subtitle}\n\nGenerated from www.KSAR DATA.ma`);
         window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${text}`, '_blank');
       }, 500);
       
@@ -477,7 +477,7 @@ Sorry, image export failed. Please try again or use your browser's screenshot to
                         : 'bg-white border-gray-200'}
                     `}
                   >
-                    {/* Share/Download Button */}
+                    {/* Share/Download
                     <div className={` ${language === 'ar' ? 'left-4' : 'right-4'} share-menu-container absolute top-3 z-10`}>
                       <button
                         onClick={() => setShowShareMenu(prev => ({ ...prev, [insight.id]: !prev[insight.id] }))}
@@ -500,7 +500,7 @@ Sorry, image export failed. Please try again or use your browser's screenshot to
                         )}
                       </button>
 
-                      {/* Share Menu */}
+
                       {showShareMenu[insight.id] && (
                         <div className={`
                           absolute top-full mt-2 ${language === 'ar' ? 'left-0' : 'right-0'} 
@@ -509,7 +509,7 @@ Sorry, image export failed. Please try again or use your browser's screenshot to
                             ? 'bg-gray-800 border-gray-700' 
                             : 'bg-white border-gray-200'}
                         `}>
-                          {/* Download Option */}
+                          
                           <button
                             onClick={() => downloadImage(insight.id)}
                             className={`
@@ -527,7 +527,7 @@ Sorry, image export failed. Please try again or use your browser's screenshot to
                             <span>{translations.downloadImage}</span>
                           </button>
 
-                          {/* Social Media Options */}
+                          
                           <button
                             onClick={() => shareToFacebook(insight.id)}
                             className={`
@@ -598,6 +598,7 @@ Sorry, image export failed. Please try again or use your browser's screenshot to
                         </div>
                       )}
                     </div>
+*/}
 
                     {/* Question Title and Description */}
                     <div className={`mb-6 mt-10 ${language === 'ar' ? 'text-right' : 'text-left'}`}>

@@ -60,7 +60,7 @@ function Navbar({ language, setLanguage, theme, setTheme, t }) {
             alt="Ksar El Kebir Gate"
             className="w-10 mr-4 max-w-2xl h-auto object-contain drop-shadow-2xl"
           />
-          KSAR-DATA
+          KSAR DATA
         </Link>
 
         {/* Desktop Navigation */}
