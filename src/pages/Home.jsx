@@ -54,7 +54,7 @@ const Home = ({ t, language, theme }) => {
       services: [
         { icon: Search, title: 'الميزانية', description: 'ابحث في البيانات المالية للمدينة.', link: '/search', color: 'blue' },
         { icon: Gavel, title: 'القرارات', description: 'تتبع قرارات المجلس الجماعي.', link: '/decisions', color: 'amber' },
-        { icon: Calendar, title: 'الحضور', description: 'مراقبة حضور أعضاء المجلس.', link: '/attendance', color: 'green' },
+        { icon: Calendar, title: 'الحاضرون', description: 'مراقبة حضور أعضاء المجلس.', link: '/attendance', color: 'green' },
         { icon: HeartHandshake, title: 'الدعم', description: 'عرض تفاصيل الدعم المقدم للجمعيات.', link: '/support', color: 'red' }
       ],
       dataGroups: [
@@ -155,6 +155,19 @@ const Home = ({ t, language, theme }) => {
 
   const content = translations[language] || translations.en;
   
+  // --- META TAGS & MULTILINGUAL SETUP ---
+  const siteUrl = "https://www.ksardata.com"; // <-- IMPORTANT: Replace with your actual domain
+  const imageUrl = "https://res.cloudinary.com/daeuundyc/image/upload/f_auto,q_auto/ksar-el-kebir-gate_lqfind.png"; // <-- IMPORTANT: Replace with the full URL to your preview image
+  
+  const locales = {
+    en: 'en_US',
+    ar: 'ar_MA',
+    fr: 'fr_FR'
+  };
+
+  const alternateLocales = Object.keys(locales).filter(lang => lang !== language);
+  // --- END OF META TAGS SETUP ---
+
   const themeClasses = {
     bg: theme === 'dark' ? 'bg-gray-950' : 'bg-gray-50',
     cardBg: theme === 'dark' ? 'bg-gray-900' : 'bg-white',
@@ -237,184 +250,208 @@ const Home = ({ t, language, theme }) => {
   );
 
   return (
-    <div 
-      style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif' } : { fontFamily: 'Inter, sans-serif' }}
-      className={`${themeClasses.bg}`}
-      dir={language === 'ar' ? 'rtl' : 'ltr'}
-    >
-      {/* HERO SECTION - MODERN SPLIT LAYOUT */}
-      <section className="min-h-screen grid grid-cols-1 lg:grid-cols-2">
-        {/* Left Panel: Text Content */}
-        <div className="relative flex flex-col justify-center items-center lg:items-start text-center lg:text-center px-8 md:p-16 order-1 lg:order-1">
-          <GlobeBackground theme={theme} />
-          <div className="relative z-10 w-full max-w-xl">
-            <h1 className={`text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-4 leading-18 ${themeClasses.textPrimary}`}>
-              {content.welcome}
-              <span className={`block my-3 bg-gradient-to-r ${themeClasses.gradientFrom} ${themeClasses.gradientTo} bg-clip-text text-transparent`}>
-                <Typewriter
-                  words={content.typewriter}
-                  loop={false}
-                  cursor
-                  cursorStyle='_'
-                  typeSpeed={90}
-                  deleteSpeed={60}
-                  delaySpeed={2000}
-                />
-              </span>
-            </h1>
-            <p className={`text-lg md:text-xl leading-relaxed mb-8 ${themeClasses.textSecondary}`}>
-              {content.subtitle}
-            </p>
-            <button
-              onClick={scrollToServices}
-              className={`inline-flex items-center  px-8 py-4 text-sm md:text-lg font-bold rounded-full transition-transform transform hover:scale-105 ${theme === 'dark' ? 'bg-gray-50 text-gray-900' : 'bg-gray-900 text-gray-50'}`}
-            >
-              {content.exploreCTA}
-              <ArrowDown className={`w-5 h-5 ${language === 'ar' ? 'mr-3' : 'ml-3'}`} />
-            </button>
-          </div>
-        </div>
+    <>
+      {/* --- META TAGS (React 19+) --- */}
+      <html lang={language} dir={language === 'ar' ? 'rtl' : 'ltr'} />
+      <title>{content.welcome}</title>
+      <meta name="description" content={content.subtitle} />
+      
+      {/* Open Graph / Facebook */}
+      <meta property="og:title" content={content.welcome} />
+      <meta property="og:description" content={content.subtitle} />
+      <meta property="og:url" content={siteUrl} />
+      <meta property="og:image" content={imageUrl} />
+      <meta property="og:type" content="website" />
+      <meta property="og:locale" content={locales[language]} />
+      {alternateLocales.map(lang => (
+        <meta key={lang} property="og:locale:alternate" content={locales[lang]} />
+      ))}
 
-        {/* Right Panel: Image */}
-        <div className="relative flex items-center justify-center order-1 lg:order-2">
-           <img 
-              src={theme === 'dark'
-                ? 'https://res.cloudinary.com/daeuundyc/image/upload/f_auto,q_auto/ksar-el-kebir-gate_lqfind.png'
-                : 'https://res.cloudinary.com/daeuundyc/image/upload/f_auto,q_auto/ksar-el-kebir-gate_dark_ujloxv.png'
-              }
-              alt="Ksar El Kebir Gate"
-              className="relative z-20 w-full max-w-2xl h-auto object-contain drop-shadow-2xl animate-float"
-            />
-        </div>
-      </section>
+      {/* Twitter */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={content.welcome} />
+      <meta name="twitter:description" content={content.subtitle} />
+      <meta name="twitter:image" content={imageUrl} />
 
-      {/* DATA IN MOTION SECTION - MOVED UP */}
-      <section className="py-0">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-12 md:mb-16">
-            <h2 className={`text-3xl md:text-4xl font-bold ${themeClasses.textPrimary}`}>{content.motionTitle}</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {/* Budget Ticker */}
-            <div className={`p-8 rounded-2xl border-2 ${themeClasses.borderColor} ${themeClasses.cardBg} bg-gradient-to-br from-blue-500/5 to-transparent transition-all duration-300 hover:shadow-lg hover:border-blue-500`}>
-              <div className="flex items-center space-x-4">
-                <Wallet className={`w-10 h-10 ${themeClasses.accents.blue}`} />
-                <div>
-                  <p className={`text-sm font-medium ${themeClasses.textSecondary}`}>{content.motionStats.budget}</p>
-                  <p className={`text-3xl font-bold ${themeClasses.textPrimary}`}>{totalBudget} <span className="text-lg font-medium">MAD</span></p>
-                </div>
-              </div>
-            </div>
-            {/* Population Ticker */}
-            <div className={`p-8 rounded-2xl border-2 ${themeClasses.borderColor} ${themeClasses.cardBg} bg-gradient-to-br from-teal-500/5 to-transparent transition-all duration-300 hover:shadow-lg hover:border-teal-500`}>
-              <div className="flex items-center space-x-4">
-                <Globe className={`w-10 h-10 ${themeClasses.accents.teal}`} />
-                <div>
-                  <p className={`text-sm font-medium ${themeClasses.textSecondary}`}>{content.motionStats.population}</p>
-                  <p className={`text-3xl font-bold ${themeClasses.textPrimary}`}>{population}</p>
-                </div>
-              </div>
-            </div>
-            {/* Datasets Ticker */}
-            <div className={`p-8 rounded-2xl border-2 ${themeClasses.borderColor} ${themeClasses.cardBg} bg-gradient-to-br from-purple-500/5 to-transparent transition-all duration-300 hover:shadow-lg hover:border-purple-500`}>
-              <div className="flex items-center space-x-4">
-                <TrendingUp className={`w-10 h-10 ${themeClasses.accents.purple}`} />
-                <div>
-                  <p className={`text-sm font-medium ${themeClasses.textSecondary}`}>{content.motionStats.datasets}</p>
-                  <p className={`text-3xl font-bold ${themeClasses.textPrimary}`}>{datasets}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SERVICES SECTION - ORGANIZED BY NAVBAR STRUCTURE */}
-      <section id="services" className={`py-20 md:py-28 ${themeClasses.sectionBg}`}>
-        <div className="container mx-auto px-6">
-          
-          {/* Digital Services */}
-          <div className="mb-20">
-            <div className="text-center mb-12">
-              <h2 className={`text-3xl md:text-4xl font-bold ${themeClasses.textPrimary}`}>{content.servicesTitle}</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-              {content.services.map((service) => (
-                <ServiceCard key={service.title} item={service} />
-              ))}
+      <div 
+        style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif' } : { fontFamily: 'Inter, sans-serif' }}
+        className={`${themeClasses.bg}`}
+        // The dir attribute is now on the <html> tag above for better standards compliance
+      >
+        {/* HERO SECTION - MODERN SPLIT LAYOUT */}
+        <section className="min-h-screen grid grid-cols-1 lg:grid-cols-2">
+          {/* Left Panel: Text Content */}
+          <div className="relative flex flex-col justify-center items-center lg:items-start text-center lg:text-center px-8 md:p-16 order-1 lg:order-1">
+            <GlobeBackground theme={theme} />
+            <div className="relative z-10 w-full max-w-xl">
+              <h1 className={`text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-4 leading-18 ${themeClasses.textPrimary}`}>
+                {content.welcome}
+                <span className={`block my-3 bg-gradient-to-r ${themeClasses.gradientFrom} ${themeClasses.gradientTo} bg-clip-text text-transparent`}>
+                  <Typewriter
+                    words={content.typewriter}
+                    loop={false}
+                    cursor
+                    cursorStyle='_'
+                    typeSpeed={90}
+                    deleteSpeed={60}
+                    delaySpeed={2000}
+                  />
+                </span>
+              </h1>
+              <p className={`text-lg md:text-xl leading-relaxed mb-8 ${themeClasses.textSecondary}`}>
+                {content.subtitle}
+              </p>
+              <button
+                onClick={scrollToServices}
+                className={`inline-flex items-center  px-8 py-4 text-sm md:text-lg font-bold rounded-full transition-transform transform hover:scale-105 ${theme === 'dark' ? 'bg-gray-50 text-gray-900' : 'bg-gray-900 text-gray-50'}`}
+              >
+                {content.exploreCTA}
+                <ArrowDown className={`w-5 h-5 ${language === 'ar' ? 'mr-3' : 'ml-3'}`} />
+              </button>
             </div>
           </div>
 
-          {/* Data Sources */}
-          <div className="mb-20">
-            <div className="text-center mb-12">
-              <h2 className={`text-3xl md:text-4xl font-bold ${themeClasses.textPrimary}`}>{content.dataTitle}</h2>
+          {/* Right Panel: Image */}
+          <div className="relative flex items-center justify-center order-1 lg:order-2">
+             <img 
+                src={theme === 'dark'
+                  ? 'https://res.cloudinary.com/daeuundyc/image/upload/f_auto,q_auto/ksar-el-kebir-gate_lqfind.png'
+                  : 'https://res.cloudinary.com/daeuundyc/image/upload/f_auto,q_auto/ksar-el-kebir-gate_dark_ujloxv.png'
+                }
+                alt="Ksar El Kebir Gate"
+                className="relative z-20 w-full max-w-2xl h-auto object-contain drop-shadow-2xl animate-float"
+              />
+          </div>
+        </section>
+
+        {/* DATA IN MOTION SECTION - MOVED UP */}
+        <section className="py-0">
+          <div className="container mx-auto px-6">
+            <div className="text-center mb-12 md:mb-16">
+              <h2 className={`text-3xl md:text-4xl font-bold ${themeClasses.textPrimary}`}>{content.motionTitle}</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              {content.dataGroups.map((data) => (
-                <ServiceCard key={data.title} item={data} size="large" />
-              ))}
+              {/* Budget Ticker */}
+              <div className={`p-8 rounded-2xl border-2 ${themeClasses.borderColor} ${themeClasses.cardBg} bg-gradient-to-br from-blue-500/5 to-transparent transition-all duration-300 hover:shadow-lg hover:border-blue-500`}>
+                <div className="flex items-center space-x-4">
+                  <Wallet className={`w-10 h-10 ${themeClasses.accents.blue}`} />
+                  <div>
+                    <p className={`text-sm font-medium ${themeClasses.textSecondary}`}>{content.motionStats.budget}</p>
+                    <p className={`text-3xl font-bold ${themeClasses.textPrimary}`}>{totalBudget} <span className="text-lg font-medium">MAD</span></p>
+                  </div>
+                </div>
+              </div>
+              {/* Population Ticker */}
+              <div className={`p-8 rounded-2xl border-2 ${themeClasses.borderColor} ${themeClasses.cardBg} bg-gradient-to-br from-teal-500/5 to-transparent transition-all duration-300 hover:shadow-lg hover:border-teal-500`}>
+                <div className="flex items-center space-x-4">
+                  <Globe className={`w-10 h-10 ${themeClasses.accents.teal}`} />
+                  <div>
+                    <p className={`text-sm font-medium ${themeClasses.textSecondary}`}>{content.motionStats.population}</p>
+                    <p className={`text-3xl font-bold ${themeClasses.textPrimary}`}>{population}</p>
+                  </div>
+                </div>
+              </div>
+              {/* Datasets Ticker */}
+              <div className={`p-8 rounded-2xl border-2 ${themeClasses.borderColor} ${themeClasses.cardBg} bg-gradient-to-br from-purple-500/5 to-transparent transition-all duration-300 hover:shadow-lg hover:border-purple-500`}>
+                <div className="flex items-center space-x-4">
+                  <TrendingUp className={`w-10 h-10 ${themeClasses.accents.purple}`} />
+                  <div>
+                    <p className={`text-sm font-medium ${themeClasses.textSecondary}`}>{content.motionStats.datasets}</p>
+                    <p className={`text-3xl font-bold ${themeClasses.textPrimary}`}>{datasets}</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+        </section>
 
-          {/* Information & Insights */}
-          <div className="mb-20">
-            <div className="text-center mb-12">
-              <h2 className={`text-3xl md:text-4xl font-bold ${themeClasses.textPrimary}`}>{content.informationTitle}</h2>
+        {/* SERVICES SECTION - ORGANIZED BY NAVBAR STRUCTURE */}
+        <section id="services" className={`py-20 md:py-28 ${themeClasses.sectionBg}`}>
+          <div className="container mx-auto px-6">
+            
+            {/* Digital Services */}
+            <div className="mb-20">
+              <div className="text-center mb-12">
+                <h2 className={`text-3xl md:text-4xl font-bold ${themeClasses.textPrimary}`}>{content.servicesTitle}</h2>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+                {content.services.map((service) => (
+                  <ServiceCard key={service.title} item={service} />
+                ))}
+              </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-              {content.informationGroups.map((info) => (
-                <ServiceCard key={info.title} item={info} size="large" />
-              ))}
+
+            {/* Data Sources */}
+            <div className="mb-20">
+              <div className="text-center mb-12">
+                <h2 className={`text-3xl md:text-4xl font-bold ${themeClasses.textPrimary}`}>{content.dataTitle}</h2>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                {content.dataGroups.map((data) => (
+                  <ServiceCard key={data.title} item={data} size="large" />
+                ))}
+              </div>
+            </div>
+
+            {/* Information & Insights */}
+            <div className="mb-20">
+              <div className="text-center mb-12">
+                <h2 className={`text-3xl md:text-4xl font-bold ${themeClasses.textPrimary}`}>{content.informationTitle}</h2>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                {content.informationGroups.map((info) => (
+                  <ServiceCard key={info.title} item={info} size="large" />
+                ))}
+              </div>
+            </div>
+
+            {/* About Section */}
+            <div>
+              <div className="text-center mb-12">
+                <h2 className={`text-3xl md:text-4xl font-bold ${themeClasses.textPrimary}`}>{content.aboutTitle}</h2>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                {content.aboutGroups.map((about) => (
+                  <ServiceCard key={about.title} item={about} />
+                ))}
+              </div>
+            </div>
+
+          </div>
+        </section>
+        
+        {/* QUICK INSIGHT SECTION */}
+        <section className="py-20 md:py-28">
+          <div className="container mx-auto px-6">
+            <div className={`relative max-w-5xl mx-auto p-8 md:p-16 rounded-3xl border-2 ${themeClasses.borderColor} ${themeClasses.cardBg} overflow-hidden`}>
+              <div className={`absolute -inset-2 bg-gradient-to-br from-purple-600/10 to-amber-600/10 blur-xl`}></div>
+              <div className="relative text-center">
+                <h3 className={`text-sm font-bold uppercase tracking-widest mb-6 ${themeClasses.textSecondary}`}>
+                  {content.insightTitle}
+                </h3>
+                <p className={`text-2xl md:text-4xl font-medium leading-relaxed ${themeClasses.textPrimary}`}>
+                  "{content.insightStat}"
+                </p>
+              </div>
             </div>
           </div>
+        </section>
 
-          {/* About Section */}
-          <div>
-            <div className="text-center mb-12">
-              <h2 className={`text-3xl md:text-4xl font-bold ${themeClasses.textPrimary}`}>{content.aboutTitle}</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-              {content.aboutGroups.map((about) => (
-                <ServiceCard key={about.title} item={about} />
-              ))}
-            </div>
-          </div>
-
-        </div>
-      </section>
-      
-      {/* QUICK INSIGHT SECTION */}
-      <section className="py-20 md:py-28">
-        <div className="container mx-auto px-6">
-          <div className={`relative max-w-5xl mx-auto p-8 md:p-16 rounded-3xl border-2 ${themeClasses.borderColor} ${themeClasses.cardBg} overflow-hidden`}>
-            <div className={`absolute -inset-2 bg-gradient-to-br from-purple-600/10 to-amber-600/10 blur-xl`}></div>
-            <div className="relative text-center">
-              <h3 className={`text-sm font-bold uppercase tracking-widest mb-6 ${themeClasses.textSecondary}`}>
-                {content.insightTitle}
-              </h3>
-              <p className={`text-2xl md:text-4xl font-medium leading-relaxed ${themeClasses.textPrimary}`}>
-                "{content.insightStat}"
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      
-      
-      {/* Adding a keyframe animation for the floating effect */}
-      <style jsx>{`
-        @keyframes float {
-          0% { transform: translateY(0px); }
-          50% { transform: translateY(-15px); }
-          100% { transform: translateY(0px); }
-        }
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-      `}</style>
-    </div>
+        
+        
+        {/* Adding a keyframe animation for the floating effect */}
+        <style jsx>{`
+          @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+          }
+          .animate-float {
+            animation: float 6s ease-in-out infinite;
+          }
+        `}</style>
+      </div>
+    </>
   );
 };
 
