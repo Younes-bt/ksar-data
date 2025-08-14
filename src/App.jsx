@@ -325,7 +325,7 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
-      <DisclaimerBanner language={language} theme={theme} />      <AppContent 
+     <AppContent 
         scoresData={scoresData}
         budgetData={budgetData}
         rgphData={rgphData}
