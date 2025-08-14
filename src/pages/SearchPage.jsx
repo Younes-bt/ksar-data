@@ -1,6 +1,9 @@
+
+
 import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Select, SelectItem, SelectTrigger, SelectContent, SelectValue } from "@/components/ui/select";
+// MODIFIED: Import PaginationEllipsis
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious, PaginationEllipsis } from "@/components/ui/pagination";
 import BudgetTable from "@/components/BudgetTable";
 import GlobeBackground from '../components/GlobeBackground';
@@ -14,6 +17,8 @@ const normalizeText = (text) => {
     .trim();
 };
 
+
+
 export default function SearchPage({ data, loading, t, language, theme }) {
   const [search, setSearch] = useState("");
   const [yearFilter, setYearFilter] = useState("");
@@ -24,27 +29,12 @@ export default function SearchPage({ data, loading, t, language, theme }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(15);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [currentPage]);
-
-  // --- META TAGS & MULTILINGUAL SETUP ---
-  const siteUrl = "https://www.your-domain.com"; // <-- IMPORTANT: Replace with your actual domain
-  const searchPageUrl = `${siteUrl}/search`;
-  const imageUrl = `${siteUrl}/social-preview.jpg`; // Using the same general preview image
-
-  const pageTitle = t?.searchpage?.meta_title || 'Search Budget Data | Ksar Data';
-  const pageDescription = t?.searchpage?.meta_description || 'Explore, search, and filter the municipal budget data of Al Ksar Al Kabir by year, type, and amount.';
-
-  const locales = {
-    en: 'en_US',
-    ar: 'ar_MA',
-    fr: 'fr_FR'
-  };
-
-  const alternateLocales = Object.keys(locales).filter(lang => lang !== language);
-  // --- END OF META TAGS SETUP ---
   
+  useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [currentPage, currentPage]);
+
+    
   const themeClasses = {
     bg: theme === 'dark' ? 'bg-gray-950' : 'bg-gray-50',
     cardBg: theme === 'dark' ? 'bg-gray-900' : 'bg-white',
@@ -56,6 +46,8 @@ export default function SearchPage({ data, loading, t, language, theme }) {
     gradientTo: theme === 'dark' ? 'to-purple-600' : 'to-purple-500'
   };
 
+
+  
   useEffect(() => {
     setIsFiltering(true);
     
@@ -96,7 +88,7 @@ export default function SearchPage({ data, loading, t, language, theme }) {
           if (sortFilter === 'asc') {
             return amountA - amountB;
           } else if (sortFilter === 'desc') {
-            return amountB - a.amount_approved;
+            return amountB - amountA;
           }
           return 0;
         });
@@ -108,7 +100,7 @@ export default function SearchPage({ data, loading, t, language, theme }) {
     }, 100);
 
     return () => clearTimeout(timeoutId);
-  }, [search, yearFilter, typeFilter, sortFilter, data]);
+  }, [search, yearFilter, typeFilter, sortFilter, data]); // Added sortFilter to dependencies
 
   // Calculate paginated data
   const totalRows = filteredData.length;
@@ -128,7 +120,7 @@ export default function SearchPage({ data, loading, t, language, theme }) {
   // Handle rows per page change
   const handleRowsPerPageChange = (value) => {
     setRowsPerPage(Number(value));
-    setCurrentPage(1);
+    setCurrentPage(1); // Reset to first page when rows per page changes
   };
 
   // Generate page numbers with ellipsis
@@ -174,152 +166,138 @@ export default function SearchPage({ data, loading, t, language, theme }) {
   };
 
   return (
-    <>
-      {/* --- META TAGS (React 19+) --- */}
-      <html lang={language} dir={language === 'ar' ? 'rtl' : 'ltr'} />
-      <title>{pageTitle}</title>
-      <meta name="description" content={pageDescription} />
+    <div className={`p-5 md:px-40 md:py-10 space-y-4 min-h-screen ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
+
       
-      {/* Open Graph / Facebook */}
-      <meta property="og:title" content={pageTitle} />
-      <meta property="og:description" content={pageDescription} />
-      <meta property="og:url" content={searchPageUrl} />
-      <meta property="og:image" content={imageUrl} />
-      <meta property="og:type" content="website" />
-      <meta property="og:locale" content={locales[language]} />
-      {alternateLocales.map(lang => (
-        <meta key={lang} property="og:locale:alternate" content={locales[lang]} />
-      ))}
+      <h1 style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif', direction:'rtl', fontSize:'2rem' } : { fontFamily: 'Inter, sans-serif', direction:'ltr', fontSize:'2rem' }} className="text-center mb-10">{t?.searchpage?.Search_Budget_Data || 'Search Budget Data'}</h1>
 
-      {/* Twitter */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={pageTitle} />
-      <meta name="twitter:description" content={pageDescription} />
-      <meta name="twitter:image" content={imageUrl} />
+      <div className="flex flex-wrap gap-4 z-10">
+        <Input
+          type="text"
+          placeholder={t?.searchpage?.Search_input_placeholder || 'Search by label, code, or type'}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-full sm:w-1/3"
+          dir="auto" // Automatically handle RTL for Arabic input
+        />
 
-      <div className={`p-5 md:px-40 md:py-10 space-y-4 min-h-screen ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
-        <h1 style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif', direction:'rtl', fontSize:'2rem' } : { fontFamily: 'Inter, sans-serif', direction:'ltr', fontSize:'2rem' }} className="text-center mb-10">{t?.searchpage?.Search_Budget_Data || 'Search Budget Data'}</h1>
+        <Select onValueChange={(v) => setYearFilter(v === "all" ? "" : v)} defaultValue="all">
+          <SelectTrigger className={`w-full sm:w-1/6 ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
+            <SelectValue placeholder="Filter by Year" />
+          </SelectTrigger>
+          <SelectContent className={`${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
+            <SelectItem value="all" className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>{t?.searchpage?.allyear || 'all years'}</SelectItem>
+            <SelectItem value="2020" className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>2020</SelectItem>
+            <SelectItem value="2021" className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>2021</SelectItem>
+            <SelectItem value="2022" className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>2022</SelectItem>
+            <SelectItem value="2023" className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>2023</SelectItem>
+            <SelectItem value="2024" className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>2024</SelectItem>
+            <SelectItem value="2025" className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>2025</SelectItem>
+          </SelectContent>
+        </Select>
 
-        <div className="flex flex-wrap gap-4 z-10">
-          <Input
-            type="text"
-            placeholder={t?.searchpage?.Search_input_placeholder || 'Search by label, code, or type'}
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full sm:w-1/3"
-            dir="auto"
-          />
+        <Select onValueChange={(v) => setTypeFilter(v === "all" ? "" : v)} defaultValue="all">
+          <SelectTrigger className={`w-full sm:w-1/6 ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
+            <SelectValue placeholder="Filter by Type" />
+          </SelectTrigger>
+          <SelectContent className={`${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
+            <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="all">{t?.searchpage?.alltype || 'All types'}</SelectItem>
+            <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="Crédits">{t?.searchpage?.credits || 'Crédits'}</SelectItem>
+            <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="recettes">{t?.searchpage?.recettes || 'Recettes'}</SelectItem>
+          </SelectContent>
+        </Select>
 
-          <Select onValueChange={(v) => setYearFilter(v === "all" ? "" : v)} defaultValue="all">
-            <SelectTrigger className={`w-full sm:w-1/6 ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
-              <SelectValue placeholder="Filter by Year" />
-            </SelectTrigger>
-            <SelectContent className={`${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
-              <SelectItem value="all" className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>{t?.searchpage?.allyear || 'all years'}</SelectItem>
-              <SelectItem value="2020" className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>2020</SelectItem>
-              <SelectItem value="2021" className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>2021</SelectItem>
-              <SelectItem value="2022" className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>2022</SelectItem>
-              <SelectItem value="2023" className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>2023</SelectItem>
-              <SelectItem value="2024" className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>2024</SelectItem>
-              <SelectItem value="2025" className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>2025</SelectItem>
-            </SelectContent>
-          </Select>
+        {/* New Sort by Approved Amount filter */}
+        <Select onValueChange={(v) => setSortFilter(v === "none" ? "" : v)} defaultValue="none">
+          <SelectTrigger className={`w-full sm:w-1/6 ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
+            <SelectValue placeholder="Sort by Amount" />
+          </SelectTrigger>
+          <SelectContent className={`${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
+            <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="none">{t?.searchpage?.no_sort || 'No sorting'}</SelectItem>
+            <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="desc">{t?.searchpage?.highest_first || 'Highest first'}</SelectItem>
+            <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="asc">{t?.searchpage?.lowest_first || 'Lowest first'}</SelectItem>
+          </SelectContent>
+        </Select>
 
-          <Select onValueChange={(v) => setTypeFilter(v === "all" ? "" : v)} defaultValue="all">
-            <SelectTrigger className={`w-full sm:w-1/6 ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
-              <SelectValue placeholder="Filter by Type" />
-            </SelectTrigger>
-            <SelectContent className={`${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
-              <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="all">{t?.searchpage?.alltype || 'All types'}</SelectItem>
-              <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="Crédits">{t?.searchpage?.credits || 'Crédits'}</SelectItem>
-              <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="recettes">{t?.searchpage?.recettes || 'Recettes'}</SelectItem>
-            </SelectContent>
-          </Select>
+        <Select onValueChange={handleRowsPerPageChange} defaultValue="15">
+          <SelectTrigger className={`w-full sm:w-32 ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
+            <SelectValue placeholder="Rows per page" />
+          </SelectTrigger>
+          <SelectContent className={`${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
+            <SelectItem value="10" className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>10</SelectItem>
+            <SelectItem value="15" className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>15</SelectItem>
+            <SelectItem value="20" className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>20</SelectItem>
+            <SelectItem value="50" className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>50</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
 
-          <Select onValueChange={(v) => setSortFilter(v === "none" ? "" : v)} defaultValue="none">
-            <SelectTrigger className={`w-full sm:w-1/6 ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
-              <SelectValue placeholder="Sort by Amount" />
-            </SelectTrigger>
-            <SelectContent className={`${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
-              <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="none">{t?.searchpage?.no_sort || 'No sorting'}</SelectItem>
-              <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="desc">{t?.searchpage?.highest_first || 'Highest first'}</SelectItem>
-              <SelectItem className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`} value="asc">{t?.searchpage?.lowest_first || 'Lowest first'}</SelectItem>
-            </SelectContent>
-          </Select>
+      {/* Results info */}
+      
+      <div className="flex items-center justify-between">
+  <p className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+    {isFiltering ? (
+      <span className="flex items-center gap-2">
+        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+        {t?.searchpage?.filtering || 'Filtering...'}
+      </span>
+    ) : (
+      `${t?.searchpage?.showing || 'Showing'} ${paginatedData.length} ${t?.searchpage?.of || 'of'} ${totalRows} ${t?.searchpage?.results || 'results'}${data.length > 0 ? ` ${t?.searchpage?.of || 'of'} ${data.length} ${t?.searchpage?.total || 'total'}` : ''}`
+    )}
+  </p>
+</div>
 
-          <Select onValueChange={handleRowsPerPageChange} defaultValue="15">
-            <SelectTrigger className={`w-full sm:w-32 ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
-              <SelectValue placeholder="Rows per page" />
-            </SelectTrigger>
-            <SelectContent className={`${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
-              <SelectItem value="10" className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>10</SelectItem>
-              <SelectItem value="15" className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>15</SelectItem>
-              <SelectItem value="20" className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>20</SelectItem>
-              <SelectItem value="50" className={`${theme === 'dark' ? 'bg-gray-950 text-white hover:bg-gray-700' : 'bg-stone-50 text-gray-950 hover:bg-gray-100'}`}>50</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+      {/* The data table */}
+      <BudgetTable t={t} data={paginatedData} isLoading={isFiltering} theme={theme} language={language}/>
 
-        <div className="flex items-center justify-between">
-          <p className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
-            {isFiltering ? (
-              <span className="flex items-center gap-2">
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
-                {t?.searchpage?.filtering || 'Filtering...'}
-              </span>
-            ) : (
-              `${t?.searchpage?.showing || 'Showing'} ${paginatedData.length} ${t?.searchpage?.of || 'of'} ${totalRows} ${t?.searchpage?.results || 'results'}${data.length > 0 ? ` ${t?.searchpage?.of || 'of'} ${data.length} ${t?.searchpage?.total || 'total'}` : ''}`
-            )}
-          </p>
-        </div>
-
-        <BudgetTable t={t} data={paginatedData} isLoading={isFiltering} theme={theme} language={language}/>
-
-        <div className={`mt-4 p-4 text-center rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
-          <div className="flex items-center gap-2 text-sm text-gray-600">
-            <div>
-              <p className="font-medium">
-                {t?.supportpage?.data_source || 'Data Source'} : {t?.supportpage?.municipal_records || 'Municipal Records of Al Ksar Al Kabir'}
-              </p>
-            </div>
+      {/* Data Source Credit */}
+      <div className={`mt-4 p-4 text-center rounded-lg border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
+        <div className="flex items-center gap-2 text-sm text-gray-600">
+          <div>
+            <p className="font-medium">
+              {t?.supportpage?.data_source || 'Data Source'} : {t?.supportpage?.municipal_records || 'Municipal Records of Al Ksar Al Kabir'}
+              {' - '} 
+            </p>
+            
           </div>
         </div>
-
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-4">
-          <Pagination className="mb-10">
-            <PaginationContent className={language === 'ar' ? 'flex-row-reverse' : ''}>
-              <PaginationPrevious
-                onClick={() => handlePageChange(currentPage - 1)}
-                className={currentPage === 1 ? 'pointer-events-none opacity-50' : ''}
-                label={t?.searchpage?.previous || 'Previous'}
-                dir={language === 'ar' ? 'rtl' : 'ltr'}
-              />
-              {getPageNumbers().map((page, index) => (
-                <PaginationItem key={index}>
-                  {typeof page === "number" ? (
-                    <PaginationLink
-                      onClick={() => handlePageChange(page)}
-                      isActive={currentPage === page}
-                      className={currentPage === page ? 'bg-blue-600 text-white' : ''}
-                      style={{cursor: 'pointer'}}
-                    >
-                      {page}
-                    </PaginationLink>
-                  ) : (
-                    <PaginationEllipsis label={t?.searchpage?.more_pages || 'More pages'} />
-                  )}
-                </PaginationItem>
-              ))}
-              <PaginationNext
-                onClick={() => handlePageChange(currentPage + 1)}
-                className={currentPage === totalPages ? 'pointer-events-none opacity-50' : ''}
-                label={t?.searchpage?.next || 'Next'}
-                dir={language === 'ar' ? 'rtl' : 'ltr'}
-              />
-            </PaginationContent>
-          </Pagination>
-        </div>
       </div>
-    </>
+
+      {/* MODIFIED: Pagination controls now support i18n and RTL */}
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-4">
+        <Pagination className="mb-10">
+          <PaginationContent className={language === 'ar' ? 'flex-row-reverse' : ''}>
+            <PaginationPrevious
+              onClick={() => handlePageChange(currentPage - 1)}
+              className={currentPage === 1 ? 'pointer-events-none opacity-50' : ''}
+              label={t?.searchpage?.previous || 'Previous'}
+              dir={language === 'ar' ? 'rtl' : 'ltr'}
+            />
+            {getPageNumbers().map((page, index) => (
+              <PaginationItem key={index}>
+                {typeof page === "number" ? (
+                  <PaginationLink
+                    onClick={() => handlePageChange(page)}
+                    isActive={currentPage === page}
+                    className={currentPage === page ? 'bg-blue-600 text-white' : ''}
+                    style={{cursor: 'pointer'}}
+                  >
+                    {page}
+                  </PaginationLink>
+                ) : (
+                  <PaginationEllipsis label={t?.searchpage?.more_pages || 'More pages'} />
+                )}
+              </PaginationItem>
+            ))}
+            <PaginationNext
+              onClick={() => handlePageChange(currentPage + 1)}
+              className={currentPage === totalPages ? 'pointer-events-none opacity-50' : ''}
+              label={t?.searchpage?.next || 'Next'}
+              dir={language === 'ar' ? 'rtl' : 'ltr'}
+            />
+          </PaginationContent>
+        </Pagination>
+      </div>
+    </div>
   );
 }
