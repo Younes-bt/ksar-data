@@ -74,7 +74,7 @@ function Navbar({ language, setLanguage, theme, setTheme, t }) {
           {/* Home Link */}
           <Link 
             to="/" 
-            className={`px-4 py-2 rounded-md transition-colors font-sm text-white border border-transparent ${theme === 'dark' ? 'hover:bg-gray-200 hover:text-gray-950 hover:border-gray-200' : 'hover:bg-blue-600 hover:text-gray-200 hover:border-blue-600'}`}
+            className={`px-4 py-2 rounded-md transition-colors font-sm  border border-transparent ${theme === 'dark' ? 'text-white hover:bg-gray-200 hover:text-gray-950 hover:border-gray-200' : 'text-gray-950 hover:bg-blue-600 hover:text-gray-200 hover:border-blue-600'}`}
           >
             {t?.navbar?.home || "Home"}
           </Link>
@@ -83,7 +83,7 @@ function Navbar({ language, setLanguage, theme, setTheme, t }) {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button 
-                className={`px-4 py-2 rounded-md transition-colors font-sm text-white border border-transparent flex items-center gap-1 bg-transparent ${theme === 'dark' ? 'hover:bg-gray-200 hover:text-gray-950 hover:border-gray-200' : 'hover:bg-blue-600 hover:text-gray-200 hover:border-blue-600'}`}
+                className={`px-4 py-2 rounded-md transition-colors font-sm  border border-transparent flex items-center gap-1 bg-transparent ${theme === 'dark' ? 'text-white hover:bg-gray-200 hover:text-gray-950 hover:border-gray-200' : 'text-gray-950 hover:bg-blue-600 hover:text-gray-200 hover:border-blue-600'}`}
               >
                 {t?.navbar?.services || "Services"}
                 <ChevronDown className={`h-4 w-4 ${language === 'ar' ? 'mr-1' : 'ml-1'}`} />
@@ -110,7 +110,7 @@ function Navbar({ language, setLanguage, theme, setTheme, t }) {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button 
-                className={`px-4 py-2 rounded-md transition-colors font-sm text-white border border-transparent flex items-center gap-1 bg-transparent ${theme === 'dark' ? 'hover:bg-gray-200 hover:text-gray-950 hover:border-gray-200' : 'hover:bg-blue-600 hover:text-gray-200 hover:border-blue-600'}`}
+                className={`px-4 py-2 rounded-md transition-colors font-sm  border border-transparent flex items-center gap-1 bg-transparent ${theme === 'dark' ? 'hover:bg-gray-200 hover:text-gray-950 hover:border-gray-200' : 'text-gray-950 hover:bg-blue-600 hover:text-gray-200 hover:border-blue-600'}`}
               >
                 {t?.navbar?.data || "Data"}
                 <ChevronDown className={`h-4 w-4 ${language === 'ar' ? 'mr-1' : 'ml-1'}`} />
@@ -137,7 +137,7 @@ function Navbar({ language, setLanguage, theme, setTheme, t }) {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button 
-                className={`px-4 py-2 rounded-md transition-colors font-sm text-white border border-transparent flex items-center gap-1 bg-transparent ${theme === 'dark' ? 'hover:bg-gray-200 hover:text-gray-950 hover:border-gray-200' : 'hover:bg-blue-600 hover:text-gray-200 hover:border-blue-600'}`}
+                className={`px-4 py-2 rounded-md transition-colors font-sm  border border-transparent flex items-center gap-1 bg-transparent ${theme === 'dark' ? 'text-white hover:bg-gray-200 hover:text-gray-950 hover:border-gray-200' : 'text-gray-950 hover:bg-blue-600 hover:text-gray-200 hover:border-blue-600'}`}
               >
                 {t?.navbar?.information || "Information"}
                 <ChevronDown className={`h-4 w-4 ${language === 'ar' ? 'mr-1' : 'ml-1'}`} />
@@ -164,7 +164,7 @@ function Navbar({ language, setLanguage, theme, setTheme, t }) {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button 
-                className={`px-4 py-2 rounded-md transition-colors font-sm text-white border border-transparent flex items-center gap-1 bg-transparent ${theme === 'dark' ? 'hover:bg-gray-200 hover:text-gray-950 hover:border-gray-200' : 'hover:bg-blue-600 hover:text-gray-200 hover:border-blue-600'}`}
+                className={`px-4 py-2 rounded-md transition-colors font-sm  border border-transparent flex items-center gap-1 bg-transparent ${theme === 'dark' ? 'text-white hover:bg-gray-200 hover:text-gray-950 hover:border-gray-200' : 'text-gray-950 hover:bg-blue-600 hover:text-gray-200 hover:border-blue-600'}`}
               >
                 {t?.navbar?.aboutUs || "About Us"}
                 <ChevronDown className={`h-4 w-4 ${language === 'ar' ? 'mr-1' : 'ml-1'}`} />

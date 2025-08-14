@@ -61,7 +61,7 @@ const TermsOfUsePage = ({
             {
               title: '8. اتصل بنا',
               content: [
-                'لأية أسئلة تتعلق بهذه الشروط، يرجى الاتصال بنا على: ksardata@gmail.com.'
+                'لأية أسئلة تتعلق بهذه الشروط، يرجى الاتصال بنا على: ksardata@gmail.com'
               ]
             }
           ]

@@ -43,23 +43,23 @@ const Home = ({ t, language, theme }) => {
       dataTitle: 'بيانات عامة',
       informationTitle: 'المعلومات و البيانات',
       aboutTitle: 'حول المبادرة',
-      motionTitle: 'البيانات في حركة',
+      motionTitle: 'لمحة حول البيانات ',
       motionStats: {
         budget: 'إجمالي ميزانية 2025',
-        population: 'تقدير السكان 2024',
+        population: 'تقدير عدد السكان (2024)',
         datasets: 'مجموعات البيانات'
       },
       insightTitle: 'هل تعلم؟',
       insightStat: 'هل تعلم أن المدينة تدفع أكثر من 6,000 درهم يومياً فقط كفوائد على ديونها؟ هذا يعني أكثر من 2 مليون درهم سنوياً.',
       services: [
-        { icon: Search, title: 'مستكشف الميزانية', description: 'ابحث في البيانات المالية للمدينة.', link: '/search', color: 'blue' },
+        { icon: Search, title: 'الميزانية', description: 'ابحث في البيانات المالية للمدينة.', link: '/search', color: 'blue' },
         { icon: Gavel, title: 'القرارات', description: 'تتبع قرارات المجلس الجماعي.', link: '/decisions', color: 'amber' },
         { icon: Calendar, title: 'الحضور', description: 'مراقبة حضور أعضاء المجلس.', link: '/attendance', color: 'green' },
         { icon: HeartHandshake, title: 'الدعم', description: 'عرض تفاصيل الدعم المقدم للجمعيات.', link: '/support', color: 'red' }
       ],
       dataGroups: [
         { icon: Users, title: 'بيانات الإحصاء (RGPH)', description: 'استكشف الإحصاءات السكانية والسكنية.', link: '/rgph', color: 'teal' },
-        { icon: BarChart3, title: 'نقاط النادي الرياضي القصري', description: 'تحليل أداء نقاط النادي الرياضي القصري.', link: '/scores', color: 'indigo' },
+        { icon: BarChart3, title: 'النادي الرياضي القصري', description: 'تحليل أداء نقاط النادي الرياضي القصري.', link: '/scores', color: 'indigo' },
         { icon: FileText, title: 'أسعار الأدوية', description: 'قاعدة بيانات أسعار الأدوية.', link: '/medicines', color: 'pink' }
       ],
       informationGroups: [
