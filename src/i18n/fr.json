@@ -134,7 +134,7 @@
     "showAll": "Cliquez sur le titre pour voir le titre complet"
   },
   "decisionspage": {
-    "search_decisions_data": "Données des Décisions du Conseil",
+    "search_decisions_data": "Données des Décisions du Conseil (de juil 2021 à oct 2024) ",
     "decisions_tab": "Décisions",
     "search_input_placeholder": "Rechercher par titre de décision, numéro de décision, ou date",
     "filter_by_year": "Filtrer par année",
@@ -200,7 +200,7 @@
     "participation_percentage": "Taux de participation"
   },
   "attendancepage": {
-    "search_attendance_data": "Données de présence aux sessions",
+    "search_attendance_data": "Données de présence aux sessions (Oct 2021 à feb 2025)",
     "sessions_tab": "Sessions",
     "search_input_placeholder": "Rechercher par type de session, date ou numéro de session",
     "filter_by_session_type": "Filtrer par type de session",

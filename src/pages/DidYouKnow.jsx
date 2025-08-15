@@ -110,14 +110,7 @@ const DidYouKnowPage = ({ language = 'en', theme = 'dark' }) => {
           color: 'red',
           category: 'budget'
         },
-        { 
-          icon: BookOpen, 
-          title: 'صفر للتكوين المستمر', 
-          body: 'هل تعلم أنه على مدار السنوات الخمس الماضية، خصصت الميزانية صفر درهم للتكوين المستمر وتقوية قدرات الموظفين والمنتخبين على حد سواء؟',
-          stat: '0 درهم',
-          color: 'red',
-          category: 'budget'
-        },
+        
         { 
           icon: UserX, 
           title: 'جلسة "الكراسي الفارغة"', 
@@ -225,14 +218,7 @@ const DidYouKnowPage = ({ language = 'en', theme = 'dark' }) => {
           color: 'red',
           category: 'budget'
         },
-        { 
-          icon: BookOpen, 
-          title: 'Zero for Continuous Training', 
-          body: 'Did you know that over the past five years, the budget allocated zero dirhams for continuous training and capacity building for both employees and elected officials?',
-          stat: '0 MAD',
-          color: 'red',
-          category: 'budget'
-        },
+        
         { 
           icon: UserX, 
           title: 'Empty Chairs Session', 
@@ -340,14 +326,7 @@ const DidYouKnowPage = ({ language = 'en', theme = 'dark' }) => {
           color: 'red',
           category: 'budget'
         },
-        { 
-          icon: BookOpen, 
-          title: 'Zéro pour la Formation Continue', 
-          body: 'Saviez-vous qu\'au cours des cinq dernières années, le budget a alloué zéro dirham à la formation continue des employés et élus ?',
-          stat: '0 MAD',
-          color: 'red',
-          category: 'budget'
-        },
+        
         { 
           icon: UserX, 
           title: 'Session des Chaises Vides', 

@@ -64,7 +64,7 @@ function Navbar({ language, setLanguage, theme, setTheme, t }) {
           <img 
             src={`${theme === 'dark' ? '/logo_on_dark.png' : '/Logo_on_white.png'}`} 
             alt="Ksar El Kebir Gate"
-            className={`w-10 max-w-2xl h-auto object-contain drop-shadow-2xl ${language === 'ar' ? 'ml-4' : 'mr-4'}`}
+            className={`w-10 max-w-2xl h-auto object-contain drop-shadow-2xl ${language === 'ar' ? 'mr-4' : 'mr-4'}`}
           />
           KSAR DATA
         </Link>

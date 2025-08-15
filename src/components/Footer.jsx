@@ -11,7 +11,7 @@ const Footer = ({ language, theme }) => {
             exploreButton: 'ابدأ الاستكشاف',
             quickLinks: 'روابط سريعة',
             connectTitle: 'تواصل معنا',
-            copyright: 'الإصدار 1.1 | جميع الحقوق محفوظة © 2025',
+            copyright: 'الإصدار 1.2 | جميع الحقوق محفوظة © 2025',
             // MODIFICATION: Added new translation keys
             privacyPolicy: 'سياسة الخصوصية',
             termsOfUse: 'شروط الاستخدام',
@@ -32,7 +32,7 @@ const Footer = ({ language, theme }) => {
             exploreButton: 'Start Exploring',
             quickLinks: 'Quick Links',
             connectTitle: 'Connect With Us',
-            copyright: 'Version – v1.1 | All Rights Reserved © 2025',
+            copyright: 'Version – v1.2 | All Rights Reserved © 2025',
             // MODIFICATION: Added new translation keys
             privacyPolicy: 'Privacy Policy',
             termsOfUse: 'Terms of Use',
@@ -53,7 +53,7 @@ const Footer = ({ language, theme }) => {
             exploreButton: 'Commencer l\'Exploration',
             quickLinks: 'Liens Rapides',
             connectTitle: 'Contactez-nous',
-            copyright: 'Version – v1.1 | Tous droits réservés © 2025',
+            copyright: 'Version – v1.2 | Tous droits réservés © 2025',
             // MODIFICATION: Added new translation keys
             privacyPolicy: 'Politique de confidentialité',
             termsOfUse: 'Conditions d\'utilisation',
@@ -138,7 +138,7 @@ const Footer = ({ language, theme }) => {
                                 </li>
                                 <li>
                                     <a
-                                        href="https://wa.me/+212723208407?text=مرحيا!!"
+                                        href="https://wa.me/+212723208407?text=مرحبا!!"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className={`flex items-center text-sm ${themeClasses.textSecondary} hover:text-green-500 transition-colors`}

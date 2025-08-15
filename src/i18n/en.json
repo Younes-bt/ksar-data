@@ -106,7 +106,7 @@
       
     },
     "decisionspage": {
-    "search_decisions_data": "Council Decisions Data",
+    "search_decisions_data": "Council Decisions Data (from jul 2021 to oct 2024)",
     "decisions_tab": "Decisions",
     "search_input_placeholder": "Search by decision title, decision number, or date",
     "filter_by_year": "Filter by year",
@@ -172,7 +172,7 @@
     "participation_percentage": "Participation Rate"
   },
   "attendancepage": {
-    "search_attendance_data": "Session Attendance Data",
+    "search_attendance_data": "Session Attendance Data (from Oct 2021 to Feb 2025)",
     "sessions_tab": "Sessions",
     "search_input_placeholder": "Search by session type, date, or session number",
     "filter_by_session_type": "Filter by session type",

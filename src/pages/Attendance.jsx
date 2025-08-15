@@ -503,8 +503,8 @@ export default function Attendance({ data, loading, t, language, theme }) {
       
       
 
-      <h1 style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif', direction:'rtl', fontSize:'2rem' } : { fontFamily: 'Inter, sans-serif', direction:'ltr', fontSize:'2rem' }} className="text-center mb-10">
-        {t?.attendancepage?.search_attendance_data || 'بيانات حضور الجلسات'}
+      <h1 style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif', direction:'ltr', fontSize:'2rem' } : { fontFamily: 'Inter, sans-serif', direction:'ltr', fontSize:'2rem' }} className="text-center mb-10">
+        {t?.attendancepage?.search_attendance_data || '(من أكتوبر 2021 الى فبراير 2025) بيانات حضور الجلسات'}
       </h1>
 
       <Tabs defaultValue="sessions" className="w-full ">
