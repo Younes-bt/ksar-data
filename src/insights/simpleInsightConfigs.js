@@ -204,42 +204,6 @@ description: {
   },
   
   {
-    id: "Q7",
-    question: {
-  en: "What are the top 5 spending sources in 2025?",
-  fr: "Quelles sont les 5 principales sources de dépenses en 2025 ?",
-  ar: "ماهي اكثر 5 مصادر الإنفاق في سنة 2025"
-},
-type: "pie",
-description: {
-  en: "Show the top 5 spending sources for the year 2025.",
-  fr: "Afficher les 5 principales sources de dépenses pour l'année 2025.",
-  ar: "إظهار أكثر 5 مصادر إنفاق في سنة 2025."
-},
-    getData: (data) => {
-  const filteredData = data.filter(row => 
-    row.fr_label && (
-      row.fr_label.includes("Total du projet ") && (row.year === 2025) && (row.amount_approved > 0) && (row.type === 'Crédits')
-    )
-  ).sort((a, b) => (b.amount_approved || 0) - (a.amount_approved || 0)); 
-      
-      const chartData = filteredData
-        .slice(0, 5) // Take only first 5 items (already sorted)
-        .map(row => ({
-          name: row.fr_label, // Use the French label as the pie slice name
-          value: row.amount_approved || 0,
-          year: row.year,
-          category: row.fr_label
-        }));
-      
-      return {
-        chartData: chartData,
-        filteredData: filteredData.slice(0, 5)
-      };
-    },
-  },
-
-  {
     id: "Q8",
    question: {
   en: "Is trade tax revenue increasing or decreasing?",
