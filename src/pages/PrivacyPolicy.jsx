@@ -21,7 +21,7 @@ const PrivacyPolicyPage = ({
             {
               title: '2. المعلومات التي نعالجها',
               content: [
-                'المهمة الأساسية لمشروع KSAR DATA هي معالجة **بيانات عامة ومجهولة المصدر** من مصادر رسمية (تقارير الميزانية، الإحصاءات السكانية، إلخ). هذه البيانات تتعلق بالمدينة وليس بمستخدمي موقعنا.',
+                'المهمة الأساسية لمشروع KSAR DATA هي معالجة **بيانات عامة ومفتوحة المصدر** من مصادر رسمية (تقارير الميزانية، الإحصاءات السكانية، إلخ). هذه البيانات تتعلق بالمدينة وليس بمستخدمي موقعنا.',
                 'نحن لا نجمع أو نعالج أي بيانات شخصية حساسة مثل المعلومات الصحية أو المالية أو السياسية.'
               ]
             },
@@ -114,7 +114,7 @@ const PrivacyPolicyPage = ({
             {
               title: '2. Les informations que nous traitons',
               content: [
-                'La mission principale de KSAR DATA est de traiter des **données publiques et anonymes** provenant de sources officielles (rapports budgétaires, recensements, etc.). Ces données concernent la ville et non les utilisateurs de notre site.',
+                'La mission principale de KSAR DATA est de traiter des **données publiques** provenant de sources officielles (rapports budgétaires, recensements, etc.). Ces données concernent la ville et non les utilisateurs de notre site.',
                 'Nous ne collectons ni ne traitons aucune donnée personnelle sensible telle que des informations de santé, financières ou politiques.'
               ]
             },
@@ -207,7 +207,7 @@ const PrivacyPolicyPage = ({
             {
               title: '2. The Information We Process',
               content: [
-                'The core mission of KSAR DATA is to process **public, anonymous data** from official sources (budget reports, census data, etc.). This data is about the city, not about the users of our website.',
+                'The core mission of KSAR DATA is to process **public, Open data** from official sources (budget reports, census data, etc.). This data is about the city, not about the users of our website.',
                 'We do not collect or process any sensitive personal data such as health, financial, or political information.'
               ]
             },

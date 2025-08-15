@@ -42,7 +42,7 @@ export const enhancedInsights = [
     description: {
       en: "Breakdown of the largest expense categories in the municipal budget",
       fr: "Répartition des plus grandes catégories de dépenses du budget municipal",
-      ar: "توزيع أكبر فئات المصاريف في الميزانية البلدية"
+      ar: "توزيع أكبر فئات الإعتمادات في الميزانية البلدية"
     },
     filter: {
       type: "Crédits",
@@ -100,7 +100,7 @@ export const enhancedInsights = [
     description: {
       en: "Comprehensive analysis of all personnel-related expenses including salaries, benefits, and allowances",
       fr: "Analyse complète de toutes les dépenses liées au personnel incluant salaires, avantages et indemnités",
-      ar: "تحليل شامل لجميع المصاريف المتعلقة بالموظفين بما في ذلك الرواتب والمزايا والبدلات"
+      ar: "تحليل شامل لجميع الإعتمادات المتعلقة بالموظفين بما في ذلك الرواتب والمزايا والبدلات"
     },
     filter: {
       type: "Crédits",

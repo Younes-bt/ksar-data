@@ -424,7 +424,7 @@ const processMemberVotingData = () => {
         }  className={`p-5 md:px-40 md:py-10 space-y-4 min-h-screen ${theme === 'dark' ? 'bg-gray-950 text-white' : 'bg-stone-50 text-gray-950'}`}>
 
       <h1 style={language === 'ar' ? { fontFamily: 'Noto Kufi Arabic, sans-serif', direction:'rtl', fontSize:'2rem' } : { fontFamily: 'Inter, sans-serif', direction:'ltr', fontSize:'2rem' }} className="text-center mb-10">
-        {t?.decisionspage?.search_decisions_data || 'بيانات قرارات المجلس (من يوليوز 2021 الى أكتوبر 2024)'}
+        {t?.decisionspage?.search_decisions_data || 'بيانات قرارات المجلس (من نونبر 2021 الى أكتوبر 2024)'}
       </h1>
       
 

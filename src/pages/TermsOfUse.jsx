@@ -15,9 +15,7 @@ const TermsOfUsePage = ({
             {
               title: '1. قبول الشروط',
               content: [
-                'مرحبًا بك في KSAR DATA. من خلال الوصول إلى موقعنا واستخدامه، فإنك توافق على الالتزام بشروط الاستخدام هذه والامتثال لها. إذا كنت لا توافق على أي جزء من هذه الشروط، يرجى عدم استخدام خدمتنا.',
-                'يجب أن تكون بعمر 18 عامًا على الأقل أو لديك موافقة من ولي الأمر لاستخدام هذا الموقع.'
-              ]
+                'مرحبًا بك في KSAR DATA. من خلال الوصول إلى موقعنا واستخدامه، فإنك توافق على الالتزام بشروط الاستخدام هذه والامتثال لها. إذا كنت لا توافق على أي جزء من هذه الشروط، يرجى عدم استخدام خدمتنا.'              ]
             },
             {
               title: '2. وصف الخدمة',
@@ -124,9 +122,7 @@ const TermsOfUsePage = ({
             {
               title: '1. Acceptation des conditions',
               content: [
-                'Bienvenue sur KSAR DATA. En accédant à notre site web et en l\'utilisant, vous acceptez de vous conformer aux présentes conditions d\'utilisation et d\'être lié par elles. Si vous n\'êtes pas d\'accord avec une partie de ces conditions, veuillez ne pas utiliser notre service.',
-                'Vous devez avoir au moins 18 ans ou avoir le consentement parental pour utiliser ce site.'
-              ]
+                'Bienvenue sur KSAR DATA. En accédant à notre site web et en l\'utilisant, vous acceptez de vous conformer aux présentes conditions d\'utilisation et d\'être lié par elles. Si vous n\'êtes pas d\'accord avec une partie de ces conditions, veuillez ne pas utiliser notre service.'              ]
             },
             {
               title: '2. Description du service',
@@ -233,9 +229,7 @@ const TermsOfUsePage = ({
             {
               title: '1. Acceptance of Terms',
               content: [
-                'Welcome to KSAR DATA. By accessing and using our website, you agree to comply with and be bound by these Terms of Use. If you do not agree with any part of these terms, please do not use our service.',
-                'You must be at least 18 years old or have parental consent to use this site.'
-              ]
+                'Welcome to KSAR DATA. By accessing and using our website, you agree to comply with and be bound by these Terms of Use. If you do not agree with any part of these terms, please do not use our service.'              ]
             },
             {
               title: '2. Description of Service',
